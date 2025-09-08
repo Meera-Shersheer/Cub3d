@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:07 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/08 18:32:03 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/08 20:10:28 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	main(int ac, char **av)
 {
-    t_map map;
-	if (check_av(ac, av,&map))
+	t_map	map;
+
+	if (check_av(ac, av, &map))
 		return (1);
 }
