@@ -10,10 +10,14 @@ BNS=
 NAME = cub3D
 CC= cc
 CFLAGS= -Wall -Wextra -Werror
+
 #-g3 -fsanitize=address -g
 BNS_NAME = cub3D
 #PATH LIB
 LFTDIR= ./Libft
+
+LIBFT_FLAGS    = -L$(LFTDIR) -lft
+MLX42_FLAGS	   = -Imlx42/include -Lmlx42/build -lmlx42 -ldl -lglfw -pthread -lm
 
 ## create an object dir 
 OBJ_DIR := obj
@@ -25,7 +29,7 @@ all: $(NAME)
 	@echo "$(GREEN)Build complete.$(NC)"
 
 $(NAME): $(OBJ_SRC) | libft
-	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) $(LIBFT_FLAGS) $(MLX42_FLAGS)
 	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
 
 $(OBJ_DIR)/%.o: %.c
@@ -42,7 +46,7 @@ clean:
 	@echo "$(CYAN)Clean is done.$(NC)"
 
 bonus: $(OBJ_BNS)| libft 
-	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) -L$(LFTDIR) -lft  -Lminilibx-linux -lmlx -lXext -lX11 -Iminilibx-linux
+	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT_FLAGS) $(MLX42_FLAGS)
 	@echo "$(MAGENTA)Building bonus...$(NC)"
 
 fclean: clean
