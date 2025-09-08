@@ -11,7 +11,7 @@ LIBFT          = $(LIBFT_PATH)libft.a
 LIBFT_FLAGS    = -L$(LIBFT_PATH) -lft
 MLX42_FLAGS	   = -Imlx42/include -Lmlx42/build -lmlx42 -ldl -lglfw -pthread -lm
 
-SRC_FILES	   = main check_av parsing init check_argument 
+SRC_FILES	   = main check_av parsing init check_argument utils
 SRC         = $(addprefix $(SRC_PATH), $(addsuffix .c, $(SRC_FILES)))
 OBJ         = $(addprefix $(OBJ_PATH), $(addsuffix .o, $(SRC_FILES)))
 

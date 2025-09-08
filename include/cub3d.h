@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:08:45 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/08 20:33:02 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/08 21:20:35 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ typedef struct s_map
 }			t_map;
 
 int			check_av(int ac, char **av, t_map *map);
-
 void		classify_lines(char **lines, t_map *map);
 void		init_map(t_map *map, size_t line_count);
+void		error_exit(const char *msg);
 void		print_map(t_map *map);
 int			ends_with_cub(const char *name);
 void		copy_old_content(char *dest, char *content, size_t total);
