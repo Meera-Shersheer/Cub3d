@@ -4,7 +4,7 @@ MAGENTA = \033[3;35m
 CYAN = \033[3;36m
 NC = \033[0m
 
-SRC= 
+SRC= main.c check_arg.c 
 BNS= 
 
 NAME = cub3D

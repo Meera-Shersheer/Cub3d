@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/08 18:39:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:41:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
+int check_arg(char *map_file);
 
 #endif
