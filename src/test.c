@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:45:20 by mshershe         ###   ########.fr       */
+/*   Created: 2025/09/09 16:16:01 by mshershe          #+#    #+#             */
+/*   Updated: 2025/09/09 16:16:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-void	error_exit(const char *msg)
+int main(void)
 {
-	printf("Error\n%s\n", msg);
-	exit(1);
+    mlx_t *mlx = mlx_init(800, 600, "Test MLX42", true);
+    if (!mlx)
+        return (1);
+
+    mlx_image_t *img = mlx_new_image(mlx, 800, 600);
+    for (int y = 0; y < 600; y++)
+        for (int x = 0; x < 800; x++)
+            mlx_put_pixel(img, x, y, 0xFF0000FF);
+
+    mlx_image_to_window(mlx, img, 0, 0);
+    mlx_loop(mlx);
+    return (0);
 }

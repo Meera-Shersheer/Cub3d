@@ -1,42 +1,63 @@
-NAME    = cub3d
-CC      = cc
-CFLAGS  = -Wall -Wextra -Werror
+GREEN = \033[3;32m
+YELLOW = \033[3;33m
+MAGENTA = \033[3;35m
+CYAN = \033[3;36m
+NC = \033[0m
 
-SRC_PATH    = src/
-OBJ_PATH    = build/
-INCLUDE     = include/
-LIBFT_PATH  = lib/libft/
+SRC= main.c check_arg.c  check_map.c parsing.c init.c read_file.c utils.c
+BNS=  
 
-LIBFT          = $(LIBFT_PATH)libft.a
-LIBFT_FLAGS    = -L$(LIBFT_PATH) -lft
-MLX42_FLAGS	   = -Imlx42/include -Lmlx42/build -lmlx42 -ldl -lglfw -pthread -lm
+NAME= cub3D
+BNS_NAME = cub3D
 
-SRC_FILES	   = main check_av parsing init check_argument utils
-SRC         = $(addprefix $(SRC_PATH), $(addsuffix .c, $(SRC_FILES)))
-OBJ         = $(addprefix $(OBJ_PATH), $(addsuffix .o, $(SRC_FILES)))
+SRC_DIR := src
+OBJ_DIR := obj
+LFTDIR= ./Libft
 
-all: $(LIBFT) $(NAME)
+SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
+BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -I$(INCLUDE) -o $@ $(OBJ) $(LIBFT_FLAGS) $(MLX42_FLAGS)
+CC= cc
+CFLAGS= -Wall -Wextra -Werror -Iinclude
+#-g3 -fsanitize=address -g
+LIBFT  = -L$(LFTDIR) -lft
+MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c | build
-	$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 
-$(LIBFT):
-	@make -C $(LIBFT_PATH) --no-print-directory
 
-build:
-	@mkdir -p $(OBJ_PATH)
+OBJ_SRC = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_PATH))
+OBJ_BNS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(BNS_PATH))
+
+all: $(NAME)
+	@echo "$(GREEN)Build complete.$(NC)"
+
+$(NAME): $(OBJ_SRC) | libft
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME)  $(LIBFT) $(MLX42)
+	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR) 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+libft: 
+	@echo "$(MAGENTA)Building libft...$(NC)"
+	@$(MAKE) -sC $(LFTDIR) bonus
 
 clean:
-	@rm -rf $(OBJ_PATH)
-	@make -C $(LIBFT_PATH) clean --no-print-directory
+	@rm -rf $(OBJ_SRC) $(OBJ_DIR)
+	@$(MAKE) -sC $(LFTDIR) clean
+	@echo "$(CYAN)Clean is done.$(NC)"
+
+bonus: $(OBJ_BNS)| libft 
+	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT) $(MLX42)
+	@echo "$(MAGENTA)Building bonus...$(NC)"
 
 fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIBFT_PATH) fclean --no-print-directory
+	@rm -f $(OBJ_SRC) 
+	@$(MAKE) -C $(LFTDIR) fclean 
+	@rm -rf $(NAME)
+	@echo "$(CYAN)fClean is done.$(NC)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft bonus      	
