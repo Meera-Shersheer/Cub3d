@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 21:55:37 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/09 23:17:57 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 # include "mlx42/include/MLX42/MLX42.h"
 # include <string.h>
 
+typedef struct s_color
+{
+        int r;
+        int g;
+        int b;
+} t_color;
+
 
 typedef struct s_map
 {
@@ -40,7 +47,11 @@ typedef struct s_map
 	char	*ceiling_color;
 	char	**map_lines;
 	char	**cpy_content;
+	t_color C_color;
+	t_color F_color;
 }			t_map;
+
+
 
 //check arg
 int 		check_arg(char *map_file);
@@ -74,4 +85,13 @@ void	classify_map_lines(char **lines, t_map *map);
 void		classify_lines(char **lines, t_map *map);
 void	validate_map_values(t_map *map);
 void validate_textures(t_map *map);
+int parse_color_line(const char *line, t_color *color);
+void check_color(t_map *map);
+void	free_map(t_map *map);
+
+void error_exit(t_map *map, const char *msg);
+
+
+
+
 #endif

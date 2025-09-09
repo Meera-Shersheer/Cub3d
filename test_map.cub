@@ -3,11 +3,14 @@ SO ./texture/grass.png
 WE ./texture/wall.png
 EA ./texture/wood.png
 
-F 220,100,0
-C 225,30,0
+F 220,100,255
+
+C 225,100,200
+
 
 1111111
 1000001
 1011101
 1000N01
 1111111
+

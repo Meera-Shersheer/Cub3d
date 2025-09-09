@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 16:43:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 22:59:12 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-int check_arg(char *map_file)
+int	check_arg(char *map_file)
 {
 	if (!map_file)
 	{
