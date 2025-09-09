@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 21:30:21 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 22:30:03 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ void	init_map(t_map *map, size_t line_count)
 		map->map_lines[i] = NULL;
 		i++;
 	}
+	map->F_color.r = -1;
+    map->F_color.g = -1;
+    map->F_color.b = -1;
+
+    map->C_color.r = -1;
+    map->C_color.g = -1;
+    map->C_color.b = -1;
 }
 
 void	validate_map_values(t_map *map)
@@ -54,8 +61,21 @@ void	validate_map_values(t_map *map)
 		error_exit(map, "Ceiling color missing");
 	if (!map->map_lines || !map->map_lines[0])
 		error_exit(map, "Map lines missing");
+	check_color(map);
+	
 }
-
+void check_color(t_map *map)
+{
+	int n;
+	n =parse_color_line(map->ceiling_color, &map->C_color);
+	if ( n!=0)
+	 error_exit(map, "Invalid  ceiling color value");
+	n =parse_color_line(map->floor_color, &map->F_color);
+	if ( n!=0)
+		error_exit(map, "Invalid  floor color value");
+	
+	
+}
 
 void	print_map(t_map *map)
 {
