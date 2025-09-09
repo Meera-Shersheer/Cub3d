@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:15:52 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:02:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,6 @@ void	classify_lines(char **lines, t_map *map)
 		i++;
 	}
 	classify_map_lines(lines, map);
+	validate_map_values(map);
+	print_map(map);
 }

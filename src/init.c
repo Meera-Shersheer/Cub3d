@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:45:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:02:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,27 @@ void	init_map(t_map *map, size_t line_count)
 	}
 }
 
+void	validate_map_values(t_map *map)
+{
+	if (map->screen_width <= 0 || map->screen_height <= 0)
+		error_exit("Resolution missing or invalid");
+	if (!map->north_texture)
+		error_exit("North texture missing");
+	if (!map->south_texture)
+		error_exit("South texture missing");
+	if (!map->west_texture)
+		error_exit("West texture missing");
+	if (!map->east_texture)
+		error_exit("East texture missing");
+	if (!map->floor_color)
+		error_exit("Floor color missing");
+	if (!map->ceiling_color)
+		error_exit("Ceiling color missing");
+	if (!map->map_lines || !map->map_lines[0])
+		error_exit("Map lines missing");
+}
+
+
 void	print_map(t_map *map)
 {
 	size_t	i;
@@ -45,7 +66,6 @@ void	print_map(t_map *map)
 	printf("South texture: %s\n", map->south_texture);
 	printf("West texture: %s\n", map->west_texture);
 	printf("East texture: %s\n", map->east_texture);
-	printf("Sprite texture: %s\n", map->sprite_texture);
 	printf("Floor color: %s\n", map->floor_color);
 	printf("Ceiling color: %s\n", map->ceiling_color);
 	printf("Map lines:\n");

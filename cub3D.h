@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 16:52:55 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:01:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void	classify_directional_textures(char *line, t_map *map);
 void	classify_colors_and_sprite(char *line, t_map *map);
 void	classify_map_lines(char **lines, t_map *map);
 void		classify_lines(char **lines, t_map *map);
-
+void	validate_map_values(t_map *map);
 #endif
