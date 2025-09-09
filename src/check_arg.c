@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/08 19:41:39 by mshershe         ###   ########.fr       */
+/*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
+/*   Updated: 2025/09/08 21:35:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../cub3D.h"
 
-int main(int argc, char *argv[])
+int check_arg(char *map_file)
 {
-	if (argc != 2)
+	if (!map_file)
 	{
-		printf ("Error\nIncorrect number of arguments\n");
+		printf("Error\nNo map file\n");
 		return (1);
 	}
-	check_arg(argv[1]);
-	
+	printf("[%s]\n", map_file);
+	//first tke the link of the map file
+	//reprint it on terminal as a first check
 	//write function checks
 	//check extension
 	//check if file exist 
@@ -29,5 +30,6 @@ int main(int argc, char *argv[])
 	//now for parsing
 	// open map and read it using read 
 	//and do the checks
+	return (0);
 	
 }

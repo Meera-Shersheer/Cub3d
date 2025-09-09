@@ -4,35 +4,38 @@ MAGENTA = \033[3;35m
 CYAN = \033[3;36m
 NC = \033[0m
 
-SRC= main.c check_arg.c 
-BNS= 
+SRC= test.c check_arg.c 
+BNS=  
 
-NAME = cub3D
-CC= cc
-CFLAGS= -Wall -Wextra -Werror
-
-#-g3 -fsanitize=address -g
+NAME= cub3D
 BNS_NAME = cub3D
-#PATH LIB
+
+SRC_DIR := src
+OBJ_DIR := obj
 LFTDIR= ./Libft
 
-LIBFT_FLAGS    = -L$(LFTDIR) -lft
-MLX42_FLAGS	   = -Imlx42/include -Lmlx42/build -lmlx42 -ldl -lglfw -pthread -lm
+SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
+BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
-## create an object dir 
-OBJ_DIR := obj
+CC= cc
+CFLAGS= -Wall -Wextra -Werror -Iinclude
+#-g3 -fsanitize=address -g
+LIBFT  = -L$(LFTDIR) -lft
+MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
 
-OBJ_SRC = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
-OBJ_BNS = $(addprefix $(OBJ_DIR)/, $(BNS:.c=.o))
+
+
+OBJ_SRC = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_PATH))
+OBJ_BNS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(BNS_PATH))
 
 all: $(NAME)
 	@echo "$(GREEN)Build complete.$(NC)"
 
 $(NAME): $(OBJ_SRC) | libft
-	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME) $(LIBFT_FLAGS) $(MLX42_FLAGS)
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME)  $(LIBFT) $(MLX42)
 	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR) 
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -46,7 +49,7 @@ clean:
 	@echo "$(CYAN)Clean is done.$(NC)"
 
 bonus: $(OBJ_BNS)| libft 
-	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT_FLAGS) $(MLX42_FLAGS)
+	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT) $(MLX42)
 	@echo "$(MAGENTA)Building bonus...$(NC)"
 
 fclean: clean

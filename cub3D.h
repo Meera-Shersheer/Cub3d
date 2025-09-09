@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/08 19:41:17 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 16:04:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 # include "./Libft/ft_printf.h"
 # include "./Libft/get_next_line_bonus.h"
 # include "./Libft/libft.h"
+#include <stdio.h>
+#include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <mlx.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "MLX42/include/MLX42/MLX42.h"
+# include <string.h>
 
 int check_arg(char *map_file);
 

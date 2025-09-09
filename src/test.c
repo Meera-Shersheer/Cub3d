@@ -1,4 +1,4 @@
-#include "MLX42/MLX42.h"
+#include "../cub3D.h"
 
 int main(void)
 {
