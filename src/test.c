@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:16:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 18:03:10 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 19:46:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ Test list :
  valgrind ./cub3D fg.cu
 valgrind ./cub3D fg.cub.cub
 
-
+// outline of 1s
+// number of players in map
+// cleanup function
 
 
 */

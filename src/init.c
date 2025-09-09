@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 18:52:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:30:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_map(t_map *map, size_t line_count)
 	map->east_texture = NULL;
 	map->floor_color = NULL;
 	map->ceiling_color = NULL;
+	map->screen_height = -1;
+	map->screen_width = -1;
 	map->map_lines = malloc(sizeof(char *) * (line_count + 1));
 	if (!map->map_lines)
 	{
@@ -39,41 +41,45 @@ void	init_map(t_map *map, size_t line_count)
 void	validate_map_values(t_map *map)
 {
 	if (!map->north_texture)
-		error_exit("North texture missing");
+		error_exit(map, "North texture missing");
 	if (!map->south_texture)
-		error_exit("South texture missing");
+		error_exit(map, "South texture missing");
 	if (!map->west_texture)
-		error_exit("West texture missing");
+		error_exit(map, "West texture missing");
 	if (!map->east_texture)
-		error_exit("East texture missing");
+		error_exit(map, "East texture missing");
 	if (!map->floor_color)
-		error_exit("Floor color missing");
+		error_exit(map, "Floor color missing");
 	if (!map->ceiling_color)
-		error_exit("Ceiling color missing");
+		error_exit(map, "Ceiling color missing");
 	if (!map->map_lines || !map->map_lines[0])
-		error_exit("Map lines missing");
+		error_exit(map, "Map lines missing");
 }
 
 
 void	print_map(t_map *map)
 {
 	size_t	i;
-
-	printf("Resolution: %d x %d\n", map->screen_width, map->screen_height);
-	printf("North texture: %s\n", map->north_texture);
-	printf("South texture: %s\n", map->south_texture);
-	printf("West texture: %s\n", map->west_texture);
-	printf("East texture: %s\n", map->east_texture);
-	printf("Floor color: %s\n", map->floor_color);
-	printf("Ceiling color: %s\n", map->ceiling_color);
-	printf("Map lines:\n");
-	if (map->map_lines)
+	if (map)
 	{
-		i = 0;
-		while (map->map_lines[i])
+		printf("Resolution: %d x %d\n", map->screen_width, map->screen_height);
+		printf("North texture: %s\n", map->north_texture);
+		printf("South texture: %s\n", map->south_texture);
+		printf("West texture: %s\n", map->west_texture);
+		printf("East texture: %s\n", map->east_texture);
+		printf("Floor color: %s\n", map->floor_color);
+		printf("Ceiling color: %s\n", map->ceiling_color);
+		printf("Map lines:\n");
+		if (map->map_lines)
 		{
-			printf("%s\n", map->map_lines[i]);
-			i++;
+			i = 0;
+			while (map->map_lines[i])
+			{
+				printf("%s\n", map->map_lines[i]);
+				i++;
+			}
 		}
 	}
+	else 
+	printf("NULL");
 }

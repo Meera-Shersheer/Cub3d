@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 18:02:40 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:27:53 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ int main(int argc, char *argv[])
 		return (1);
 	if (check_map(argv, &map))
 		return (1);
-	
+	free_map(&map);	
 }

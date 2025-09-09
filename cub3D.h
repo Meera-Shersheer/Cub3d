@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 18:01:32 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:14:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct s_map
 	char	*south_texture;
 	char	*west_texture;
 	char	*east_texture;
-	char	*sprite_texture;
 	char	*floor_color;
 	char	*ceiling_color;
 	char	**map_lines;
+	char	**cpy_content;
 }			t_map;
 
 //check arg
@@ -56,8 +56,10 @@ void		init_map(t_map *map, size_t line_count);
 void		print_map(t_map *map);
 
 //utils
-void		error_exit(const char *msg);
-
+void	error_exit(t_map *map, const char *msg);
+void    free_map(t_map *map);
+void	ft_free(char **matrix);
+size_t	ft_strlen_d(char **s);
 //read_file
 void		copy_old_content(char *dest, char *content, size_t total);
 char		*append_buffer(char *content, char *buffer, size_t total,

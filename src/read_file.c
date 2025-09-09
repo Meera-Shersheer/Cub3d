@@ -6,13 +6,11 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 16:51:33 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:15:47 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-
 
 void	copy_old_content(char *dest, char *content, size_t total)
 {
