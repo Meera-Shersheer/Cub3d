@@ -6,11 +6,22 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 16:16:01 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 16:16:05 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 17:28:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+/*
+Test list :
+ valgrind ./cub3D fg
+ valgrind ./cub3D fg.cu
+valgrind ./cub3D fg.cub.cub
+
+
+
+
+*/
 
 int main(void)
 {
