@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 18:02:25 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 18:52:42 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ void	init_map(t_map *map, size_t line_count)
 
 void	validate_map_values(t_map *map)
 {
-	if (map->screen_width <= 0 || map->screen_height <= 0)
-		error_exit("Resolution missing or invalid");
 	if (!map->north_texture)
 		error_exit("North texture missing");
 	if (!map->south_texture)
