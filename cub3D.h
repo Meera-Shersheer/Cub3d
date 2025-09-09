@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 21:14:49 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:55:37 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <fcntl.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "MLX42/include/MLX42/MLX42.h"
+# include "mlx42/include/MLX42/MLX42.h"
 # include <string.h>
 
 
@@ -73,4 +73,5 @@ void	classify_colors_and_sprite(char *line, t_map *map);
 void	classify_map_lines(char **lines, t_map *map);
 void		classify_lines(char **lines, t_map *map);
 void	validate_map_values(t_map *map);
+void validate_textures(t_map *map);
 #endif
