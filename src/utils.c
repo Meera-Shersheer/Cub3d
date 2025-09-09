@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 16:42:37 by mshershe         ###   ########.fr       */
+/*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
+/*   Updated: 2025/09/09 16:45:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-int main(int argc, char *argv[])
+void	error_exit(const char *msg)
 {
-	t_map	map;
-	
-	if (argc != 2)
-	{
-		printf ("Error\nIncorrect number of arguments\n");
-		return (1);
-	}
-	check_arg(argv[1]);
-	if (check_map(argv, &map))
-		return (1);
-	
+	printf("Error\n%s\n", msg);
+	exit(1);
 }
