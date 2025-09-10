@@ -2,7 +2,7 @@ EA ./textures/wood.xpm
 
 R 1280 400
 NO ./textures/greystone.xpm
-SO ./textures/redbrick.xpm
+SO ./textures/redbrick.xpm 
 WE ./textures/wood.xpm
 
 C 255,200,222
