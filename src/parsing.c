@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing2.c                                         :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:33:59 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/10 06:09:08 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
+
+void	classify_resolution(char *line, t_map *map)
+{
+	if (line[0] == 'R' && line[1] == ' ')
+	{
+		if (map->screen_width >= 0 || map->screen_height >= 0)
+			error_exit(map, "Resolution defined more than once");
+		map->screen_width = ft_atoi(line + 2);
+		map->screen_height = ft_atoi(ft_strchr(line + 2, ' '));
+	}
+}
 
 void	classify_lines(char **lines, t_map *map)
 {

@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:07:04 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/10 06:27:43 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,12 @@ size_t	ft_strlen_d(char **s)
 	while (s[n] != NULL)
 		n++;
 	return (n);
+}
+
+void	check_map_values(t_map *map)
+{
+	check_map_outer_walls(map);
+	check_map_inner_spaces(map);
+	check_map_chars(map);
+	check_player_position(map);
 }

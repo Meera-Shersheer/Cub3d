@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:26:47 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/10 06:37:24 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	init_textures_and_colors(t_map *map)
 	map->ceiling_color = NULL;
 	map->screen_height = -1;
 	map->screen_width = -1;
-	map->F_color.r = -1;
-	map->F_color.g = -1;
-	map->F_color.b = -1;
-	map->C_color.r = -1;
-	map->C_color.g = -1;
-	map->C_color.b = -1;
+	map->f_color.r = -1;
+	map->f_color.g = -1;
+	map->f_color.b = -1;
+	map->c_color.r = -1;
+	map->c_color.g = -1;
+	map->c_color.b = -1;
 }
 
 static void	init_map_lines(t_map *map, size_t line_count)
@@ -71,16 +71,17 @@ void	validate_map_values(t_map *map)
 	if (!map->map_lines || !map->map_lines[0])
 		error_exit(map, "Map lines missing");
 	check_color(map);
+	check_map_values(map);
 }
 
 void	check_color(t_map *map)
 {
 	int	n;
 
-	n = parse_color_line(map->ceiling_color, &map->C_color);
+	n = parse_color_line(map->ceiling_color, &map->c_color);
 	if (n != 0)
 		error_exit(map, "Invalid  ceiling color value");
-	n = parse_color_line(map->floor_color, &map->F_color);
+	n = parse_color_line(map->floor_color, &map->f_color);
 	if (n != 0)
 		error_exit(map, "Invalid  floor color value");
 }

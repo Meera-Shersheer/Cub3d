@@ -1,0 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
+/*   Updated: 2025/09/10 06:27:06 by aalmahas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../cub3D.h"
+
+int	is_valid_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
+		|| c == ' ');
+}
+
+void	check_map_chars(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (map->map_lines[i])
+	{
+		j = 0;
+		while (map->map_lines[i][j])
+		{
+			if (!is_valid_map_char(map->map_lines[i][j]))
+				error_exit(map, "Invalid character in map");
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_player_position(t_map *map)
+{
+	int		count;
+	size_t	i;
+	size_t	j;
+
+	count = 0;
+	i = 0;
+	while (map->map_lines[i])
+	{
+		j = 0;
+		while (map->map_lines[i][j])
+		{
+			if (map->map_lines[i][j] == 'N' || map->map_lines[i][j] == 'S'
+				|| map->map_lines[i][j] == 'E' || map->map_lines[i][j] == 'W')
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count != 1)
+		error_exit(map, "There must be exactly one player start position");
+}
+
+void	check_map_outer_walls(t_map *map)
+{
+	size_t	rows;
+	size_t	i;
+	size_t	j;
+
+	rows = 0;
+	while (map->map_lines[rows])
+		rows++;
+	i = 0;
+	while (i < rows)
+	{
+		j = 0;
+		while (map->map_lines[i][j])
+		{
+			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N'
+					|| map->map_lines[i][j] == 'S'
+					|| map->map_lines[i][j] == 'E'
+					|| map->map_lines[i][j] == 'W') && (i == 0 || i == rows - 1
+					|| j == 0 || j == ft_strlen(map->map_lines[i]) - 1))
+				error_exit(map, "Map is not closed by walls");
+			j++;
+		}
+		i++;
+	}
+}
+
+void	check_map_inner_spaces(t_map *map)
+{
+	size_t	rows;
+	size_t	i;
+	size_t	j;
+
+	rows = 0;
+	while (map->map_lines[rows])
+		rows++;
+	i = 1;
+	while (i < rows - 1)
+	{
+		j = 1;
+		while (j < ft_strlen(map->map_lines[i]) - 1)
+		{
+			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N'
+					|| map->map_lines[i][j] == 'S'
+					|| map->map_lines[i][j] == 'E'
+					|| map->map_lines[i][j] == 'W') && (map->map_lines[i
+					- 1][j] == ' ' || map->map_lines[i + 1][j] == ' '
+					|| map->map_lines[i][j - 1] == ' ' || map->map_lines[i][j
+					+ 1] == ' '))
+				error_exit(map, "Map is not closed by walls");
+			j++;
+		}
+		i++;
+	}
+}

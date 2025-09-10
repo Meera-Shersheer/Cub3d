@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:32:32 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/10 06:10:18 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-void	classify_resolution(char *line, t_map *map)
-{
-	if (line[0] == 'R' && line[1] == ' ')
-	{
-		if (map->screen_width >= 0 || map->screen_height >= 0)
-			error_exit(map, "Resolution defined more than once");
-		map->screen_width = ft_atoi(line + 2);
-		map->screen_height = ft_atoi(ft_strchr(line + 2, ' '));
-	}
-}
 
 void	set_texture(char **texture_field, const char *line, t_map *map,
 		const char *err_msg)
@@ -69,22 +58,33 @@ void	classify_colors_and_sprite(char *line, t_map *map)
 	}
 }
 
+void	add_map_line(t_map *map, char *line, size_t *map_index)
+{
+	map->map_lines[*map_index] = ft_strdup(line);
+	if (!map->map_lines[*map_index])
+		error_exit(map, "malloc");
+	(*map_index)++;
+}
+
 void	classify_map_lines(char **lines, t_map *map)
 {
 	size_t	i;
 	size_t	map_index;
+	int		map_started;
 
 	i = 0;
 	map_index = 0;
+	map_started = 0;
 	while (lines[i])
 	{
-		if (lines[i][0] == '0' || lines[i][0] == '1' || lines[i][0] == '2')
+		if (lines[i][0] == '0' || lines[i][0] == '1')
 		{
-			map->map_lines[map_index] = ft_strdup(lines[i]);
-			if (!(map->map_lines[map_index]))
-				error_exit(map, "malloc");
-			map_index++;
+			if (!map_started)
+				map_started = 1;
+			add_map_line(map, lines[i], &map_index);
 		}
+		else if (map_started)
+			error_exit(map, "Map must be the last element in the file");
 		i++;
 	}
 	map->map_lines[map_index] = NULL;
