@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/10 06:40:21 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:49:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "./Libft/ft_printf.h"
 # include "./Libft/get_next_line_bonus.h"
 # include "./Libft/libft.h"
-# include "mlx42/include/MLX42/MLX42.h"
+# include "MLX42/include/MLX42/MLX42.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <errno.h>
