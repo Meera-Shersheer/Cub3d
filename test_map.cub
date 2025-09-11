@@ -1,21 +1,12 @@
-NO ./texture/bricks.png
-SO ./texture/grass.png
-
-
-
-
-
-F 220,100,255
-
-C 225,100,200
-
-
-WE ./texture/wall.png
+NO          ./texture/grass.png
+SO ./texture/wall.png
+WE ./texture/bricks.png
 EA ./texture/wood.png
-
+F       220,100,0
+C     225,30,0
 
 1111111
 1000001
-1010101
+1011101
 1000N01
 1111111
