@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/11 10:45:07 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/11 19:23:23 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ char		*read_file(const char *path);
 void		classify_resolution(char *line, t_map *map);
 void		classify_directional_textures(char *line, t_map *map);
 void		classify_colors(char *line, t_map *map);
-void		classify_lines(char **lines, t_map *map);
+void	classify_map_lines(char **lines, t_map *map);
+void	classify_config_lines(char **lines, t_map *map);
 
 void		validate_map_values(t_map *map);
 void		validate_textures(t_map *map);

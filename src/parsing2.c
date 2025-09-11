@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/11 10:44:21 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/11 19:23:54 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,3 @@ void	classify_colors(char *line, t_map *map)
 			error_exit(map, "malloc");
 	}
 }
-

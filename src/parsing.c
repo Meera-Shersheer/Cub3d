@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/11 10:44:58 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/11 19:24:09 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,48 +50,47 @@ void	classify_map_lines(char **lines, t_map *map)
 	size_t	i;
 	size_t	map_index;
 	int		map_started;
+	int		j;
 
 	i = 0;
 	map_index = 0;
 	map_started = 0;
 	while (lines[i])
 	{
-		if (lines[i][0] == '0' || lines[i][0] == '1')
+		j = skip_spaces(lines[i], 0);
+		if (lines[i][j] == '0' || lines[i][j] == '1')
 		{
 			if (!map_started)
 				map_started = 1;
-			add_map_line(map, lines[i], &map_index);
+			add_map_line(map, lines[i] + j, &map_index);
 		}
-		else if (map_started)
+		else if (map_started && lines[i][j] != '\0')
 			error_exit(map, "Map must be the last element in the file");
 		i++;
 	}
 	map->map_lines[map_index] = NULL;
 }
 
-void	classify_lines(char **lines, t_map *map)
+void	classify_config_lines(char **lines, t_map *map)
 {
 	size_t	i;
+	int		j;
 
 	i = 0;
-	if (!lines || !map)
-		error_exit(map, "NULL Variable");
 	while (lines[i])
 	{
-		if (lines[i][0] == 'R')
-			classify_resolution(lines[i], map);
-		else if (lines[i][0] == 'N' || lines[i][0] == 'S' || lines[i][0] == 'W'
-			|| lines[i][0] == 'E')
-			classify_directional_textures(lines[i], map);
-		else if (lines[i][0] == 'F' || lines[i][0] == 'C' || (lines[i][0] == 'S'
-				&& lines[i][1] == ' '))
-			classify_colors(lines[i], map);
-		else if (!(lines[i][0] >= '0' && lines[i][0] <= '2'))
-		{
+		j = skip_spaces(lines[i], 0);
+		if (lines[i][j] == 'R')
+			classify_resolution(lines[i] + j, map);
+		else if (lines[i][j] == 'N' || lines[i][j] == 'S'
+			|| lines[i][j] == 'W' || lines[i][j] == 'E')
+			classify_directional_textures(lines[i] + j, map);
+		else if (lines[i][j] == 'F' || lines[i][j] == 'C'
+			|| (lines[i][j] == 'S' && lines[i][j + 1] == ' '))
+			classify_colors(lines[i] + j, map);
+		else if (!(lines[i][j] >= '0' && lines[i][j] <= '2')
+			&& lines[i][j] != '\0')
 			error_exit(map, "Unknown or extra line detected");
-		}
 		i++;
 	}
-	classify_map_lines(lines, map);
-	validate_map_values(map);
 }
