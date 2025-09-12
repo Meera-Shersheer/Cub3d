@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/11 19:23:54 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 22:23:53 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,16 @@
 void	set_texture(char **texture_field, const char *line, t_map *map,
 		const char *err_msg)
 {
+	size_t		len;
+
 	if (*texture_field)
 		error_exit(map, err_msg);
-	*texture_field = ft_strdup(line);
+	len = ft_strlen(line);
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n'))
+		len--;
+	if (len == 0)
+		error_exit(map, err_msg);
+	*texture_field = ft_substr(line, 0, len);
 	if (!*texture_field)
 		error_exit(map, "malloc failed");
 }

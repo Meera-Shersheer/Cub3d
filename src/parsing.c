@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/11 19:24:09 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 22:23:05 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	classify_map_lines(char **lines, t_map *map)
 	while (lines[i])
 	{
 		j = skip_spaces(lines[i], 0);
+		if (map_started && lines[i][j] == '\0')
+			error_exit(map, "Empty line inside map");
 		if (lines[i][j] == '0' || lines[i][j] == '1')
 		{
 			if (!map_started)
@@ -75,21 +77,23 @@ void	classify_config_lines(char **lines, t_map *map)
 {
 	size_t	i;
 	int		j;
+	char	*line_trimmed;
 
 	i = 0;
 	while (lines[i])
 	{
-		j = skip_spaces(lines[i], 0);
-		if (lines[i][j] == 'R')
-			classify_resolution(lines[i] + j, map);
-		else if (lines[i][j] == 'N' || lines[i][j] == 'S'
-			|| lines[i][j] == 'W' || lines[i][j] == 'E')
-			classify_directional_textures(lines[i] + j, map);
-		else if (lines[i][j] == 'F' || lines[i][j] == 'C'
-			|| (lines[i][j] == 'S' && lines[i][j + 1] == ' '))
-			classify_colors(lines[i] + j, map);
-		else if (!(lines[i][j] >= '0' && lines[i][j] <= '2')
-			&& lines[i][j] != '\0')
+		line_trimmed = trim_newline(lines[i]);
+		j = skip_spaces(line_trimmed, 0);
+		if (line_trimmed[j] == 'R')
+			classify_resolution(line_trimmed + j, map);
+		else if (line_trimmed[j] == 'N' || line_trimmed[j] == 'S'
+			|| line_trimmed[j] == 'W' || line_trimmed[j] == 'E')
+			classify_directional_textures(line_trimmed + j, map);
+		else if (line_trimmed[j] == 'F' || line_trimmed[j] == 'C'
+			|| (line_trimmed[j] == 'S' && line_trimmed[j + 1] == ' '))
+			classify_colors(line_trimmed + j, map);
+		else if (!(line_trimmed[j] >= '0' && line_trimmed[j] <= '2')
+			&& line_trimmed[j] != '\0')
 			error_exit(map, "Unknown or extra line detected");
 		i++;
 	}

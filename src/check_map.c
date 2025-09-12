@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/11 19:23:44 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 21:42:25 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	process_map(char *content, t_map *map)
 {
 	size_t	total_lines;
 
-	map->cpy_content = ft_split(content, '\n');
+	map->cpy_content = split_lines_with_nl(content);
 	if (content)
 		free(content);
 	if (!map->cpy_content)
