@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/12 21:42:25 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/13 21:20:53 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	read_map(char **av, char **content)
 	*content = read_file(av[1]);
 	if (!*content)
 	{
-		printf("Error\nFailed to read file\n");
+		printf(RED "Error\nEmpty File\n" NC);
 		return (1);
 	}
 	return (0);
@@ -41,7 +41,7 @@ int	process_map(char *content, t_map *map)
 		free(content);
 	if (!map->cpy_content)
 	{
-		printf("Error\nFailed to split lines\n");
+		printf(RED "Error\nFailed to split lines\n" NC);
 		return (1);
 	}
 	total_lines = 0;

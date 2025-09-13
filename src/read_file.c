@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 20:15:47 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/13 19:15:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*append_buffer(char *content, char *buffer, size_t total, ssize_t n)
 	new_content = malloc(total + n + 1);
 	if (!new_content)
 	{
-		perror("malloc");
+		printf(RED "Error\nmalloc: %s\n" NC, strerror(errno));
 		free(content);
 		exit(1);
 	}
@@ -59,7 +59,7 @@ char	*read_file(const char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("Error\n");
+		printf(RED "Error\n%s\n" NC, strerror(errno));
 		exit(1);
 	}
 	content = NULL;

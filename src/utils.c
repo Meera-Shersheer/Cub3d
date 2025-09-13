@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/12 22:24:27 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:33:33 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	error_exit(t_map *map, const char *msg)
 {
+	printf(RED "Error\n%s\n" NC, msg);
 	free_map(map);
-	printf("Error\n%s\n", msg);
 	exit(1);
 }
 

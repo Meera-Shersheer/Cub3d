@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/10 06:27:06 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:50:03 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	check_player_position(t_map *map)
 		}
 		i++;
 	}
-	if (count != 1)
-		error_exit(map, "There must be exactly one player start position");
+	if (count > 1)
+		error_exit(map, "Too many players, There must be exactly one player");
+	else if (count < 1)
+		error_exit(map, "There must be exactly one player");
 }
 
 void	check_map_outer_walls(t_map *map)
@@ -81,7 +83,7 @@ void	check_map_outer_walls(t_map *map)
 					|| map->map_lines[i][j] == 'E'
 					|| map->map_lines[i][j] == 'W') && (i == 0 || i == rows - 1
 					|| j == 0 || j == ft_strlen(map->map_lines[i]) - 1))
-				error_exit(map, "Map is not closed by walls");
+				error_exit(map, "Map is not fully closed by walls");
 			j++;
 		}
 		i++;
@@ -93,6 +95,9 @@ void	check_map_inner_spaces(t_map *map)
 	size_t	rows;
 	size_t	i;
 	size_t	j;
+	
+	if (!map)
+		error_exit(map, "NULL variable"); 
 
 	rows = 0;
 	while (map->map_lines[rows])

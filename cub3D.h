@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/13 14:53:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:30:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,26 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+# ifndef GREEN
+#  define GREEN   "\033[0;32m"
+# endif
+
+# ifndef MAGENTA
+#  define MAGENTA "\033[0;35m"
+# endif
+
+# ifndef CYAN
+#  define CYAN    "\033[0;36m"
+# endif
+
+# ifndef RED
+#  define RED     "\033[0;31m"
+# endif
+
+# ifndef NC
+#  define NC      "\033[0m"
+# endif
 
 typedef struct s_color
 {
@@ -48,6 +68,7 @@ typedef struct s_map
 	char	**cpy_content;
 	t_color	c_color;
 	t_color	f_color;
+	char *msg;
 }			t_map;
 
 // check arg
