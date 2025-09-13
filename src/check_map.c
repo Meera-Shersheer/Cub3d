@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 21:59:44 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 21:42:25 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,20 @@ int	read_map(char **av, char **content)
 	return (0);
 }
 
+void	classify_lines(char **lines, t_map *map)
+{
+	if (!lines || !map)
+		error_exit(map, "NULL Variable");
+	classify_config_lines(lines, map);
+	classify_map_lines(lines, map);
+	validate_map_values(map);
+}
+
 int	process_map(char *content, t_map *map)
 {
 	size_t	total_lines;
 
-	map->cpy_content = ft_split(content, '\n');
+	map->cpy_content = split_lines_with_nl(content);
 	if (content)
 		free(content);
 	if (!map->cpy_content)

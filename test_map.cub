@@ -1,0 +1,22 @@
+    NO          ./texture/grass.png
+
+    SO ./texture/wall.png
+    WE ./texture/bricks.png
+    EA ./texture/wood.png
+
+
+
+
+
+F 20,20,20
+C 200,200,200
+
+
+111111111111
+1         11
+1          1
+111111111111
+10S000000001
+111111111111
+11         1
+111111111111

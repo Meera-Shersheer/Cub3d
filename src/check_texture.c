@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:24:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:24:55 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 22:24:16 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	check_file(t_map *map, const char *path, const char *name)
 {
 	int	fd;
 
+	if (!path || !*path)
+		error_exit(map, name);
+	if (path[strlen(path) - 1] == '/')
+		error_exit(map, "Texture path must include file name");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		error_exit(map, name);

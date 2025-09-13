@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/10 06:10:18 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/12 22:23:53 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,72 @@
 void	set_texture(char **texture_field, const char *line, t_map *map,
 		const char *err_msg)
 {
+	size_t		len;
+
 	if (*texture_field)
 		error_exit(map, err_msg);
-	*texture_field = ft_strdup(line);
+	len = ft_strlen(line);
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n'))
+		len--;
+	if (len == 0)
+		error_exit(map, err_msg);
+	*texture_field = ft_substr(line, 0, len);
 	if (!*texture_field)
 		error_exit(map, "malloc failed");
 }
 
-void	classify_directional_textures(char *line, t_map *map)
+void	handle_ns_textures(char *line, t_map *map)
 {
+	int	i;
+
 	if (line[0] == 'N' && line[1] == 'O')
-		set_texture(&map->north_texture, line + 3, map,
+	{
+		i = skip_spaces(line, 2);
+		set_texture(&map->north_texture, line + i, map,
 			"North texture defined more than once");
+	}
 	else if (line[0] == 'S' && line[1] == 'O')
-		set_texture(&map->south_texture, line + 3, map,
+	{
+		i = skip_spaces(line, 2);
+		set_texture(&map->south_texture, line + i, map,
 			"South texture defined more than once");
-	else if (line[0] == 'W' && line[1] == 'E')
-		set_texture(&map->west_texture, line + 3, map,
-			"West texture defined more than once");
-	else if (line[0] == 'E' && line[1] == 'A')
-		set_texture(&map->east_texture, line + 3, map,
-			"East texture defined more than once");
+	}
 }
 
-void	classify_colors_and_sprite(char *line, t_map *map)
+void	handle_we_textures(char *line, t_map *map)
 {
+	int	i;
+
+	if (line[0] == 'W' && line[1] == 'E')
+	{
+		i = skip_spaces(line, 2);
+		set_texture(&map->west_texture, line + i, map,
+			"West texture defined more than once");
+	}
+	else if (line[0] == 'E' && line[1] == 'A')
+	{
+		i = skip_spaces(line, 2);
+		set_texture(&map->east_texture, line + i, map,
+			"East texture defined more than once");
+	}
+}
+
+void	classify_directional_textures(char *line, t_map *map)
+{
+	handle_ns_textures(line, map);
+	handle_we_textures(line, map);
+}
+
+void	classify_colors(char *line, t_map *map)
+{
+	int	i;
+
 	if (line[0] == 'F')
 	{
 		if (map->floor_color)
 			error_exit(map, "Floor color defined more than once");
-		map->floor_color = ft_strdup(line + 2);
+		i = skip_spaces(line, 1);
+		map->floor_color = ft_strdup(line + i);
 		if (!map->floor_color)
 			error_exit(map, "malloc");
 	}
@@ -52,40 +88,9 @@ void	classify_colors_and_sprite(char *line, t_map *map)
 	{
 		if (map->ceiling_color)
 			error_exit(map, "Ceiling color defined more than once");
-		map->ceiling_color = ft_strdup(line + 2);
+		i = skip_spaces(line, 1);
+		map->ceiling_color = ft_strdup(line + i);
 		if (!map->ceiling_color)
 			error_exit(map, "malloc");
 	}
-}
-
-void	add_map_line(t_map *map, char *line, size_t *map_index)
-{
-	map->map_lines[*map_index] = ft_strdup(line);
-	if (!map->map_lines[*map_index])
-		error_exit(map, "malloc");
-	(*map_index)++;
-}
-
-void	classify_map_lines(char **lines, t_map *map)
-{
-	size_t	i;
-	size_t	map_index;
-	int		map_started;
-
-	i = 0;
-	map_index = 0;
-	map_started = 0;
-	while (lines[i])
-	{
-		if (lines[i][0] == '0' || lines[i][0] == '1')
-		{
-			if (!map_started)
-				map_started = 1;
-			add_map_line(map, lines[i], &map_index);
-		}
-		else if (map_started)
-			error_exit(map, "Map must be the last element in the file");
-		i++;
-	}
-	map->map_lines[map_index] = NULL;
 }

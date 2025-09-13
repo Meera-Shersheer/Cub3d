@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/10 18:49:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/13 14:53:59 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ char		*read_file(const char *path);
 // parsing
 void		classify_resolution(char *line, t_map *map);
 void		classify_directional_textures(char *line, t_map *map);
-void		classify_colors_and_sprite(char *line, t_map *map);
+void		classify_colors(char *line, t_map *map);
 void		classify_map_lines(char **lines, t_map *map);
-void		classify_lines(char **lines, t_map *map);
+void		classify_config_lines(char **lines, t_map *map);
 
 void		validate_map_values(t_map *map);
 void		validate_textures(t_map *map);
@@ -95,5 +95,7 @@ void		check_player_position(t_map *map);
 void		check_map_chars(t_map *map);
 void		check_map_outer_walls(t_map *map);
 void		check_map_inner_spaces(t_map *map);
-
+int			skip_spaces(char *str, int i);
+char		**split_lines_with_nl(char *content);
+char		*trim_newline(char *str);
 #endif
