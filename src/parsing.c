@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 04:15:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:51:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,9 @@ void	classify_resolution(char *line, t_map *map)
 
 void	add_map_line(t_map *map, char *line, size_t *map_index, char **lines)
 {
-	int max_length;
-	
+	int	max_length;
+
 	max_length = find_max_len(lines);
-	//add padding
 	map->map_lines[*map_index] = pad_line(line, max_length);
 	if (!map->map_lines[*map_index])
 		error_exit(map, "malloc");

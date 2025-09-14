@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 02:25:38 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:46:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_component(char **ptr)
 
 	if (!ptr || !*ptr)
 		return (-1);
-	while(**ptr == ' ')
+	while (**ptr == ' ')
 		(*ptr)++;
 	if (!ft_isdigit(**ptr))
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:11:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 02:59:11 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:51:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	print_map(t_map *map)
 
 	if (map)
 	{
-		printf(CYAN "Resolution:" NC " %d x %d\n", map->screen_width, map->screen_height);
+		printf(CYAN "Resolution:" NC " %d x %d\n", map->screen_width, \
+map->screen_height);
 		printf(CYAN "North texture:" NC " %s\n", map->north_texture);
 		printf(CYAN "South texture:" NC " %s\n", map->south_texture);
 		printf(CYAN "West texture:" NC " %s\n", map->west_texture);

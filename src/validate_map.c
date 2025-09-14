@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 03:23:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:50:23 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,9 @@ void	check_map_inner_spaces(t_map *map)
 	size_t	rows;
 	size_t	i;
 	size_t	j;
-	
-	if (!map)
-		error_exit(map, "NULL variable"); 
 
+	if (!map)
+		error_exit(map, "NULL variable");
 	rows = 0;
 	while (map->map_lines[rows])
 		rows++;
@@ -108,13 +107,11 @@ void	check_map_inner_spaces(t_map *map)
 		j = 1;
 		while (j < ft_strlen(map->map_lines[i]) - 1)
 		{
-			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N'
-					|| map->map_lines[i][j] == 'S'
-					|| map->map_lines[i][j] == 'E'
-					|| map->map_lines[i][j] == 'W') && (map->map_lines[i
-					- 1][j] == ' ' || map->map_lines[i + 1][j] == ' '
-					|| map->map_lines[i][j - 1] == ' ' || map->map_lines[i][j
-					+ 1] == ' '))
+			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N' || \
+	map->map_lines[i][j] == 'S' || map->map_lines[i][j] == 'E' || \
+	map->map_lines[i][j] == 'W') && (map->map_lines[i - 1][j] == ' ' || \
+map->map_lines[i + 1][j] == ' ' || map->map_lines[i][j - 1] == ' ' || \
+map->map_lines[i][j + 1] == ' '))
 				error_exit(map, "Map is not closed by walls");
 			j++;
 		}

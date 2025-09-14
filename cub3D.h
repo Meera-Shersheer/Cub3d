@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/14 03:59:37 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:54:33 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ typedef struct s_map
 	char	**map_lines;
 	char	**map_cpy;
 	char	**cpy_content;
+	char	*msg;
 	t_color	c_color;
 	t_color	f_color;
-	char *msg;
 }			t_map;
 
 // check arg
@@ -122,9 +122,9 @@ char		**split_lines_with_nl(char *content);
 char		*trim_newline(char *str);
 
 //padding
-int find_max_len(char **lines);
-char    *pad_line(char *line, int max_length);
-int map_start(char *line);
-int map_end(char **lines, int i);
+int			find_max_len(char **lines);
+char		*pad_line(char *line, int max_length);
+int			map_start(char *line);
+int			map_end(char **lines, int i);
 
 #endif

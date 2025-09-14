@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:24:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 00:31:25 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:46:50 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_file(t_map *map, const char *path, const char *name)
 	if (fd < 0)
 	{
 		map->msg = ft_strjoin(name, strerror(errno));
-		error_exit(map, map->msg);	
+		error_exit(map, map->msg);
 	}
 	close(fd);
 }
