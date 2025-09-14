@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:11:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 00:19:44 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 02:59:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_map(t_map *map)
 			i = 0;
 			while (map->map_lines[i])
 			{
-				printf("%s\n", map->map_lines[i]);
+				printf("[%s]\n", map->map_lines[i]);
 				i++;
 			}
 		}

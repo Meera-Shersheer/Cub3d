@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 00:32:10 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/14 03:00:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	init_map_lines(t_map *map, size_t line_count)
 	size_t	i;
 
 	map->map_lines = malloc(sizeof(char *) * (line_count + 1));
+	
 	if (!map->map_lines)
 	{
 		printf(RED "Error\nmalloc: %s\n" NC, strerror(errno));
@@ -47,6 +48,7 @@ static void	init_map_lines(t_map *map, size_t line_count)
 		map->map_lines[i] = NULL;
 		i++;
 	}
+	
 }
 
 void	init_map(t_map *map, size_t line_count)
