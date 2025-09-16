@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/16 06:05:53 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 19:43:30 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,14 @@ int	process_map(char *content, t_map *map)
 	return (0);
 }
 
+/*int movement;
+movement = floodfill(map, map->flood_fill_map, x, y);
+	if (movement <= 1)
+		error_exit(map, "Player is stuck and cannot move");*/
 void	check_playable_area( t_map *map)
 {
 	int	x;
 	int	y;
-	int	movement;
 
 	if (!map)
 		error_exit(map, "No map to check");
@@ -74,9 +77,7 @@ void	check_playable_area( t_map *map)
 	y = get_player_y_pos(map->map_lines);
 	if (x < 0 || y < 0)
 		error_exit(map, "player position is out of bound");
-	movement = floodfill(map, map->flood_fill_map, x, y);
-	if (movement <= 1)
-		error_exit(map, "Player is stuck and cannot move");
+	floodfill(map, map->flood_fill_map, x, y);
 	print_floodfill_map(map);
 	printf(GREEN "-----------------------------------------------\n" NC);
 }

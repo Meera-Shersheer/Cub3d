@@ -6,12 +6,12 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 01:06:38 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/16 06:06:01 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 19:42:34 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
+/*
 int	floodfill(t_map *map, char **grid, int pos_x, int pos_y)
 {
 	int	count;
@@ -35,6 +35,26 @@ int	floodfill(t_map *map, char **grid, int pos_x, int pos_y)
 	count += floodfill(map, grid, pos_x + 1, pos_y - 1);
 	count += floodfill(map, grid, pos_x + 1, pos_y + 1);
 	return (count);
+}*/
+void	floodfill(t_map *map, char **grid, int pos_x, int pos_y)
+{
+	if (pos_x < 0 || pos_y < 0 || pos_x >= (int)ft_strlen_d(grid))
+		error_exit(map, "Map is not fully closed");
+	if (pos_y >= (int)ft_strlen(grid[pos_x]))
+		error_exit(map, "Map is not fully closed");
+	if (grid[pos_x][pos_y] == '1' || grid[pos_x][pos_y] == 'D')
+		return ;
+	if (grid[pos_x][pos_y] == ' ')
+		error_exit(map, "Map is not closed (Can reach a space)");
+	grid[pos_x][pos_y] = 'D';
+	floodfill(map, grid, pos_x - 1, pos_y);
+	floodfill(map, grid, pos_x + 1, pos_y);
+	floodfill(map, grid, pos_x, pos_y - 1);
+	floodfill(map, grid, pos_x, pos_y + 1);
+	floodfill(map, grid, pos_x - 1, pos_y - 1);
+	floodfill(map, grid, pos_x - 1, pos_y + 1);
+	floodfill(map, grid, pos_x + 1, pos_y - 1);
+	floodfill(map, grid, pos_x + 1, pos_y + 1);
 }
 
 char	**cpy_matrix(char	**map)
