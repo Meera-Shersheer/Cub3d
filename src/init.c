@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 04:47:33 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 04:06:53 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	init_textures_and_colors(t_map *map)
 	map->c_color.g = -1;
 	map->c_color.b = -1;
 	map->msg = NULL;
+	map->flood_fill_map = NULL;
 }
 
 static void	init_map_lines(t_map *map, size_t line_count)

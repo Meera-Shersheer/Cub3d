@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 00:33:33 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 05:20:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ size_t	ft_strlen_d(char **s)
 
 void	check_map_values(t_map *map)
 {
-	check_map_outer_walls(map);
-	check_map_inner_spaces(map);
 	check_map_chars(map);
 	check_player_position(map);
 }

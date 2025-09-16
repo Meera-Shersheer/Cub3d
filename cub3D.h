@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/14 04:54:33 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 05:49:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_map
 	char	*floor_color;
 	char	*ceiling_color;
 	char	**map_lines;
-	char	**map_cpy;
+	char	**flood_fill_map;
 	char	**cpy_content;
 	char	*msg;
 	t_color	c_color;
@@ -80,10 +80,14 @@ int			ends_with_cub(const char *file_name);
 int			read_map(char **av, char **content);
 int			process_map(char *content, t_map *map);
 int			check_map(char **av, t_map *map);
+void		check_playable_area( t_map *map);
 
 // init
 void		init_map(t_map *map, size_t line_count);
+
+//print
 void		print_map(t_map *map);
+void		print_floodfill_map(t_map *map);
 
 // utils
 void		error_exit(t_map *map, const char *msg);
@@ -103,10 +107,12 @@ void		classify_colors(char *line, t_map *map);
 void		classify_map_lines(char **lines, t_map *map);
 void		classify_config_lines(char **lines, t_map *map);
 
+//validate map
 void		validate_map_values(t_map *map);
 void		validate_textures(t_map *map);
 int			parse_color_line(const char *line, t_color *color);
 void		check_color(t_map *map);
+int			check_map_order(char **lines);
 
 void		free_map(t_map *map);
 
@@ -120,11 +126,14 @@ void		check_map_inner_spaces(t_map *map);
 int			skip_spaces(char *str, int i);
 char		**split_lines_with_nl(char *content);
 char		*trim_newline(char *str);
-
 //padding
 int			find_max_len(char **lines);
-char		*pad_line(char *line, int max_length);
 int			map_start(char *line);
 int			map_end(char **lines, int i);
-
+char		*pad_line(char *line, int max_length);
+//flood_fill
+void		floodfill(t_map *map, char **grid, int pos_x, int pos_y);
+int			get_player_x_pos(char **grid);
+int			get_player_y_pos(char **grid);
+char		**cpy_matrix(char	**map);
 #endif

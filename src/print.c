@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:11:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 04:51:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 05:20:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,27 @@ map->screen_height);
 			while (map->map_lines[i])
 			{
 				printf("[%s]\n", map->map_lines[i]);
+				i++;
+			}
+		}
+	}
+	else
+		printf(CYAN "NULL" NC);
+}
+
+void	print_floodfill_map(t_map *map)
+{
+	size_t	i;
+
+	if (map)
+	{
+		if (map->flood_fill_map)
+		{
+			printf(CYAN "Map after applying flood fill algorithm:\n" NC);
+			i = 0;
+			while (map->flood_fill_map[i])
+			{
+				printf("[%s]\n", map->flood_fill_map[i]);
 				i++;
 			}
 		}
