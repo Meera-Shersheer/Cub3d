@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/16 05:49:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/16 06:06:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			map_start(char *line);
 int			map_end(char **lines, int i);
 char		*pad_line(char *line, int max_length);
 //flood_fill
-void		floodfill(t_map *map, char **grid, int pos_x, int pos_y);
+int			floodfill(t_map *map, char **grid, int pos_x, int pos_y);
 int			get_player_x_pos(char **grid);
 int			get_player_y_pos(char **grid);
 char		**cpy_matrix(char	**map);
