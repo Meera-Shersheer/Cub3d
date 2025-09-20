@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/16 19:39:23 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/20 23:41:47 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+
+# ifndef WIDTH
+#  define WIDTH   64
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT   64
+# endif
 
 # ifndef GREEN
 #  define GREEN   "\033[0;32m"
@@ -72,9 +80,40 @@ typedef struct s_map
 	t_color	f_color;
 }			t_map;
 
+typedef struct s_player
+{
+    mlx_image_t *img;     // The player's sprite or rectangle
+    float x;             // Player x position in the map (float for smooth movement)
+    float y;             // Player y position
+	float dir_x;         // Facing direction (unit vector x)
+    float dir_y;         // Facing direction (unit vector y)
+    float plane_x;       // Camera plane (for raycasting)
+    float plane_y;
+    float move_speed;    // Movement step per frame
+    float rot_speed;     // Rotation speed
+	//flags
+    int    moving_forward;
+    int    moving_backward;
+    int    moving_left;
+    int    moving_right;
+    int    rotating_left;
+    int    rotating_right;
+
+}   t_player;
+
+
+typedef struct s_game
+{
+	mlx_t	*mlx;
+	struct s_map	*map;
+	struct s_player	*player;
+	
+}			t_game;
+
 // check arg
 int			check_arg(char *map_file);
 int			ends_with_cub(const char *file_name);
+int			parsing(int argc, char *argv[], t_game *game);
 
 // check map
 int			read_map(char **av, char **content);
@@ -137,4 +176,7 @@ void		floodfill(t_map *map, char **grid, int pos_x, int pos_y);
 int			get_player_x_pos(char **grid);
 int			get_player_y_pos(char **grid);
 char		**cpy_matrix(char	**map);
+
+//
+void draw_player(t_game *game);
 #endif

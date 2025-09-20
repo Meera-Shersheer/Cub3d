@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/16 19:43:30 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/20 01:23:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	check_map(char **av, t_map *map)
 	if (process_map(content, map))
 		return (1);
 	validate_textures(map);
+	map->screen_height = ft_strlen_d(map->map_lines);
+	map->screen_width = ft_strlen(map->map_lines[0]);
 	print_map(map);
 	return (0);
 }

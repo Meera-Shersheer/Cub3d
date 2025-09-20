@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/16 04:08:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/21 01:13:42 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,6 @@ void	free_map(t_map *map)
 	free_colors_and_maps(map);
 	if (map->msg)
 		free(map->msg);
+	if (map)
+		free(map);
 }
