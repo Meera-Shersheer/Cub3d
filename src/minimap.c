@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/21 20:34:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/22 00:08:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void draw_player(t_game *game)
 		error_exit(NULL, "malloc failure");//edit to free game as well
 	if(!game->map)
 		error_exit(NULL, "map failure");//edit to free game as well
-	game->player->img = mlx_new_image(game->mlx, WIDTH / 4, HEIGHT / 4); // fix dimention of the player
+	game->player->img = mlx_new_image(game->mlx, WIDTH / 3, HEIGHT / 3); // fix dimention of the player
 	if(!game->player->img)
 		error_exit(NULL, "image initialization failure");
 	game->player->x = get_player_x_pos(game->map->map_lines) * WIDTH 
                 + (WIDTH - game->player->img->width) / 2;
 	game->player->y = get_player_y_pos(game->map->map_lines) * HEIGHT 
                 + (HEIGHT - game->player->img->height) / 2;
-	color_block ( 0xFFFFFF00, game->player->img);
+	color_block ( 0xFF0055CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
 		game->player->y) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well
@@ -71,11 +71,11 @@ void draw_2d_map(t_game *game)
 		while(x < game->map->screen_width)
 		{
 			if (game->map->map_lines[y][x] == '1')
-				color_square (0xFF8B0000, game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square (0xFF230C06, game->map_2d, x * WIDTH, y * HEIGHT);
 			else if (game->map->map_lines[y][x] == ' ')
-				color_square (0xFF000000 , game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square (0xFF1A1A1A , game->map_2d, x * WIDTH, y * HEIGHT);
 			else 
-				color_square (0xFFAFC9ED , game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square (0xFFF3C5B9, game->map_2d, x * WIDTH, y * HEIGHT);
 			x++;
 		}	
 		y++;
