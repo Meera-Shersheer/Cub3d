@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/21 18:53:46 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/21 20:23:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int argc, char *argv[])
 	game.mlx =  mlx_init(WIDTH * (game.map->screen_width), HEIGHT * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
+	draw_2d_map(&game);
 	draw_player(&game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
@@ -83,49 +84,10 @@ int	main(int argc, char *argv[])
     	free(game.player);
     	game.player = NULL;
 	}
+    if (game.map_2d)
+   		mlx_delete_image(game.mlx, game.map_2d);
 	mlx_terminate(game.mlx);// a must to free some leaks caused by mlx 42
 	free_map(game.map);
 	
 	return (0);
 }
-
-void color_block (unsigned int color, mlx_image_t *img)
-{
-	int	i;
-	uint32_t *pixels;
-	
-	i = 0;
-	if (!img)
-		return;
-	pixels = (uint32_t *)img->pixels;
-	while (i < (int)(img->width * img->height))
-	{
-		pixels[i] = color;
-		i++;
-	}
-}
-
-
-void draw_player(t_game *game)
-{
-	if (!game)
-		exit(1);
-	game->player = malloc(sizeof(t_player));
-	if(!game->player)
-		error_exit(NULL, "malloc failure");//edit to free game as well
-	if(!game->map)
-		error_exit(NULL, "map failure");//edit to free game as well
-	game->player->img = mlx_new_image(game->mlx, WIDTH / 4, HEIGHT / 4); // fix dimention of the player
-	if(!game->player->img)
-		error_exit(NULL, "image initialization failure");
-	game->player->x = get_player_x_pos(game->map->map_lines) * WIDTH 
-                + (WIDTH - game->player->img->width) / 2;
-	game->player->y = get_player_y_pos(game->map->map_lines) * HEIGHT 
-                + (HEIGHT - game->player->img->height) / 2;
-	color_block ( 0xFFFFFF00, game->player->img);
-	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
-		game->player->y) < 0) // fix start position
-		error_exit(NULL, "image display failure");//edit to free game as well
-
-}
-

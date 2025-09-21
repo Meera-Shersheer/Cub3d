@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/20 23:41:47 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/21 20:05:54 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_game
 	mlx_t	*mlx;
 	struct s_map	*map;
 	struct s_player	*player;
-	
+	mlx_image_t *map_2d;
 }			t_game;
 
 // check arg
@@ -177,6 +177,8 @@ int			get_player_x_pos(char **grid);
 int			get_player_y_pos(char **grid);
 char		**cpy_matrix(char	**map);
 
-//
+//minimap
 void draw_player(t_game *game);
+void draw_2d_map(t_game *game);
+void color_square (unsigned int color, mlx_image_t *img, int x, int y);
 #endif

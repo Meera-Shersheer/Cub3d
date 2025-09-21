@@ -6,7 +6,8 @@ NC = \033[0m
 
 SRC= check_arg.c  check_color.c  check_map.c  check_texture.c  cleanup.c   \
 		init.c  main.c  parsing.c  print.c  read_file.c   utils.c parsing2.c validate_map.c split.c \
-		padding.c flood_fill.c
+		padding.c flood_fill.c \
+		minimap.c 
 BNS=  
 
 NAME= cub3D
