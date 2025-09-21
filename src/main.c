@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/21 01:16:41 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/21 18:53:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,18 @@ void draw_player(t_game *game)
 	game->player = malloc(sizeof(t_player));
 	if(!game->player)
 		error_exit(NULL, "malloc failure");//edit to free game as well
-	game->player->x = 0;
-    game->player->y = 0;
+	if(!game->map)
+		error_exit(NULL, "map failure");//edit to free game as well
 	game->player->img = mlx_new_image(game->mlx, WIDTH / 4, HEIGHT / 4); // fix dimention of the player
 	if(!game->player->img)
 		error_exit(NULL, "image initialization failure");
+	game->player->x = get_player_x_pos(game->map->map_lines) * WIDTH 
+                + (WIDTH - game->player->img->width) / 2;
+	game->player->y = get_player_y_pos(game->map->map_lines) * HEIGHT 
+                + (HEIGHT - game->player->img->height) / 2;
 	color_block ( 0xFFFFFF00, game->player->img);
-	if (mlx_image_to_window(game->mlx, game->player->img, 0, 0) < 0) // fix start position
+	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
+		game->player->y) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well
 
 }

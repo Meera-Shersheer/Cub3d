@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 01:06:38 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/16 19:42:34 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/21 18:52:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**cpy_matrix(char	**map)
 	return (map_cpy);
 }
 
-int	get_player_x_pos(char **grid)
+int	get_player_y_pos(char **grid)
 {
 	int	i;
 	int	j;
@@ -98,7 +98,7 @@ int	get_player_x_pos(char **grid)
 	return (-1);
 }
 
-int	get_player_y_pos(char **grid)
+int	get_player_x_pos(char **grid)
 {
 	int	i;
 	int	j;
