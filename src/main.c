@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/21 20:23:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/30 19:18:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,52 @@ void move(void *param)
 	g = (t_game *)param;
     dx = 0;
 	dy = 0;
-	g->player->move_speed = 1;
+	g->player->move_speed = 2;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
     if (mlx_is_key_down(g->mlx, MLX_KEY_W))
-		dy -= g->player->move_speed;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_S))
-		dy += g->player->move_speed;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_A))
-		dx -= g->player->move_speed;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_D))
-		dx += g->player->move_speed;
-    if (dx != 0 && dy != 0)// diagonal movement normalization so the diagonal movement is not faster than the straight movement
-	{ 
-        dx *= 0.7071;
-        dy *= 0.7071;
+    {
+        dx += cos(g->player->angle) * g->player->move_speed;
+        dy += sin(g->player->angle) * g->player->move_speed;
     }
+    if (mlx_is_key_down(g->mlx, MLX_KEY_S))
+    {
+        dx -= cos(g->player->angle) * g->player->move_speed;
+        dy -= sin(g->player->angle) * g->player->move_speed;
+    }
+    if (mlx_is_key_down(g->mlx, MLX_KEY_A))
+    {
+        dx += sin(g->player->angle) * g->player->move_speed;
+        dy += -cos(g->player->angle) * g->player->move_speed;
+    }
+    if (mlx_is_key_down(g->mlx, MLX_KEY_D))
+    {
+        dx += -sin(g->player->angle) * g->player->move_speed;
+        dy += cos(g->player->angle) * g->player->move_speed;
+    }
+	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
+		g->player->angle += 0.05;
+	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
+        g->player->angle -= 0.05;
+	if (g->player->angle < 0)
+        g->player->angle += 2 * M_PI;
+    else if (g->player->angle > 2 * M_PI)
+        g->player->angle -= 2 * M_PI;
+
+// if (dx != 0 && dy != 0)// diagonal movement normalization so the diagonal movement is not faster than the straight movement
+	// { 
+    //     dx *= 0.7071;
+    //     dy *= 0.7071;
+    // }
     g->player->x += dx;
     g->player->y += dy;
     g->player->img->instances[0].x = g->player->x;
     g->player->img->instances[0].y = g->player->y;
+	dda(g);
 }
+
+
+
 
  /*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D map*/
 int	main(int argc, char *argv[])
@@ -75,6 +100,7 @@ int	main(int argc, char *argv[])
 		error_exit(game.map, "mlx initializing failure");
 	draw_2d_map(&game);
 	draw_player(&game);
+	draw_rays(&game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
 	if (game.player)

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/22 00:08:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/09/30 20:18:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void color_block (unsigned int color, mlx_image_t *img)
 	pixels = (uint32_t *)img->pixels;
 	while (i < (int)(img->width * img->height))
 	{
-		pixels[i] = color;
+		// if (i < (int)(img->width) * 2)
+		// 	pixels[i] = 0xFF000000;
+		// else
+			pixels[i] = color;
 		i++;
 	}
 }
@@ -45,6 +48,7 @@ void draw_player(t_game *game)
                 + (WIDTH - game->player->img->width) / 2;
 	game->player->y = get_player_y_pos(game->map->map_lines) * HEIGHT 
                 + (HEIGHT - game->player->img->height) / 2;
+	game->player->angle = - M_PI / 2;
 	color_block ( 0xFF0055CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
 		game->player->y) < 0) // fix start position
@@ -73,7 +77,7 @@ void draw_2d_map(t_game *game)
 			if (game->map->map_lines[y][x] == '1')
 				color_square (0xFF230C06, game->map_2d, x * WIDTH, y * HEIGHT);
 			else if (game->map->map_lines[y][x] == ' ')
-				color_square (0xFF1A1A1A , game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square (0xFF363636 , game->map_2d, x * WIDTH, y * HEIGHT);
 			else 
 				color_square (0xFFF3C5B9, game->map_2d, x * WIDTH, y * HEIGHT);
 			x++;
@@ -104,5 +108,80 @@ void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_
 			j++;
 		}
 		i++;
+	}
+}
+
+float abs_max (float num1, float num2)
+{
+	float n1;
+	float n2;
+	
+	n1 = fabsf (num1);
+	n2 = fabsf (num2);
+	if (n1 >= n2)
+		return (n1);
+	else
+		return (n2);
+}
+
+void draw_rays(t_game *game)
+{
+	if (!game)
+		exit(1);
+	game->rays = mlx_new_image(game->mlx,  WIDTH * (game->map->screen_width), HEIGHT * (game->map->screen_height));
+	if(!game->rays)
+		error_exit(NULL, "image initialization failure");
+ 	dda(game);
+	if (mlx_image_to_window(game->mlx, game->rays, 0, 0) < 0) // fix start position
+		error_exit(NULL, "image display failure");//edit to free game as well
+}
+
+void dda(t_game *game)
+{
+	uint32_t *pixels = (uint32_t *)game->rays->pixels;
+	ft_memset(pixels, 0, game->rays->width * game->rays->height * sizeof(uint32_t));
+    
+	float  	step;
+	float	x_inc;
+	float	y_inc;
+	int map_x;
+	int map_y;
+	float x;
+	float y;
+	float i;
+
+	i = 0;
+	while(i < WIDTH * (game->map->screen_width))
+	{
+    // 1) convert column position to camera space (-1 to +1)
+    float camera_x = 2 * i / (float)game->rays->width - 1;
+
+    // 2) compute the ray angle for this column
+    float an = game->player->angle + atanf(camera_x * tanf((M_PI / 3) / 2));
+
+		step = abs_max (cos(an), sin(an));
+		x_inc = cos(an) / step;
+		y_inc = sin(an) / step;
+		x = game->player->x + game->player->img->width / 2.0f;
+		y = game->player->y + game->player->img->height / 2.0f;
+		while (1)
+		{
+			int xi = (int)x;
+    	    int yi = (int)y;
+		
+    	    if (xi < 0 || yi < 0 || xi >= (int)game->rays->width || yi >= (int)game->rays->height)
+				break;
+			pixels[yi * game->rays->width + xi] = 0xFFCC00CC;
+		
+    	    x += x_inc;
+    	    y += y_inc;
+			
+			map_x = (int)(x / WIDTH);
+			map_y = (int)(y / HEIGHT);
+			if (map_y >= 0 && map_y < (int)ft_strlen_d(game->map->map_lines) && map_x >= 0 && \
+			map_x < find_max_len(game->map->map_lines) && game->map->map_lines[map_y][map_x] == '1')
+				break;
+		}
+		i++;;
 	}
 }
