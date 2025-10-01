@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/30 19:17:14 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/01 19:46:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,4 +197,5 @@ void draw_rays(t_game *game);
 ////
 float abs_max (float num1, float num2);
 void dda(t_game *game);
+void draw_single_ray(t_game *game, float angle, uint32_t *pixels);
 #endif
