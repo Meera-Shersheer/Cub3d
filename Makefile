@@ -5,7 +5,9 @@ CYAN = \033[3;36m
 NC = \033[0m
 
 SRC= check_arg.c  check_color.c  check_map.c  check_texture.c  cleanup.c   \
-		init.c  main.c  parsing.c  print.c  read_file.c   utils.c parsing2.c validate_map.c split.c 
+		init.c  main.c  parsing.c  print.c  read_file.c   utils.c parsing2.c validate_map.c split.c \
+		padding.c flood_fill.c \
+		minimap.c move.c try_move.c
 BNS=  
 
 NAME= cub3D
@@ -19,7 +21,7 @@ SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -Iinclude -g
+CFLAGS= -Wall -Wextra -Werror -Iinclude -g 
 #-g3 -fsanitize=address -g
 LIBFT  = -L$(LFTDIR) -lft
 MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm

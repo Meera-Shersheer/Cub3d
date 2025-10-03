@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/12 22:25:31 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/03 14:06:08 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,46 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+# ifndef WIDTH
+#  define WIDTH   64
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT   64
+# endif
+
+# ifndef GREEN
+#  define GREEN   "\033[0;32m"
+# endif
+
+# ifndef MAGENTA
+#  define MAGENTA "\033[0;35m"
+# endif
+
+# ifndef CYAN
+#  define CYAN    "\033[0;36m"
+# endif
+
+# ifndef RED
+#  define RED     "\033[0;31m"
+# endif
+
+# ifndef NC
+#  define NC      "\033[0m"
+# endif
+
+typedef struct s_corners
+{
+    int rows;
+    int corners_x[2];
+    int corners_y[2];
+}   t_corners;
 
 typedef struct s_color
 {
@@ -45,23 +85,63 @@ typedef struct s_map
 	char	*floor_color;
 	char	*ceiling_color;
 	char	**map_lines;
+	char	**flood_fill_map;
 	char	**cpy_content;
+	char	*msg;
 	t_color	c_color;
 	t_color	f_color;
 }			t_map;
 
+typedef struct s_player
+{
+    mlx_image_t *img;     // The player's sprite or rectangle
+    float x;             // Player x position in the map (float for smooth movement)
+    float y;             // Player y position
+	float angle;
+	float dir_x;         // Facing direction (unit vector x)
+    float dir_y;         // Facing direction (unit vector y)
+    float plane_x;       // Camera plane (for raycasting)
+    float plane_y;
+    float move_speed;    // Movement step per frame
+    float rot_speed;     // Rotation speed
+	
+	//flags
+    int    moving_forward;
+    int    moving_backward;
+    int    moving_left;
+    int    moving_right;
+    int    rotating_left;
+    int    rotating_right;
+
+}   t_player;
+
+
+typedef struct s_game
+{
+	mlx_t	*mlx;
+	struct s_map	*map;
+	struct s_player	*player;
+	mlx_image_t *map_2d;
+	mlx_image_t *rays;
+}			t_game;
+
 // check arg
 int			check_arg(char *map_file);
 int			ends_with_cub(const char *file_name);
+int			parsing(int argc, char *argv[], t_game *game);
 
 // check map
 int			read_map(char **av, char **content);
 int			process_map(char *content, t_map *map);
 int			check_map(char **av, t_map *map);
+void		check_playable_area( t_map *map);
 
 // init
 void		init_map(t_map *map, size_t line_count);
+
+//print
 void		print_map(t_map *map);
+void		print_floodfill_map(t_map *map);
 
 // utils
 void		error_exit(t_map *map, const char *msg);
@@ -81,10 +161,12 @@ void		classify_colors(char *line, t_map *map);
 void		classify_map_lines(char **lines, t_map *map);
 void		classify_config_lines(char **lines, t_map *map);
 
+//validate map
 void		validate_map_values(t_map *map);
 void		validate_textures(t_map *map);
 int			parse_color_line(const char *line, t_color *color);
 void		check_color(t_map *map);
+int			check_map_order(char **lines);
 
 void		free_map(t_map *map);
 
@@ -93,9 +175,40 @@ void		check_map_values(t_map *map);
 
 void		check_player_position(t_map *map);
 void		check_map_chars(t_map *map);
-void		check_map_outer_walls(t_map *map);
-void		check_map_inner_spaces(t_map *map);
+//void		check_map_outer_walls(t_map *map);
+//void		check_map_inner_spaces(t_map *map);
 int			skip_spaces(char *str, int i);
 char		**split_lines_with_nl(char *content);
 char		*trim_newline(char *str);
+//padding
+int			find_max_len(char **lines);
+int			map_start(char *line);
+int			map_end(char **lines, int i);
+char		*pad_line(char *line, int max_length);
+//flood_fill
+//int			floodfill(t_map *map, char **grid, int pos_x, int pos_y);
+void		floodfill(t_map *map, char **grid, int pos_x, int pos_y);
+int			get_player_x_pos(char **grid);
+int			get_player_y_pos(char **grid);
+char		**cpy_matrix(char	**map);
+
+//minimap
+void draw_player(t_game *game);
+void draw_2d_map(t_game *game);
+void color_square (unsigned int color, mlx_image_t *img, int x, int y);
+void draw_rays(t_game *game);
+
+
+
+
+////
+float abs_max (float num1, float num2);
+void dda(t_game *game);
+void draw_single_ray(t_game *game, float angle, uint32_t *pixels);
+
+void try_move(t_game *g, float dx, float dy);
+void move_right(t_game *g);
+void move_left(t_game *g);
+void move_backward(t_game *g);
+void move_forward(t_game *g);
 #endif

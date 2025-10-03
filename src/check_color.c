@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/09 23:22:41 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/14 04:46:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ int	parse_component(char **ptr)
 {
 	int	value;
 
+	if (!ptr || !*ptr)
+		return (-1);
+	while (**ptr == ' ')
+		(*ptr)++;
 	if (!ft_isdigit(**ptr))
 		return (-1);
 	value = ft_atoi(*ptr);

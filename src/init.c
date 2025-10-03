@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/10 06:37:24 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/16 04:06:53 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	init_textures_and_colors(t_map *map)
 	map->c_color.r = -1;
 	map->c_color.g = -1;
 	map->c_color.b = -1;
+	map->msg = NULL;
+	map->flood_fill_map = NULL;
 }
 
 static void	init_map_lines(t_map *map, size_t line_count)
@@ -37,7 +39,7 @@ static void	init_map_lines(t_map *map, size_t line_count)
 	map->map_lines = malloc(sizeof(char *) * (line_count + 1));
 	if (!map->map_lines)
 	{
-		perror("Error\nmalloc");
+		printf(RED "Error\nmalloc: %s\n" NC, strerror(errno));
 		exit(1);
 	}
 	i = 0;
@@ -56,6 +58,9 @@ void	init_map(t_map *map, size_t line_count)
 
 void	validate_map_values(t_map *map)
 {
+	if (!map->north_texture && !map->south_texture && !map->west_texture \
+	&& !map->east_texture)
+		error_exit(map, "No textures available");
 	if (!map->north_texture)
 		error_exit(map, "North texture missing");
 	if (!map->south_texture)
@@ -65,7 +70,12 @@ void	validate_map_values(t_map *map)
 	if (!map->east_texture)
 		error_exit(map, "East texture missing");
 	if (!map->floor_color)
-		error_exit(map, "Floor color missing");
+	{
+		if (!map->ceiling_color)
+			error_exit(map, "No color specifications");
+		else
+			error_exit(map, "Floor color missing");
+	}
 	if (!map->ceiling_color)
 		error_exit(map, "Ceiling color missing");
 	if (!map->map_lines || !map->map_lines[0])
@@ -80,8 +90,13 @@ void	check_color(t_map *map)
 
 	n = parse_color_line(map->ceiling_color, &map->c_color);
 	if (n != 0)
-		error_exit(map, "Invalid  ceiling color value");
+	{
+		if (parse_color_line(map->floor_color, &map->f_color) != 0)
+			error_exit(map, "Invalid colors specification in the map");
+		else
+			error_exit(map, "Invalid ceiling color value");
+	}
 	n = parse_color_line(map->floor_color, &map->f_color);
 	if (n != 0)
-		error_exit(map, "Invalid  floor color value");
+		error_exit(map, "Invalid floor color value");
 }

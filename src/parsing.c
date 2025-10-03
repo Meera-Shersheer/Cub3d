@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/12 22:23:05 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/16 04:49:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	classify_resolution(char *line, t_map *map)
 	}
 }
 
-void	add_map_line(t_map *map, char *line, size_t *map_index)
+void	add_map_line(t_map *map, char *line, size_t *map_index, char **lines)
 {
-	map->map_lines[*map_index] = ft_strdup(line);
+	int	max_length;
+
+	max_length = find_max_len(lines);
+	map->map_lines[*map_index] = pad_line(line, max_length);
 	if (!map->map_lines[*map_index])
 		error_exit(map, "malloc");
 	(*map_index)++;
@@ -57,14 +60,14 @@ void	classify_map_lines(char **lines, t_map *map)
 	map_started = 0;
 	while (lines[i])
 	{
-		j = skip_spaces(lines[i], 0);
-		if (map_started && lines[i][j] == '\0')
+		j = 0;
+		if (map_started && map_end(lines, i))
 			error_exit(map, "Empty line inside map");
-		if (lines[i][j] == '0' || lines[i][j] == '1')
+		if (map_start(lines[i]))
 		{
 			if (!map_started)
 				map_started = 1;
-			add_map_line(map, lines[i] + j, &map_index);
+			add_map_line(map, lines[i] + j, &map_index, lines);
 		}
 		else if (map_started && lines[i][j] != '\0')
 			error_exit(map, "Map must be the last element in the file");

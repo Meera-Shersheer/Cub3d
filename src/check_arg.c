@@ -3,25 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/09 22:59:12 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/09/20 22:48:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
+int	parsing(int argc, char *argv[], t_game *game)
+{
+	if (argc != 2)
+	{
+		printf(RED "Error\nIncorrect number of arguments\n" NC);
+		return (1);
+	}
+	if (check_arg(argv[1]))
+		return (1);
+	if (check_map(argv, game->map))
+		return (1);
+	return (0);
+}
+
 int	check_arg(char *map_file)
 {
 	if (!map_file)
 	{
-		printf("Error\nNo map file\n");
+		printf(RED "Error\nNo map file\n" NC);
 		return (1);
 	}
 	if (!ends_with_cub(map_file))
 	{
-		printf("Error\nInvalid file extension: must end with .cub\n");
+		printf(RED "Error\nInvalid file extension: must end with .cub\n" NC);
 		return (1);
 	}
 	return (0);
