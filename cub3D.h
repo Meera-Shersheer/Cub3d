@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 14:40:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:48:28 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@
 # ifndef NC
 #  define NC      "\033[0m"
 # endif
+
+typedef struct s_corners
+{
+    int rows;
+    int corners_x[2];
+    int corners_y[2];
+}   t_corners;
 
 typedef struct s_color
 {
@@ -239,4 +246,10 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y);
 int check_acum_err(int err, int sd[4], t_ray_pos *x, t_ray_pos *y);
 void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y);
 
- #endif
+
+void try_move(t_game *g, float dx, float dy);
+void move_right(t_game *g);
+void move_left(t_game *g);
+void move_backward(t_game *g);
+void move_forward(t_game *g);
+#endif

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/09/30 19:18:57 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:49:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,58 +27,34 @@
 	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
 		puts("!");
 		*/
-
 void move(void *param)
-{ 
+{
     t_game *g;
-	float dx;
-	float dy;
 	
 	g = (t_game *)param;
-    dx = 0;
-	dy = 0;
-	g->player->move_speed = 2;
-	if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(g->mlx);
+    g->player->move_speed = 2;
+
+    if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
+        mlx_close_window(g->mlx);
     if (mlx_is_key_down(g->mlx, MLX_KEY_W))
-    {
-        dx += cos(g->player->angle) * g->player->move_speed;
-        dy += sin(g->player->angle) * g->player->move_speed;
-    }
+        move_forward(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_S))
-    {
-        dx -= cos(g->player->angle) * g->player->move_speed;
-        dy -= sin(g->player->angle) * g->player->move_speed;
-    }
+        move_backward(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_A))
-    {
-        dx += sin(g->player->angle) * g->player->move_speed;
-        dy += -cos(g->player->angle) * g->player->move_speed;
-    }
+        move_left(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_D))
-    {
-        dx += -sin(g->player->angle) * g->player->move_speed;
-        dy += cos(g->player->angle) * g->player->move_speed;
-    }
-	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-		g->player->angle += 0.05;
-	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
+        move_right(g);
+    if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
+        g->player->angle += 0.05;
+    if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
         g->player->angle -= 0.05;
-	if (g->player->angle < 0)
+    if (g->player->angle < 0)
         g->player->angle += 2 * M_PI;
     else if (g->player->angle > 2 * M_PI)
         g->player->angle -= 2 * M_PI;
-
-// if (dx != 0 && dy != 0)// diagonal movement normalization so the diagonal movement is not faster than the straight movement
-	// { 
-    //     dx *= 0.7071;
-    //     dy *= 0.7071;
-    // }
-    g->player->x += dx;
-    g->player->y += dy;
     g->player->img->instances[0].x = g->player->x;
     g->player->img->instances[0].y = g->player->y;
-	dda(g);
+    dda(g);
 }
 
 

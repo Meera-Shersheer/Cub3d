@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/08 20:49:30 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:50:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void draw_2d_map(t_game *game)
 		error_exit(NULL, "image display failure");//edit to free game as well
 }
 
-void color_square(unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
+void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
 {
 	uint32_t *pixels;
 	int i;
@@ -111,7 +111,7 @@ void color_square(unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y
 	}
 }
 
-float abs_max(float num1, float num2)
+float abs_max (float num1, float num2)
 {
 	float n1;
 	float n2;
