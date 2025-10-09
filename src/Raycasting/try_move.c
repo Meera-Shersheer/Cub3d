@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   try_move.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/03 15:14:53 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:03:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../cub3D.h"
 
 t_corners	get_corners(t_game *g, float nx, float ny)
 {
@@ -23,10 +23,10 @@ t_corners	get_corners(t_game *g, float nx, float ny)
 	c.rows = 0;
 	while (g->map->map_lines[c.rows])
 		c.rows++;
-	c.corners_x[0] = (int)(nx / WIDTH);
-	c.corners_x[1] = (int)((nx + player_width - 1) / WIDTH);
-	c.corners_y[0] = (int)(ny / HEIGHT);
-	c.corners_y[1] = (int)((ny + player_height - 1) / HEIGHT);
+	c.corners_x[0] = (int)floorf(nx / WIDTH);
+	c.corners_x[1] = (int)floorf((nx + player_width - 1) / WIDTH);
+	c.corners_y[0] = (int)floorf(ny / HEIGHT);
+	c.corners_y[1] = (int)floorf((ny + player_height - 1) / HEIGHT);
 	return (c);
 }
 
@@ -79,8 +79,8 @@ void	try_move(t_game *g, float dx, float dy)
 	float		nx;
 	float		ny;
 	t_corners	c;
-	int			final_row;
-	int			final_col;
+	//int			final_row;
+	//int			final_col;
 
 	nx = g->player->x + dx;
 	ny = g->player->y + dy;
@@ -90,8 +90,8 @@ void	try_move(t_game *g, float dx, float dy)
 	c = get_corners(g, g->player->x, ny);
 	if (can_move(g, c))
 		g->player->y = ny;
-	final_row = (int)(g->player->y / HEIGHT);
-	final_col = (int)(g->player->x / WIDTH);
-	printf("Player stopped at map cell -> row: %d, col: %d, value: %c\n",
-		final_row, final_col, g->map->map_lines[final_row][final_col]);
+	// final_row = (int)(g->player->y / HEIGHT);
+	// final_col = (int)(g->player->x / WIDTH);
+	//printf("Player stopped at map cell -> row: %d, col: %d, value: %c\n",
+	//	final_row, final_col, g->map->map_lines[final_row][final_col]);
 }

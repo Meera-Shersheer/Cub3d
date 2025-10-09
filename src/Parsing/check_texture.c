@@ -6,11 +6,11 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:24:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/14 04:46:50 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:02:10 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../cub3D.h"
 
 void	check_file(t_map *map, const char *path, const char *name)
 {
