@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/01 20:36:23 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/08 20:49:30 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void draw_2d_map(t_game *game)
 		error_exit(NULL, "image display failure");//edit to free game as well
 }
 
-void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
+void color_square(unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
 {
 	uint32_t *pixels;
 	int i;
@@ -111,7 +111,7 @@ void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_
 	}
 }
 
-float abs_max (float num1, float num2)
+float abs_max(float num1, float num2)
 {
 	float n1;
 	float n2;
@@ -124,59 +124,3 @@ float abs_max (float num1, float num2)
 		return (n2);
 }
 
-void draw_rays(t_game *game)
-{
-	if (!game)
-		exit(1);
-	game->rays = mlx_new_image(game->mlx,  WIDTH * (game->map->screen_width), HEIGHT * (game->map->screen_height));
-	if(!game->rays)
-		error_exit(NULL, "image initialization failure");
- 	dda(game);
-	if (mlx_image_to_window(game->mlx, game->rays, 0, 0) < 0) // fix start position
-		error_exit(NULL, "image display failure");//edit to free game as well
-}
-
-void dda(t_game *game)
-{
-	uint32_t *pixels;
-	int i;
-	
-	pixels = (uint32_t *)game->rays->pixels;
-	ft_memset(pixels, 0, game->rays->width * game->rays->height * sizeof(uint32_t));
-	i = 0;
-	while(i < WIDTH * (game->map->screen_width))
-	{
-		//i++;
-    	float camera_x = 2 * i / (float)game->rays->width - 1;
-    	float an = game->player->angle + atanf(camera_x * tanf((M_PI / 3) / 2));
-		draw_single_ray(game, an, pixels);
-		i++;
-	}
-}
-
-void draw_single_ray(t_game *game, float angle, uint32_t *pixels)
-{
-	float sq_x;
-	float sq_y;
-	int map_x;
-	int map_y;
-	
-	sq_x = (game->player->x + game->player->img->width / 2.0f);
-	sq_y = (game->player->y + game->player->img->height / 2.0f);
-	while (1)
-	{
-        if ((int)sq_x < 0 || (int)sq_y < 0 || (int)sq_x >= (int)game->rays->width \
-		|| (int)sq_y >= (int)game->rays->height)
-			break;
-		pixels[(int)sq_y * game->rays->width + (int)sq_x] = 0xFFCC00CC;
-	
-       sq_x += cos(angle) / (abs_max (cos(angle), sin(angle)));
-        sq_y += sin(angle) / (abs_max (cos(angle), sin(angle)));	
-		map_x = (int)sq_x  / WIDTH;
-		map_y = (int)sq_y  / HEIGHT;
-		if (map_y >= 0 && map_y < (int)ft_strlen_d(game->map->map_lines) && \
-		map_x >= 0 && map_x < find_max_len(game->map->map_lines) && \
-		game->map->map_lines[map_y][map_x] == '1')
-			break;
-	}
-}

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/01 19:46:20 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 14:40:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+#ifndef FOV
+#define FOV (M_PI / 3)
+#endif
+
 
 # ifndef WIDTH
 #  define WIDTH   64
@@ -66,6 +71,18 @@ typedef struct s_color
 	int		g;
 	int		b;
 }			t_color;
+
+typedef struct s_ray_pos
+{
+	int		map_p;
+	int		sign;
+	float	pos;
+	float	walk;
+	float	delta_dist;
+	int line_start;
+	int	line_end;
+}			t_ray_pos;
+
 
 typedef struct s_map
 {
@@ -117,6 +134,25 @@ typedef struct s_game
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
 }			t_game;
+
+typedef struct s_ray
+{
+    float dir_x;
+    float dir_y;
+    int map_x;
+    int map_y;
+    float side_dist_x;
+    float side_dist_y;
+    float delta_dist_x;
+    float delta_dist_y;
+    int side;  // 0 = hit vertical wall (x-side), 1 = horizontal wall (y-side)
+    float perp_wall_dist;
+    // For drawing (2D & 3D)
+    int hit;   // did we hit a wall?
+    int wall_x; // used for texture mapping
+
+}   t_ray;
+
 
 // check arg
 int			check_arg(char *map_file);
@@ -193,9 +229,14 @@ void draw_rays(t_game *game);
 
 
 
-
 ////
 float abs_max (float num1, float num2);
 void dda(t_game *game);
-void draw_single_ray(t_game *game, float angle, uint32_t *pixels);
-#endif
+void draw_single_ray(t_game *game, float angle);
+int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, float angle);
+int evaluate_walk(t_ray_pos *i);
+float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y);
+int check_acum_err(int err, int sd[4], t_ray_pos *x, t_ray_pos *y);
+void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y);
+
+ #endif
