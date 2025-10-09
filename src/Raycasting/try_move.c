@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:03:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:42:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_corners	get_corners(t_game *g, float nx, float ny)
 	c.rows = 0;
 	while (g->map->map_lines[c.rows])
 		c.rows++;
-	c.corners_x[0] = (int)floorf(nx / WIDTH);
-	c.corners_x[1] = (int)floorf((nx + player_width - 1) / WIDTH);
-	c.corners_y[0] = (int)floorf(ny / HEIGHT);
-	c.corners_y[1] = (int)floorf((ny + player_height - 1) / HEIGHT);
+	c.corners_x[0] = (int)floorf(nx / MINI_TILE);
+	c.corners_x[1] = (int)floorf((nx + player_width - 1) / MINI_TILE);
+	c.corners_y[0] = (int)floorf(ny / MINI_TILE);
+	c.corners_y[1] = (int)floorf((ny + player_height - 1) / MINI_TILE);
 	return (c);
 }
 

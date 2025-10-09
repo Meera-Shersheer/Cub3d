@@ -6,12 +6,12 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:44:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
-
+ 
 char	*pad_line(char *line, int max_length)
 {
 	int		len;

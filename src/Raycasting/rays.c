@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:55 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:50:59 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void draw_rays(t_game *game)
 {
 	if (!game)
 		exit(1);
-	game->rays = mlx_new_image(game->mlx,  WIDTH * (game->map->screen_width), HEIGHT * (game->map->screen_height));
+	game->rays = mlx_new_image(game->mlx,  MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
 	if(!game->rays)
 		error_exit(NULL, "image initialization failure");
  	dda(game);
@@ -32,7 +32,7 @@ void dda(t_game *game)
 	pixels = (uint32_t *)game->rays->pixels;
 	ft_memset(pixels, 0, game->rays->width * game->rays->height * sizeof(uint32_t));
 	i = 0;
-	while(i < WIDTH * (game->map->screen_width))
+	while(i < MINI_TILE * (game->map->screen_width))
 	{
     	float camera_x = 2 * i / (float)game->rays->width - 1;
     	float an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
@@ -129,19 +129,19 @@ void draw_single_ray(t_game *game, float angle)
 	float wall_dist;
 	if (!game)
 		error_exit(NULL, "draw ray failure");//edit
-	x.pos = (game->player->x + game->player->img->width / 2.0f) / WIDTH;
-	y.pos = (game->player->y + game->player->img->height / 2.0f) / HEIGHT;
+	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
+	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);	
 	if (evaluate_delta_dist(&x, &y, angle) == 1)
 		error_exit(game->map, "error during drawing rays");//edit later
 	set_dir(angle, &x, &y);
 	wall_dist = find_stop_point(game,&x, &y);
-    x.line_start = (int)(x.pos * WIDTH);
-    y.line_start = (int)(y.pos * HEIGHT);
-    x.line_end = (int)((x.pos+ cosf(angle) * wall_dist) * WIDTH);
-    y.line_end = (int)((y.pos + sinf(angle) * wall_dist) * HEIGHT);
-    draw_line_bresenham(game->rays, &x, &y, 0xFFCC00CC);
+    x.line_start = (int)(x.pos * MINI_TILE);
+    y.line_start = (int)(y.pos * MINI_TILE);
+    x.line_end = (int)((x.pos+ cosf(angle) * wall_dist) * MINI_TILE);
+    y.line_end = (int)((y.pos + sinf(angle) * wall_dist) * MINI_TILE);
+    draw_line_bresenham(game->rays, &x, &y, 0xFF00EE00);
  }
 
 void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y)

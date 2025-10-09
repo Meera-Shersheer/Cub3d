@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:52:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ void draw_player(t_game *game)
 		error_exit(NULL, "malloc failure");//edit to free game as well
 	if(!game->map)
 		error_exit(NULL, "map failure");//edit to free game as well
-	game->player->img = mlx_new_image(game->mlx, WIDTH / 3, HEIGHT / 3); // fix dimention of the player
+	game->player->img = mlx_new_image(game->mlx, MINI_TILE / 3, MINI_TILE / 3); // fix dimention of the player
 	if(!game->player->img)
 		error_exit(NULL, "image initialization failure");
-	game->player->x = get_player_x_pos(game->map->map_lines) * WIDTH 
-                + (WIDTH - game->player->img->width) / 2;
-	game->player->y = get_player_y_pos(game->map->map_lines) * HEIGHT 
-                + (HEIGHT - game->player->img->height) / 2;
+	game->player->x = get_player_x_pos(game->map->map_lines) * MINI_TILE 
+                + (MINI_TILE - game->player->img->width) / 2;
+	game->player->y = get_player_y_pos(game->map->map_lines) * MINI_TILE 
+                + (MINI_TILE - game->player->img->height) / 2;
 	game->player->angle = - M_PI / 2;
-	color_block ( 0xFF0055CC, game->player->img);
+	color_block (0xFFCC00CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
 		game->player->y) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well
@@ -66,7 +66,7 @@ void draw_2d_map(t_game *game)
 	y = 0;
 	if (!game)
 		exit(1);
-	game->map_2d = mlx_new_image(game->mlx, WIDTH * (game->map->screen_width), HEIGHT * (game->map->screen_height));
+	game->map_2d = mlx_new_image(game->mlx, MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
 	if(!game->map_2d)
 		error_exit(NULL, "image initialization failure");
 	while(y < game->map->screen_height)
@@ -75,11 +75,11 @@ void draw_2d_map(t_game *game)
 		while(x < game->map->screen_width)
 		{
 			if (game->map->map_lines[y][x] == '1')
-				color_square (0xFF230C06, game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square_map2d (0xFF230C06, game->map_2d, x * MINI_TILE, y * MINI_TILE);
 			else if (game->map->map_lines[y][x] == ' ')
-				color_square (0xFF363636 , game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square_map2d (0xFF363636 , game->map_2d, x * MINI_TILE, y * MINI_TILE);
 			else 
-				color_square (0xFFF3C5B9, game->map_2d, x * WIDTH, y * HEIGHT);
+				color_square_map2d (0xFFF3C5B9, game->map_2d, x * MINI_TILE, y * MINI_TILE);
 			x++;
 		}	
 		y++;
@@ -88,7 +88,7 @@ void draw_2d_map(t_game *game)
 		error_exit(NULL, "image display failure");//edit to free game as well
 }
 
-void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
+void color_square_map2d (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
 {
 	uint32_t *pixels;
 	int i;
@@ -99,10 +99,10 @@ void color_square (unsigned int color, mlx_image_t *img, int pixel_x, int pixel_
 	if (!img)
 		return;
 	pixels = (uint32_t *)img->pixels;
-	while (i < WIDTH)
+	while (i < MINI_TILE)
 	{
 		j = 0;
-		while (j < HEIGHT)
+		while (j < MINI_TILE)
 		{
 			pixels[(i + pixel_x) + (pixel_y + j) * img->width] = color;
 			j++;

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 14:49:32 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:37:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char *argv[])
 		error_exit(NULL, "malloc failure");
 	if (parsing(argc, argv, &game))
 		return (1);
-	game.mlx =  mlx_init(WIDTH * (game.map->screen_width), HEIGHT * (game.map->screen_height), "Cub3d Game", true);
+	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
 	draw_2d_map(&game);

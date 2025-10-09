@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 14:48:28 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/09 19:45:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@
 #endif
 
 
-# ifndef WIDTH
-#  define WIDTH   64
+# ifndef W_TILE
+#  define W_TILE  96
 # endif
 
-# ifndef HEIGHT
-#  define HEIGHT   64
+# ifndef MINI_TILE
+#  define MINI_TILE   (W_TILE / 3)
 # endif
 
 # ifndef GREEN
@@ -231,7 +231,7 @@ char		**cpy_matrix(char	**map);
 //minimap
 void draw_player(t_game *game);
 void draw_2d_map(t_game *game);
-void color_square (unsigned int color, mlx_image_t *img, int x, int y);
+void color_square_map2d (unsigned int color, mlx_image_t *img, int x, int y);
 void draw_rays(t_game *game);
 
 
