@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:37:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/12 16:10:31 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,40 @@
 	// If we HOLD the 'L' key, print "!" on terminal.
 	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
 		puts("!");
+
 		*/
+
+
+void hide_map2d(mlx_key_data_t keydata, void *param)
+{
+    t_game *g;
+	
+	g = (t_game *)param;
+    if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
+	{
+		if (g->map_2d->instances[0].enabled == true )
+		{
+			g->map_2d->instances[0].enabled = false;
+			g->player->img->instances[0].enabled = false;
+			g->rays->instances[0].enabled = false;
+			puts("Now, the minimap is hidden to make appear press '1'\n");
+		}
+		else if (g->map_2d->instances[0].enabled == false )
+		{
+			g->map_2d->instances[0].enabled = true;
+			g->player->img->instances[0].enabled = true;
+			g->rays->instances[0].enabled = true;
+			puts("To hide the minimap press '1'\n");
+		}
+	}
+}		
 void move(void *param)
 {
     t_game *g;
 	
 	g = (t_game *)param;
-    g->player->move_speed = 2;
-
+    g->player->move_speed = 1;
+	mlx_key_hook(g->mlx, hide_map2d, param);
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(g->mlx);
     if (mlx_is_key_down(g->mlx, MLX_KEY_W))
