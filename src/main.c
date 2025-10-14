@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/12 16:10:31 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:50:42 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void move(void *param)
     t_game *g;
 	
 	g = (t_game *)param;
-    g->player->move_speed = 1;
+    g->player->move_speed = 2;
 	mlx_key_hook(g->mlx, hide_map2d, param);
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(g->mlx);
@@ -80,7 +80,7 @@ void move(void *param)
         g->player->angle -= 2 * M_PI;
     g->player->img->instances[0].x = g->player->x;
     g->player->img->instances[0].y = g->player->y;
-    dda(g);
+	dda(g);
 }
 
 
@@ -102,7 +102,7 @@ int	main(int argc, char *argv[])
 		error_exit(game.map, "mlx initializing failure");
 	draw_2d_map(&game);
 	draw_player(&game);
-	draw_rays(&game);
+	draw_scene_and_rays(&game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
 	if (game.player)

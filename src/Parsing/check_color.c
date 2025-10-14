@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:03 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 18:29:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,12 @@ int	parse_color_line(const char *line, t_color *color)
 	color->r = r;
 	color->g = g;
 	color->b = b;
+	color->color = get_rgba(r, g, b, 0xFF);
 	return (0);
+}
+
+int get_rgba(int r, int g, int b, int a)
+{
+	//return (a << 24) | (r << 16) | (g << 8) | b;
+	 return (r << 24 | g << 16 | b << 8 | a);
 }

@@ -6,46 +6,65 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:50:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:04:41 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-void draw_rays(t_game *game)
+void draw_scene_and_rays(t_game *game)
 {
 	if (!game)
 		exit(1);
 	game->rays = mlx_new_image(game->mlx,  MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
-	if(!game->rays)
+	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
+	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
  	dda(game);
 	if (mlx_image_to_window(game->mlx, game->rays, 0, 0) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well
+	if (mlx_image_to_window(game->mlx, game->scene_3d, 0, 0) < 0) // fix start position
+		error_exit(NULL, "image display failure");//edit to free game as well
+	mlx_set_instance_depth(&game->scene_3d->instances[0],-1);
 }
 
-void dda(t_game *game)
+/* an2 is another way to calculate the angles of the rays other than the camera and tan*/
+//an2 = game->player->angle - (FOV / 2);
+//an2 += FOV / game->rays->width;
+void	dda(t_game *game)
 {
-	uint32_t *pixels;
+	float camera_x;
+	float an;
 	int i;
 	
-	pixels = (uint32_t *)game->rays->pixels;
-	ft_memset(pixels, 0, game->rays->width * game->rays->height * sizeof(uint32_t));
+	if (!game || !game->scene_3d || !game->player || !game->rays)
+		error_exit(NULL, "cast ray failure");
+	ft_memset((uint32_t *)game->rays->pixels , 0, game->rays->width * \
+	game->rays->height * sizeof(uint32_t));
+	ft_memset((uint32_t *)game->scene_3d->pixels, 0, game->scene_3d->width * \
+	game->scene_3d->height * sizeof(uint32_t));
 	i = 0;
-	while(i < MINI_TILE * (game->map->screen_width))
+	while(i < (int)game->scene_3d->width)
 	{
-    	float camera_x = 2 * i / (float)game->rays->width - 1;
-    	float an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
-		draw_single_ray(game, an);
+		if (i < MINI_TILE * game->map->screen_width)
+		{
+			camera_x = 2 * i / (float)game->rays->width - 1;
+    		an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
+			cast_rays(game, an);
+		}
+		camera_x = 2 * i / (float)game->scene_3d->width - 1;
+    	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
+		draw_single_col(game, an, i);
 		i++;
 	}
 }
+
 
       
 /*void draw_single_ray_pixels(t_game *game, float angle, uint32_t *pixels)
 {
 	float sq_x;
-	float sq_y;
+	float sq_y
 	int map_x;
 	int map_y;
 	
@@ -122,13 +141,14 @@ int check_acum_err(int err, int sd[4], t_ray_pos *x, t_ray_pos *y)
 	return (inc);
 }
 
-void draw_single_ray(t_game *game, float angle)
+void cast_rays(t_game *game, float angle)
 {
 	t_ray_pos x;
 	t_ray_pos y;
 	float wall_dist;
-	if (!game)
-		error_exit(NULL, "draw ray failure");//edit
+	
+	if (!game  || !game->player)
+		error_exit(NULL, "cast ray failure");//edit
 	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
 	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
 	x.map_p = (int)(x.pos);
@@ -228,6 +248,7 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y)
 	    wall_dist = y->walk - y->delta_dist;
 	return (wall_dist);
  }
+ 
  
  
  

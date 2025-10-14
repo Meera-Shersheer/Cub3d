@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:45:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:54:15 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_color
 	int		r;
 	int		g;
 	int		b;
+	uint32_t color;
 }			t_color;
 
 typedef struct s_ray_pos
@@ -140,6 +141,7 @@ typedef struct s_game
 	struct s_player	*player;
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
+	mlx_image_t *scene_3d;
 }			t_game;
 
 typedef struct s_ray
@@ -159,6 +161,14 @@ typedef struct s_ray
     int wall_x; // used for texture mapping
 
 }   t_ray;
+
+typedef struct s_ray_hit3
+{
+    float ray_len;    // length returned by your find_stop_point (along ray)
+    float perp_dist;  // corrected perpendicular distance (for projection)
+    float hit_x;      // fractional hit position along the wall (0..1) - optional for textures
+    int side;         // 0 = hit vertical gridline (x), 1 = horizontal gridline (y) - optional for shading
+} t_ray_hit3;
 
 
 // check arg
@@ -234,12 +244,12 @@ void draw_2d_map(t_game *game);
 void color_square_map2d (unsigned int color, mlx_image_t *img, int x, int y);
 void draw_rays(t_game *game);
 
-
+void color_block (unsigned int color, mlx_image_t *img);
 
 ////
 float abs_max (float num1, float num2);
-void dda(t_game *game);
-void draw_single_ray(t_game *game, float angle);
+void	dda(t_game *game);
+void cast_rays(t_game *game, float angle);
 int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, float angle);
 int evaluate_walk(t_ray_pos *i);
 float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y);
@@ -252,4 +262,11 @@ void move_right(t_game *g);
 void move_left(t_game *g);
 void move_backward(t_game *g);
 void move_forward(t_game *g);
+
+//3dscene
+void draw_scene_and_rays(t_game *game);
+void draw_single_col(t_game *game, float angle, int col);
+void color_3d_scene(t_game *game, int wall_height, int col);
+int get_rgba(int r, int g, int b, int a);
+
 #endif

@@ -11,8 +11,9 @@ BNS_NAME = cub3D
 SRC_PARSING = check_arg.c  check_color.c  check_map.c  check_texture.c parsing.c  \
 		print.c  read_file.c parsing2.c validate_map.c split.c padding.c flood_fill.c 
 		
-SRC_RAYCASTING = minimap.c rays.c move.c try_move.c 
-SRC_MAIN = cleanup.c  init.c  main.c  utils.c 
+SRC_RAYCASTING = minimap.c rays.c move.c try_move.c scene_3d.c
+
+SRC_MAIN = cleanup.c  init.c  main.c  utils.c
 
 BNS=  
 
