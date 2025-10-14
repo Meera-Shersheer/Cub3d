@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:44 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:19:44 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	check_player_position(t_map *map)
 		{
 			if (map->map_lines[i][j] == 'N' || map->map_lines[i][j] == 'S'
 				|| map->map_lines[i][j] == 'E' || map->map_lines[i][j] == 'W')
+			{
 				count++;
+				map->initial_look_dir = map->map_lines[i][j]; 
+			}
 			j++;
 		}
 		i++;

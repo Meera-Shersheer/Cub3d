@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/14 20:54:15 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:16:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_map
 	char	**flood_fill_map;
 	char	**cpy_content;
 	char	*msg;
+	char	initial_look_dir;
 	t_color	c_color;
 	t_color	f_color;
 }			t_map;
@@ -122,15 +123,6 @@ typedef struct s_player
     float plane_y;
     float move_speed;    // Movement step per frame
     float rot_speed;     // Rotation speed
-	
-	//flags
-    int    moving_forward;
-    int    moving_backward;
-    int    moving_left;
-    int    moving_right;
-    int    rotating_left;
-    int    rotating_right;
-
 }   t_player;
 
 
@@ -242,7 +234,7 @@ char		**cpy_matrix(char	**map);
 void draw_player(t_game *game);
 void draw_2d_map(t_game *game);
 void color_square_map2d (unsigned int color, mlx_image_t *img, int x, int y);
-void draw_rays(t_game *game);
+void pick_initial_angle (t_game *game);
 
 void color_block (unsigned int color, mlx_image_t *img);
 

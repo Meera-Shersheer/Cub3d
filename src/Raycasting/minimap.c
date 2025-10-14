@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/09 19:52:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/14 21:16:24 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,27 @@ void draw_player(t_game *game)
                 + (MINI_TILE - game->player->img->width) / 2;
 	game->player->y = get_player_y_pos(game->map->map_lines) * MINI_TILE 
                 + (MINI_TILE - game->player->img->height) / 2;
-	game->player->angle = - M_PI / 2;
+	pick_initial_angle (game);
 	color_block (0xFFCC00CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
 		game->player->y) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well
 
 }
-
+void pick_initial_angle (t_game *game)
+{
+	if (!game)
+		exit(1);
+	if (game ->map->initial_look_dir == 'N')
+		game->player->angle = - M_PI / 2; // north
+	else if (game ->map->initial_look_dir == 'S')
+		game->player->angle =  M_PI / 2; // south
+	else if (game ->map->initial_look_dir == 'W')
+		game->player->angle =  M_PI; // west
+	else 
+		game->player->angle = 0; // east
+	
+}
 
 void draw_2d_map(t_game *game)
 {
