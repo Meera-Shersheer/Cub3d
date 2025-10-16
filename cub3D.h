@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/16 14:16:47 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/16 18:38:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 
 # ifndef W_TILE
-#  define W_TILE  64
+#  define W_TILE  96
 # endif
 
 # ifndef MINI_TILE
@@ -259,9 +259,10 @@ void move_backward(t_game *g);
 void move_forward(t_game *g);
 
 //3dscene
+
 void draw_scene_and_rays(t_game *game);
 void draw_single_col(t_game *game, float angle, int col);
-void	color_3d_scene(t_game *game, int wall_height, int col, float x_hit, float y_hit);
+void color_3d_scene(t_game *game, int wall_height, float corrected_dist, int col,float angle, t_ray_pos *x, t_ray_pos *y);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
 uint32_t pick_color(t_game *game, int plane, int col);

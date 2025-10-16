@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/15 19:04:20 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/16 19:25:44 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,96 +33,124 @@ void draw_single_col(t_game *game, float angle, int col)
 	wall_dist = find_stop_point(game,&x, &y);
 	
 	corrected_dist = wall_dist * cosf(angle - game->player->angle);
-	float x_hit = game->player->x + wall_dist * cosf(angle);
-	float y_hit = game->player->y + wall_dist * sinf(angle);
+ // float x_hit = x.pos + (x.map_p - x.pos) + (x.walk - x.delta_dist) * cosf(angle);
+   // float y_hit = y.pos + (y.map_p - y.pos) + (y.walk - y.delta_dist) * sinf(angle);
 
 
     // Step 2: wall projection height
 	wall_height = (int)(game->scene_3d->height/ corrected_dist);
     // Step 3: draw start & end
-	color_3d_scene(game, wall_height,col, x_hit, y_hit);
+	 color_3d_scene(game, wall_height, wall_dist,  col, angle, &x, &y);
 }
 
 // Step 4: draw the column
-void	color_3d_scene(t_game *game, int wall_height, int col, float x_hit, float y_hit)
+void color_3d_scene(t_game *game, int wall_height, float wall_dist, int col,float angle, t_ray_pos *x, t_ray_pos *y)
 {
-	int draw_start;
+    int draw_start;
     int draw_end;
-	uint32_t *pixels;
-	  float wallX;
-	int y;
+    float wallX;
+    int tex_x;
+    int i;
+	//float dist;
+//	int tex_y;
+(void) angle;
+(void) wall_dist;
+float hitX;
+float hitY;
+
+    
+    // Clamp to screen boundaries
+  
+	float perp_wall_dist;
+	if (game->hit_side == 0) // vertical wall (X grid line)
+	    perp_wall_dist = (x->map_p - x->pos + (1 - x->sign) / 2.0f) / cosf(angle);
+	else // horizontal wall (Y grid line)
+	    perp_wall_dist = (y->map_p - y->pos + (1 - y->sign) / 2.0f) / sinf(angle);
+	if (perp_wall_dist < 0.1f)
+    	perp_wall_dist = 0.1f;
+
+	wall_height = (int)(game->scene_3d->height / perp_wall_dist);
+	if (game->hit_side == 0)
+	{
+    	hitX = x->line_end;   // already the exact intersection in world units
+    	hitY = y->pos + (x->walk - x->delta_dist) * sin(angle);
+	}
+	else
+	{
+   		hitX = x->pos + (y->walk - y->delta_dist) * cos(angle);
+    	hitY = y->line_end;
+	}
+	if (game->hit_side == 0) // vertical wall
+    	wallX = hitY - floorf(hitY); // take fractional part of Y
+	else // horizontal wall
+    	wallX = hitX - floorf(hitX); // take fractional part of X
 	
+	tex_x = (int)(wallX * game->img_tex->width);
+	if ((game->hit_side == 0 && x->sign < 0) ||
+    (game->hit_side == 1 && y->sign > 0))
+		tex_x = game->img_tex->width - tex_x - 1;
+
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= (int)game->img_tex->width)
+		tex_x = game->img_tex->width - 1;
+		//float tex_pos = (draw_start - game->scene_3d->height / 2 + wall_height / 2) * step;
 	draw_start = (game->scene_3d->height / 2) - (wall_height / 2);
-	draw_end = draw_start + wall_height;
-    if (draw_start < 0)
-		draw_start = 0;
+    draw_end = draw_start + wall_height;
+	if (draw_start < 0)
+        draw_start = 0;
     if (draw_end >= (int)game->scene_3d->height)
 		draw_end = game->scene_3d->height - 1;
-    pixels = (uint32_t *)game->scene_3d->pixels;
-	y = 0;
-	 // Calculate wallX (texture x-coordinate)
-    if (game->hit_side == 0)  // vertical wall (hit x-side)
-        wallX = y_hit - floorf(y_hit);
-    else                      // horizontal wall (hit y-side)
-        wallX = x_hit - floorf(x_hit);
-    // Ensure wallX is in [0, 1) range
-    if (wallX < 0)
-        wallX += 1.0f;
-    if (wallX >= 1.0f)
-        wallX -= 1.0f;
-    // Calculate texture x coordinate (column in texture)
-    int tex_x = (int)(wallX * game->texture->width);
-    
-    // Clamp tex_x to valid range
-    if (tex_x < 0)
-        tex_x = 0;
-    if (tex_x >= (int)game->texture->width)
-        tex_x = game->texture->width - 1;
-		
-    while (y < (int)game->scene_3d->height)
+
+	for (i = 0; i < draw_start; ++i)
+        mlx_put_pixel(game->scene_3d, col, i, game->map->c_color.color);
+	i = draw_start;
+	float step = (float)game->img_tex->height / wall_height;
+	float tex_pos = (draw_start - game->scene_3d->height / 2 + wall_height / 2) * step;
+	while (i <= draw_end)
     {
-		uint32_t color;
-        if (y < draw_start)
-			color = game->map->c_color.color;
-        else if (y > draw_end)
-			color = game->map->f_color.color;
-        else
-		{
+        uint32_t color;
 
-
-			 int d = y - draw_start;
-            int tex_y = d * game->texture->height / wall_height;
-            
-            // Clamp tex_y to valid range
-            if (tex_y < 0)
-                tex_y = 0;
-            if (tex_y >= (int)game->texture->height)
-                tex_y = game->texture->height - 1;
-            
-            // Get pixel from texture
-            // Assuming RGBA format (4 bytes per pixel)
-            int tex_index = (tex_y * game->texture->width + tex_x) * 4;
-            uint8_t *p = game->texture->pixels;
-            
-            // Construct color in correct format (RGBA for MLX42)
-            uint8_t r = p[tex_index];
-            uint8_t g = p[tex_index + 1];
-            uint8_t b = p[tex_index + 2];
-            uint8_t a = p[tex_index + 3];
-            
-            // Pack into uint32_t (format depends on your library)
-            // For MLX42: RGBA order
-            color = (a << 24) | (r << 16) | (g << 8) | b;
-			//0xFF228B22;
+	//	int pixel_on_wall = i - draw_start;               /* 0..wall_height-1 */
+      //  int tex_y = (int)(pixel_on_wall * step);
+	    int tex_y = (int)tex_pos;
+    	tex_pos += step;	
+	 	if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= (int)game->img_tex->height)
+			tex_y = game->img_tex->height - 1;
+		
+		// Get the pixel from texture (RGBA format = 4 bytes per pixel)
+		int tex_index = (tex_y * game->img_tex->width + tex_x) * 4;
+        uint8_t *p = game->img_tex->pixels;
+        int max_index = game->img_tex->width * game->img_tex->height * 4;
+        if (tex_index < 0 || tex_index + 3 >= max_index)
+        {
+            /* debugging: draw magenta so you can see invalid read */
+            mlx_put_pixel(game->scene_3d, col, i, 0xFF00FFFF);
+            continue;
+        }
+		
+		  // Read pixel (ABGR format from your PNG)
+        uint8_t r = p[tex_index];
+        uint8_t g = p[tex_index + 1];
+        uint8_t b = p[tex_index + 2];
+        uint8_t a = p[tex_index + 3];
         
-		}
-			pixels[y * game->scene_3d->width + col] = color;
-		y++ ;
+        color = (r << 24) | (g << 16) | (b << 8) | a;
+    
+		mlx_put_pixel(game->scene_3d, col, i, color);
+        i++;
     }
+	for (i = draw_end + 1; i < (int)game->scene_3d->height; ++i)
+        mlx_put_pixel(game->scene_3d, col, i, game->map->f_color.color);
 }
 
 
 
+/*if (game->hit_side == 1)
+    color = (color >> 1) & 0x7F7F7F7F;
+*/
 
 // void init_scene_3d(t_game *game)
 // {
