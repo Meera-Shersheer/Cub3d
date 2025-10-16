@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/14 21:04:41 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/15 18:43:01 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y)
 	    wall_dist = x->walk - x->delta_dist;			
 	else
 	    wall_dist = y->walk - y->delta_dist;
+	game->hit_side = side_dir;
 	return (wall_dist);
  }
  

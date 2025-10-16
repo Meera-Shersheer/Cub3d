@@ -4,6 +4,9 @@
         "unistd.h": "c",
         "map": "c",
         "format": "c",
-        "mlx42.h": "c"
+        "mlx42.h": "c",
+        "string.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }

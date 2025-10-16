@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/14 21:16:39 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:16:47 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 
 
 # ifndef W_TILE
-#  define W_TILE  96
+#  define W_TILE  64
 # endif
 
 # ifndef MINI_TILE
@@ -134,6 +134,9 @@ typedef struct s_game
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
 	mlx_image_t *scene_3d;
+	mlx_texture_t *texture;
+	mlx_image_t *img_tex;
+	int hit_side;
 }			t_game;
 
 typedef struct s_ray
@@ -258,7 +261,8 @@ void move_forward(t_game *g);
 //3dscene
 void draw_scene_and_rays(t_game *game);
 void draw_single_col(t_game *game, float angle, int col);
-void color_3d_scene(t_game *game, int wall_height, int col);
+void	color_3d_scene(t_game *game, int wall_height, int col, float x_hit, float y_hit);
 int get_rgba(int r, int g, int b, int a);
-
+void mouse_rotate(double xpos, double ypos, void *param);
+uint32_t pick_color(t_game *game, int plane, int col);
 #endif

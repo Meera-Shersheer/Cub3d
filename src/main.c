@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/14 18:50:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:18:42 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,36 @@ void hide_map2d(mlx_key_data_t keydata, void *param)
 			puts("To hide the minimap press '1'\n");
 		}
 	}
-}		
+}
+
+ // adjust for comfort
+
+void mouse_rotate(double xpos, double ypos, void *param)
+{
+    t_game *game;
+	double delta_x;
+    static double last_x = -1;
+
+	(void) ypos;
+	game = (t_game *)param;
+    if (last_x == -1)
+        last_x = xpos;
+
+    delta_x = xpos - last_x;
+    last_x = xpos;
+	
+    if (delta_x > 0)
+	    game->player->angle += 0.03;
+    if (delta_x < 0)
+		game->player->angle -= 0.03;
+	if (game->player->angle < 0)
+        game->player->angle += 2 * M_PI;
+	else if (game->player->angle > 2 * M_PI)
+        game->player->angle -= 2 * M_PI;
+}
+
+
+
 void move(void *param)
 {
     t_game *g;
@@ -73,36 +102,43 @@ void move(void *param)
     if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
         g->player->angle += 0.05;
     if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-        g->player->angle -= 0.05;
-    if (g->player->angle < 0)
+		g->player->angle -= 0.05;
+	if (g->player->angle < 0)
         g->player->angle += 2 * M_PI;
-    else if (g->player->angle > 2 * M_PI)
+	else if (g->player->angle > 2 * M_PI)
         g->player->angle -= 2 * M_PI;
-    g->player->img->instances[0].x = g->player->x;
-    g->player->img->instances[0].y = g->player->y;
+	g->player->img->instances[0].x = g->player->x;
+	g->player->img->instances[0].y = g->player->y;
 	dda(g);
 }
-
-
-
-
- /*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D map*/
+	
+	
+	/*1)test a really huge map and see if we need to resize or give an error
+	2)do the textures
+	3)write the other bonuses*/
+	
+	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D map*/
 int	main(int argc, char *argv[])
 {
 	t_game game;
-	
+		
 	ft_bzero(&game, sizeof(game));
 	game.map = malloc(sizeof(t_map));
 	if(!game.map)
 		error_exit(NULL, "malloc failure");
 	if (parsing(argc, argv, &game))
 		return (1);
+	//one door and keys (randomly)
+	//test the size of window
 	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
+	game.texture =  mlx_load_png("texture/N.png");// add protection and exit 
+	game.img_tex = mlx_texture_to_image(game.mlx, game.texture);//add protection and exit 
 	draw_2d_map(&game);
 	draw_player(&game);
 	draw_scene_and_rays(&game);
+	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
 	if (game.player)
