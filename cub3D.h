@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/16 18:38:05 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/16 19:48:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,8 +262,10 @@ void move_forward(t_game *g);
 
 void draw_scene_and_rays(t_game *game);
 void draw_single_col(t_game *game, float angle, int col);
-void color_3d_scene(t_game *game, int wall_height, float corrected_dist, int col,float angle, t_ray_pos *x, t_ray_pos *y);
+void color_3d_scene(t_game *game, int col,float angle, t_ray_pos *x, t_ray_pos *y);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
 uint32_t pick_color(t_game *game, int plane, int col);
+float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
 #endif
