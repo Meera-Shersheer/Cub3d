@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/03 14:06:08 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/18 17:22:36 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,23 @@
 # include <string.h>
 # include <unistd.h>
 # include <math.h>
+#include <sys/time.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-# ifndef WIDTH
-#  define WIDTH   64
+#ifndef FOV
+#define FOV (M_PI / 3)
+#endif
+
+
+# ifndef W_TILE
+#  define W_TILE  96
 # endif
 
-# ifndef HEIGHT
-#  define HEIGHT   64
+# ifndef MINI_TILE
+#  define MINI_TILE   (W_TILE / 3)
 # endif
 
 # ifndef GREEN
@@ -72,8 +78,26 @@ typedef struct s_color
 	int		r;
 	int		g;
 	int		b;
+	uint32_t color;
 }			t_color;
 
+typedef struct s_ray_pos
+{
+	int		map_p;
+	int		sign;
+	float	pos;
+	float	walk;
+	float	delta_dist;
+	int line_start;
+	int	line_end;
+}			t_ray_pos;
+
+typedef struct s_item
+{
+    int x;
+    int y;
+    bool picked; // for key, false initially
+} t_item;
 typedef struct s_map
 {
 	int		screen_width;
@@ -88,8 +112,12 @@ typedef struct s_map
 	char	**flood_fill_map;
 	char	**cpy_content;
 	char	*msg;
+	char	initial_look_dir;
 	t_color	c_color;
 	t_color	f_color;
+
+    t_item key;
+    t_item door;
 }			t_map;
 
 typedef struct s_player
@@ -104,15 +132,6 @@ typedef struct s_player
     float plane_y;
     float move_speed;    // Movement step per frame
     float rot_speed;     // Rotation speed
-	
-	//flags
-    int    moving_forward;
-    int    moving_backward;
-    int    moving_left;
-    int    moving_right;
-    int    rotating_left;
-    int    rotating_right;
-
 }   t_player;
 
 
@@ -123,7 +142,44 @@ typedef struct s_game
 	struct s_player	*player;
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
+	mlx_image_t *scene_3d;
+	mlx_texture_t *texture;
+	mlx_image_t *img_tex;
+	int hit_side;
+	int total_keys;      // how many keys were spawned
+	int collected_keys;  // how many player has picked
+	int door_x;          // door coordinates
+	int door_y;
+	int door_open;       // 0 = closed, 1 = open
+
 }			t_game;
+
+typedef struct s_ray
+{
+    float dir_x;
+    float dir_y;
+    int map_x;
+    int map_y;
+    float side_dist_x;
+    float side_dist_y;
+    float delta_dist_x;
+    float delta_dist_y;
+    int side;  // 0 = hit vertical wall (x-side), 1 = horizontal wall (y-side)
+    float perp_wall_dist;
+    // For drawing (2D & 3D)
+    int hit;   // did we hit a wall?
+    int wall_x; // used for texture mapping
+
+}   t_ray;
+
+typedef struct s_ray_hit3
+{
+    float ray_len;    // length returned by your find_stop_point (along ray)
+    float perp_dist;  // corrected perpendicular distance (for projection)
+    float hit_x;      // fractional hit position along the wall (0..1) - optional for textures
+    int side;         // 0 = hit vertical gridline (x), 1 = horizontal gridline (y) - optional for shading
+} t_ray_hit3;
+
 
 // check arg
 int			check_arg(char *map_file);
@@ -195,20 +251,42 @@ char		**cpy_matrix(char	**map);
 //minimap
 void draw_player(t_game *game);
 void draw_2d_map(t_game *game);
-void color_square (unsigned int color, mlx_image_t *img, int x, int y);
-void draw_rays(t_game *game);
+void color_square_map2d (unsigned int color, mlx_image_t *img, int x, int y);
+void pick_initial_angle (t_game *game);
 
-
-
+void color_block (unsigned int color, mlx_image_t *img);
 
 ////
 float abs_max (float num1, float num2);
-void dda(t_game *game);
-void draw_single_ray(t_game *game, float angle, uint32_t *pixels);
+void	dda(t_game *game);
+void cast_rays(t_game *game, float angle);
+int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, float angle);
+int evaluate_walk(t_ray_pos *i);
+float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y);
+int check_acum_err(int err, int sd[4], t_ray_pos *x, t_ray_pos *y);
+void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y);
+
 
 void try_move(t_game *g, float dx, float dy);
 void move_right(t_game *g);
 void move_left(t_game *g);
 void move_backward(t_game *g);
 void move_forward(t_game *g);
+
+//3dscene
+
+void draw_scene_and_rays(t_game *game);
+void draw_single_col(t_game *game, float angle, int col);
+void color_3d_scene(t_game *game, int col,float angle, t_ray_pos *x, t_ray_pos *y);
+int get_rgba(int r, int g, int b, int a);
+void mouse_rotate(double xpos, double ypos, void *param);
+uint32_t pick_color(t_game *game, int plane, int col);
+float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
+
+void place_keys_and_door(t_game *g);
+void check_door(t_game *game);
+void check_key_pickup(t_game *game);
+void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
+void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
 #endif

@@ -4,18 +4,31 @@ MAGENTA = \033[3;35m
 CYAN = \033[3;36m
 NC = \033[0m
 
-SRC= check_arg.c  check_color.c  check_map.c  check_texture.c  cleanup.c   \
-		init.c  main.c  parsing.c  print.c  read_file.c   utils.c parsing2.c validate_map.c split.c \
-		padding.c flood_fill.c \
-		minimap.c move.c try_move.c
-BNS=  
 
 NAME= cub3D
 BNS_NAME = cub3D
 
+SRC_PARSING = check_arg.c  check_color.c  check_map.c  check_texture.c parsing.c  \
+		print.c  read_file.c parsing2.c validate_map.c split.c padding.c flood_fill.c 
+		
+SRC_RAYCASTING = minimap.c rays.c move.c try_move.c scene_3d.c door_key.c
+
+SRC_MAIN = cleanup.c  init.c  main.c  utils.c
+
+BNS=  
+
+
 SRC_DIR := src
 OBJ_DIR := obj
 LFTDIR= ./Libft
+PARSING_DIR := Parsing
+RAYCASTING_DIR := Raycasting
+
+
+
+SRC = $(SRC_MAIN)\
+	  $(addprefix $(PARSING_DIR)/, $(SRC_PARSING)) \
+	  $(addprefix $(RAYCASTING_DIR)/, $(SRC_RAYCASTING))
 
 SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
@@ -26,34 +39,33 @@ CFLAGS= -Wall -Wextra -Werror -Iinclude -g
 LIBFT  = -L$(LFTDIR) -lft
 MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
 
-
-
 OBJ_SRC = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_PATH))
 OBJ_BNS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(BNS_PATH))
 
 all: $(NAME)
+
+$(NAME): $(OBJ_SRC) $(LFTDIR)/libft.a
+	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
+	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME)  $(LIBFT) $(MLX42)
 	@echo "$(GREEN)Build complete.$(NC)"
 
-$(NAME): $(OBJ_SRC) | libft
-	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME)  $(LIBFT) $(MLX42)
-	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
-
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR) 
+	@mkdir -p  $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-libft: 
+$(LFTDIR)/libft.a:
 	@echo "$(MAGENTA)Building libft...$(NC)"
 	@$(MAKE) -sC $(LFTDIR) bonus
-
+	@echo "$(GREEN)Building Libft is complete.$(NC)"
+	
 clean:
 	@rm -rf $(OBJ_SRC) $(OBJ_DIR)
 	@$(MAKE) -sC $(LFTDIR) clean
 	@echo "$(CYAN)Clean is done.$(NC)"
 
 bonus: $(OBJ_BNS)| libft 
-	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT) $(MLX42)
 	@echo "$(MAGENTA)Building bonus...$(NC)"
+	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT) $(MLX42)
 
 fclean: clean
 	@rm -f $(OBJ_SRC) 
@@ -63,4 +75,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft bonus      	
+.PHONY: all clean fclean re bonus      	
