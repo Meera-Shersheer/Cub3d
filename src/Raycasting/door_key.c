@@ -130,3 +130,43 @@ void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
     }
 }
 
+int	reach_keys(t_map *map, char **grid, int x, int y)
+{
+	int	count;
+
+	if (x < 0 || y < 0 || y >= (int)ft_strlen_d(grid))
+		return (0);
+	if (x >= (int)ft_strlen(grid[y]))
+		return (0);
+	if (grid[y][x] == '1' || grid[y][x] == 'D' || grid[y][x] == 'V')
+		return (0);
+	count = 0;
+	if (grid[y][x] == 'K')
+		count = 1;
+	grid[y][x] = 'V';
+	count += reach_keys(map, grid, x - 1, y);
+	count += reach_keys(map, grid, x + 1, y);
+	count += reach_keys(map, grid, x, y - 1);
+	count += reach_keys(map, grid, x, y + 1);
+	count += reach_keys(map, grid, x - 1, y - 1);
+	count += reach_keys(map, grid, x - 1, y + 1);
+	count += reach_keys(map, grid, x + 1, y - 1);
+	count += reach_keys(map, grid, x + 1, y + 1);
+	return (count);
+}
+
+void	check_keys_reachable(t_game *g)
+{
+	char	**grid_copy;
+	int		px;
+	int		py;
+	int		reached;
+
+	grid_copy = cpy_matrix(g->map->map_lines);
+	py = get_player_y_pos(grid_copy);
+	px = get_player_x_pos(grid_copy);
+	reached = reach_keys(g->map, grid_copy, px, py);
+	if (reached != g->total_keys)
+		error_exit(g->map, "Cannot reach all keys from player position");
+	ft_free(grid_copy);
+}
