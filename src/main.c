@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/19 19:30:48 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/21 23:33:27 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int	main(int argc, char *argv[])
 	//one door and keys (randomly)
 	//test the size of window
 	place_keys_and_door(&game);
-	check_keys_reachable(&game);
 	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");

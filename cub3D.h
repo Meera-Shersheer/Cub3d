@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/19 19:30:29 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/21 23:45:04 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,4 +290,7 @@ void check_key_pickup(t_game *game);
 void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
 void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
 void	check_keys_reachable(t_game *g);
+int	reach_keys(t_map *map, char **grid, int x, int y);
+int pseudo_random(int max);
+
 #endif

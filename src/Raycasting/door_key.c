@@ -1,172 +1,104 @@
 #include "../../cub3D.h"
 
 
- int pseudo_random(int max)
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_usec ^ tv.tv_sec) % max);
-}
 
-void place_keys_and_door(t_game *g)
-{
-	int x, y;
-	int num_keys;
-	int placed = 0;
-	int attempts = 0;
-	int max_attempts = 1000;
 
-	num_keys = (pseudo_random(3) + 2);
-	g->total_keys = num_keys;
-	g->collected_keys = 0;
-	g->door_open = 0;
-	while (placed < num_keys && attempts < max_attempts)
+ int place_keys(char **map, int screen_width, int screen_height, int total_keys)
+{
+	int placed;
+	int attempts;
+	int x;
+	int y;
+	int max_attempts;
+
+	placed=0;
+	attempts=0;
+	max_attempts=1000;
+
+	while (placed < total_keys && attempts < max_attempts)
 	{
-		y = pseudo_random(g->map->screen_height);
-		x = pseudo_random(g->map->screen_width);
-		if (g->map->map_lines[y][x] == '0')
+		y = pseudo_random(screen_height);
+		x = pseudo_random(screen_width);
+		if (map[y][x] == '0')
 		{
-			g->map->map_lines[y][x] = 'K';
+			map[y][x] = 'K';
 			placed++;
 		}
 		attempts++;
 	}
-	if (placed < num_keys)
-		error_exit(NULL, "Cannot place all keys safely");
-	attempts = 0;
+	return (placed == total_keys);
+}
+int place_door(char **map, t_game *g)
+{
+
+	int attempts;
+	int x;
+	int y;
+	int max_attempts;
+
+
+	attempts=0;
+	max_attempts=1000;
+
 	while (attempts < max_attempts)
 	{
 		y = pseudo_random(g->map->screen_height);
 		x = pseudo_random(g->map->screen_width);
-		if (g->map->map_lines[y][x] == '1')
+		if (map[y][x] == '1' &&
+			((x>0 && map[y][x-1]=='0') || (x<g->map->screen_width-1 && map[y][x+1]=='0') ||
+			(y>0 && map[y-1][x]=='0') || (y<g->map->screen_height-1 && map[y+1][x]=='0')))
 		{
-			if ((x > 0 && g->map->map_lines[y][x - 1] == '0') ||
-				(x < g->map->screen_width - 1 && g->map->map_lines[y][x + 1] == '0') ||
-				(y > 0 && g->map->map_lines[y - 1][x] == '0') ||
-				(y < g->map->screen_height - 1 && g->map->map_lines[y + 1][x] == '0'))
-			{
-				g->map->map_lines[y][x] = 'D';
-				g->door_x = x;
-				g->door_y = y;
-				break;
-			}
+			map[y][x] = 'D';
+			g->door_x = x;
+			g->door_y = y;
+			return 1;
 		}
 		attempts++;
 	}
-	if (attempts >= max_attempts)
-		error_exit(NULL, "Cannot place door safely");
+	return 0;
 }
-
-
-void check_key_pickup(t_game *g)
+static int keys_reachable(t_game *g, char **map)
 {
-    int px = (int)(g->player->x / MINI_TILE);
-    int py = (int)(g->player->y / MINI_TILE);
-
-    if (g->map->map_lines[py][px] == 'K')
-    {
-        g->collected_keys++;
-        g->map->map_lines[py][px] = '0';
-        printf("🔑 You picked up a key! (%d/%d)\n", g->collected_keys, g->total_keys);
-        color_square_map2d(0xFFF3C5B9, g->map_2d, px * MINI_TILE, py * MINI_TILE);
-    }
-}
-
-
-
-void check_door(t_game *g)
-{
-	int px = (int)(g->player->x / MINI_TILE);
-	int py = (int)(g->player->y / MINI_TILE);
-
-	if (g->map->map_lines[py][px] == 'D')
-	{
-		if (g->collected_keys == g->total_keys)
-		{
-			printf("🚪 Door opened! You win! 🎉\n");
-			g->door_open = 1;
-			mlx_close_window(g->mlx);
-		}
-		else
-		{
-			printf("🚫 Door is locked! Collect all keys first (%d/%d)\n",
-				g->collected_keys, g->total_keys);
-		}
-	}
-}
-void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
-{
-    int center_x = pixel_x + MINI_TILE / 2;
-    int center_y = pixel_y + MINI_TILE / 2;
-    uint32_t *pixels = (uint32_t *)img->pixels;
-    int i, j;
-    for (i = -2; i <= 2; i++)
-    {
-        for (j = -2; j <= 2; j++)
-        {
-            if (i * i + j * j <= 4)
-                pixels[(center_y + j) * img->width + (center_x + i)] = 0xFFFFFF00;
-        }
-    }
-    for (i = 0; i < 5; i++)
-        pixels[center_y * img->width + (center_x + 3 + i)] = 0xFFFFFF00;
-}
-void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
-{
-    uint32_t *pixels = (uint32_t *)img->pixels;
-    int i, j;
-
-    for (i = 0; i < MINI_TILE; i++)
-    {
-        for (j = 0; j < MINI_TILE; j++)
-            pixels[(pixel_y + j) * img->width + (pixel_x + i)] = 0xFF230C06;
-    }
-    int gap_start = pixel_x + MINI_TILE / 2 - 2;
-    int gap_end = pixel_x + MINI_TILE / 2 + 2;
-    for (i = gap_start; i < gap_end; i++)
-    {
-        for (j = pixel_y + 2; j < pixel_y + MINI_TILE - 2; j++)
-            pixels[j * img->width + i] = 0xFFAAAAAA;
-    }
-}
-
-int	reach_keys(t_map *map, char **grid, int x, int y)
-{
-	int	count;
-
-	if (x < 0 || y < 0 || y >= (int)ft_strlen_d(grid))
-		return (0);
-	if (x >= (int)ft_strlen(grid[y]))
-		return (0);
-	if (grid[y][x] == '1' || grid[y][x] == 'D' || grid[y][x] == 'V')
-		return (0);
-	count = 0;
-	if (grid[y][x] == 'K')
-		count = 1;
-	grid[y][x] = 'V';
-	count += reach_keys(map, grid, x - 1, y);
-	count += reach_keys(map, grid, x + 1, y);
-	count += reach_keys(map, grid, x, y - 1);
-	count += reach_keys(map, grid, x, y + 1);
-	count += reach_keys(map, grid, x - 1, y - 1);
-	count += reach_keys(map, grid, x - 1, y + 1);
-	count += reach_keys(map, grid, x + 1, y - 1);
-	count += reach_keys(map, grid, x + 1, y + 1);
-	return (count);
-}
-
-void	check_keys_reachable(t_game *g)
-{
-	char	**grid_copy;
-	int		px;
-	int		py;
-	int		reached;
-
-	grid_copy = cpy_matrix(g->map->map_lines);
-	py = get_player_y_pos(grid_copy);
-	px = get_player_x_pos(grid_copy);
-	reached = reach_keys(g->map, grid_copy, px, py);
-	if (reached != g->total_keys)
-		error_exit(g->map, "Cannot reach all keys from player position");
+	char **grid_copy = cpy_matrix(map);
+	int px = get_player_x_pos(grid_copy);
+	int py = get_player_y_pos(grid_copy);
+	int reached = reach_keys(g->map, grid_copy, px, py);
 	ft_free(grid_copy);
+	return (reached == g->total_keys);
 }
+static int try_place(t_game *g, char **temp_map)
+{
+	g->total_keys = pseudo_random(3) + 2;
+	g->collected_keys = 0;
+	g->door_open = 0;
+
+	if (!place_keys(temp_map, g->map->screen_width, g->map->screen_height, g->total_keys))
+		return 0;
+	if (!place_door(temp_map, g))
+		return 0;
+	if (!keys_reachable(g, temp_map))
+		return 0;
+	return 1;
+}
+void place_keys_and_door(t_game *g)
+{
+	int retries = 0;
+	int max_retries = 10;
+
+	while (retries < max_retries)
+	{
+		char **temp_map = cpy_matrix(g->map->map_lines);
+		if (try_place(g, temp_map))
+		{
+			ft_free(g->map->map_lines);
+			g->map->map_lines = temp_map;
+			printf("✅ Keys and door placed successfully after %d retries.\n", retries);
+			return;
+		}
+		ft_free(temp_map);
+		retries++;
+	}
+	error_exit(g->map, "❌ Failed to place keys and door after multiple attempts");
+}
+
+
