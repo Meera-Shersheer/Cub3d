@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/14 21:16:24 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:09:41 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,15 @@ void draw_2d_map(t_game *game)
 				color_square_map2d (0xFF230C06, game->map_2d, x * MINI_TILE, y * MINI_TILE);
 			else if (game->map->map_lines[y][x] == ' ')
 				color_square_map2d (0xFF363636 , game->map_2d, x * MINI_TILE, y * MINI_TILE);
+			else if (game->map->map_lines[y][x] == 'K')
+			{
+    			color_square_map2d(0xFFF3C5B9, game->map_2d, x * MINI_TILE, y * MINI_TILE);
+    			draw_key_symbol(game->map_2d, x * MINI_TILE, y * MINI_TILE);
+			}
+			else if (game->map->map_lines[y][x] == 'D')
+			{
+    			draw_door_symbol(game->map_2d, x * MINI_TILE, y * MINI_TILE);
+			}
 			else 
 				color_square_map2d (0xFFF3C5B9, game->map_2d, x * MINI_TILE, y * MINI_TILE);
 			x++;

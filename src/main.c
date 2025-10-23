@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:00:17 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:08:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void move(void *param)
 	g->player->img->instances[0].x = g->player->x;
 	g->player->img->instances[0].y = g->player->y;
 	dda(g);
+	check_key_pickup(g);
+    check_door(g);
 }
 	
 	
@@ -130,6 +132,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	//one door and keys (randomly)
 	//test the size of window
+	place_keys_and_door(&game);
 	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");

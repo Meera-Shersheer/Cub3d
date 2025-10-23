@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/22 15:15:20 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:05:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <math.h>
+#include <sys/time.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -91,6 +92,12 @@ typedef struct s_ray_pos
 	int	line_end;
 }			t_ray_pos;
 
+typedef struct s_item
+{
+    int x;
+    int y;
+    bool picked; // for key, false initially
+} t_item;
 
 typedef struct s_map
 {
@@ -109,6 +116,9 @@ typedef struct s_map
 	char	initial_look_dir;
 	t_color	c_color;
 	t_color	f_color;
+
+    t_item key;
+    t_item door;
 }			t_map;
 
 typedef struct s_player
@@ -148,8 +158,16 @@ typedef struct s_game
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
 	mlx_image_t *scene_3d;
-
 	int hit_side;
+	mlx_texture_t *texture;
+	mlx_image_t *img_tex;
+	int hit_side;
+	int total_keys;      // how many keys were spawned
+	int collected_keys;  // how many player has picked
+	int door_x;          // door coordinates
+	int door_y;
+	int door_open;       // 0 = closed, 1 = open
+
 }			t_game;
 
 typedef struct s_ray
@@ -314,5 +332,14 @@ float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y)
 int init_textures(t_game *game);
 mlx_image_t *get_wall_texture(t_game *game, t_ray_pos *x, t_ray_pos *y);
 int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y);
+
+void place_keys_and_door(t_game *g);
+void check_door(t_game *game);
+void check_key_pickup(t_game *game);
+void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
+void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
+void	check_keys_reachable(t_game *g);
+int	reach_keys(t_map *map, char **grid, int x, int y);
+int pseudo_random(int max);
 
 #endif

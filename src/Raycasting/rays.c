@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/22 15:19:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:10:28 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void draw_scene_and_rays(t_game *game)
 		exit(1);
 	game->rays = mlx_new_image(game->mlx,  MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
 	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
-	//if(!game->rays || !game->scene_3d)
-	//if(!game->scene_3d)	
 	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
  	dda(game);
