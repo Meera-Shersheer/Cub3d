@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/22 15:23:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:00:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ void move(void *param)
     if (mlx_is_key_down(g->mlx, MLX_KEY_D))
         move_right(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-        g->player->angle += 0.1;
+        g->player->angle += 0.2;
     if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.1;
+		g->player->angle -= 0.2;
 	if (g->player->angle < 0)
         g->player->angle += 2 * M_PI;
 	else if (g->player->angle > 2 * M_PI)
