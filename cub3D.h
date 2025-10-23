@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/16 19:48:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:15:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # endif
 
 # ifndef MINI_TILE
-#  define MINI_TILE   (W_TILE / 3)
+#  define MINI_TILE   (W_TILE / 4)
 # endif
 
 # ifndef GREEN
@@ -125,17 +125,30 @@ typedef struct s_player
     float rot_speed;     // Rotation speed
 }   t_player;
 
+typedef struct s_textures
+{
+	mlx_texture_t *tex_no;
+	mlx_image_t *img_tex_no;
+	mlx_texture_t *tex_ea;
+	mlx_image_t *img_tex_ea;
+	mlx_texture_t *tex_we;
+	mlx_image_t *img_tex_we;
+	mlx_texture_t *tex_so;
+	mlx_image_t *img_tex_so;
+	mlx_texture_t *tex_door;
+	mlx_image_t *img_tex_door;
+}			t_textures;
 
 typedef struct s_game
 {
 	mlx_t	*mlx;
 	struct s_map	*map;
 	struct s_player	*player;
+	struct s_textures	*textures;
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
 	mlx_image_t *scene_3d;
-	mlx_texture_t *texture;
-	mlx_image_t *img_tex;
+
 	int hit_side;
 }			t_game;
 
@@ -165,6 +178,30 @@ typedef struct s_ray_hit3
     int side;         // 0 = hit vertical gridline (x), 1 = horizontal gridline (y) - optional for shading
 } t_ray_hit3;
 
+typedef struct s_wall_draw
+{
+    int     wall_height;
+    int     draw_start;
+    int     draw_end;
+    int     tex_x;
+    int     col;
+}   t_wall_draw;
+
+
+typedef struct s_ray_dic
+{
+	t_ray_pos	*x;
+	t_ray_pos	*y;
+}			t_ray_dic;
+
+typedef enum e_wall_dir
+{
+    NORTH,  
+    SOUTH, 
+    EAST,  
+    WEST,
+	OTHER
+}   t_wall_dir;
 
 // check arg
 int			check_arg(char *map_file);
@@ -262,10 +299,20 @@ void move_forward(t_game *g);
 
 void draw_scene_and_rays(t_game *game);
 void draw_single_col(t_game *game, float angle, int col);
-void color_3d_scene(t_game *game, int col,float angle, t_ray_pos *x, t_ray_pos *y);
+void color_3d_scene(t_game *game, int col,float angle, t_ray_dic *rays);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
-uint32_t pick_color(t_game *game, int plane, int col);
+uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex);
 float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
 void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
+
+//3dscene
+int eval_wall_height(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+int eval_tex_x(t_game *game, float angle, t_ray_dic *rays, mlx_image_t *img_tex);
+float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+
+int init_textures(t_game *game);
+mlx_image_t *get_wall_texture(t_game *game, t_ray_pos *x, t_ray_pos *y);
+int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y);
+
 #endif

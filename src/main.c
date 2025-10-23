@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/16 14:18:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:23:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void mouse_rotate(double xpos, double ypos, void *param)
     last_x = xpos;
 	
     if (delta_x > 0)
-	    game->player->angle += 0.03;
+	    game->player->angle += 0.05;
     if (delta_x < 0)
-		game->player->angle -= 0.03;
+		game->player->angle -= 0.05;
 	if (game->player->angle < 0)
         game->player->angle += 2 * M_PI;
 	else if (game->player->angle > 2 * M_PI)
@@ -87,7 +87,7 @@ void move(void *param)
     t_game *g;
 	
 	g = (t_game *)param;
-    g->player->move_speed = 2;
+    g->player->move_speed = 5;
 	mlx_key_hook(g->mlx, hide_map2d, param);
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(g->mlx);
@@ -100,9 +100,9 @@ void move(void *param)
     if (mlx_is_key_down(g->mlx, MLX_KEY_D))
         move_right(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-        g->player->angle += 0.05;
+        g->player->angle += 0.1;
     if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.05;
+		g->player->angle -= 0.1;
 	if (g->player->angle < 0)
         g->player->angle += 2 * M_PI;
 	else if (g->player->angle > 2 * M_PI)
@@ -133,8 +133,7 @@ int	main(int argc, char *argv[])
 	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
-	game.texture =  mlx_load_png("texture/N.png");// add protection and exit 
-	game.img_tex = mlx_texture_to_image(game.mlx, game.texture);//add protection and exit 
+	init_textures(&game);
 	draw_2d_map(&game);
 	draw_player(&game);
 	draw_scene_and_rays(&game);
@@ -153,5 +152,26 @@ int	main(int argc, char *argv[])
 	mlx_terminate(game.mlx);// a must to free some leaks caused by mlx 42
 	free_map(game.map);
 	
+	return (0);
+}
+
+
+int init_textures(t_game *game)
+{
+	if (!game)
+		exit(1);//edit
+	game->textures = malloc(sizeof(t_textures));
+	if(!game->textures)
+		error_exit(NULL, "malloc failure");//edit to free game as well
+	game->textures->tex_no =  mlx_load_png(game->map->north_texture);// add protection and exit 
+	game->textures->img_tex_no = mlx_texture_to_image(game->mlx, game->textures->tex_no);//add protection and exit 
+	game->textures->tex_we =  mlx_load_png(game->map->west_texture);// add protection and exit 
+	game->textures->img_tex_we = mlx_texture_to_image(game->mlx, game->textures->tex_we);//add protection and exit 
+	game->textures->tex_ea =  mlx_load_png(game->map->east_texture);// add protection and exit 
+	game->textures->img_tex_ea = mlx_texture_to_image(game->mlx, game->textures->tex_ea);//add protection and exit 
+	game->textures->tex_so =  mlx_load_png(game->map->south_texture);// add protection and exit 
+	game->textures->img_tex_so = mlx_texture_to_image(game->mlx, game->textures->tex_so);//add protection and exit 
+	game->textures->tex_door =  mlx_load_png(game->map->north_texture);// add protection and exit 
+	game->textures->img_tex_door = mlx_texture_to_image(game->mlx, game->textures->tex_no);//add protection and exit 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/15 18:43:01 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/22 15:19:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void draw_scene_and_rays(t_game *game)
 		exit(1);
 	game->rays = mlx_new_image(game->mlx,  MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
 	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
+	//if(!game->rays || !game->scene_3d)
+	//if(!game->scene_3d)	
 	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
  	dda(game);
@@ -37,12 +39,11 @@ void	dda(t_game *game)
 	float an;
 	int i;
 	
+	//if (!game || !game->scene_3d || !game->player)
 	if (!game || !game->scene_3d || !game->player || !game->rays)
 		error_exit(NULL, "cast ray failure");
-	ft_memset((uint32_t *)game->rays->pixels , 0, game->rays->width * \
+	ft_memset((uint32_t *)game->rays->pixels , 0, game->rays->width * 
 	game->rays->height * sizeof(uint32_t));
-	ft_memset((uint32_t *)game->scene_3d->pixels, 0, game->scene_3d->width * \
-	game->scene_3d->height * sizeof(uint32_t));
 	i = 0;
 	while(i < (int)game->scene_3d->width)
 	{
