@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:10:28 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 16:53:43 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y)
 			error_exit(game->map, "error during drawing rays");
 		if (y->map_p >= 0 && y->map_p < (int)ft_strlen_d(game->map->map_lines) && \
 		x->map_p >= 0 && x->map_p < find_max_len(game->map->map_lines) && \
-		game->map->map_lines[y->map_p][x->map_p] == '1')
+		(game->map->map_lines[y->map_p][x->map_p] == '1' || game->map->map_lines[y->map_p][x->map_p] == 'D'))
 			break;
 	}
 	if (side_dir == 0)
@@ -248,6 +248,7 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y)
 	game->hit_side = side_dir;
 	return (wall_dist);
  }
+ 
  
  
  

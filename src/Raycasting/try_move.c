@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/23 11:11:52 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 17:02:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	is_out_of_bounds(t_game *g, int row, int col)
 
 int	is_wall_at(t_game *g, int row, int col)
 {
-	if (g->map->map_lines[row][col] == '1')
+	if (g->map->map_lines[row][col] == '1' || \
+		(g->map->map_lines[row][col] == 'D' && g->collected_keys != g->total_keys))
 		return (1);
 	return (0);
 }

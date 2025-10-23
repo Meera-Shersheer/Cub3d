@@ -1,8 +1,5 @@
 #include "../../cub3D.h"
 
-
-
-
  int place_keys(char **map, int screen_width, int screen_height, int total_keys)
 {
 	int placed;
@@ -92,13 +89,13 @@ void place_keys_and_door(t_game *g)
 		{
 			ft_free(g->map->map_lines);
 			g->map->map_lines = temp_map;
-			printf("✅ Keys and door placed successfully after %d retries.\n", retries);
+			//printf("✅ Keys and door placed successfully after %d retries.\n", retries);
 			return;
 		}
 		ft_free(temp_map);
 		retries++;
 	}
-	error_exit(g->map, "❌ Failed to place keys and door after multiple attempts");
+	error_exit(g->map, "❌ Failed to place keys and door after multiple attempts");//edit later
 }
 
 

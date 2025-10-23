@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:05:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 11:12:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ typedef struct s_game
 	int hit_side;
 	mlx_texture_t *texture;
 	mlx_image_t *img_tex;
-	int hit_side;
 	int total_keys;      // how many keys were spawned
 	int collected_keys;  // how many player has picked
 	int door_x;          // door coordinates
