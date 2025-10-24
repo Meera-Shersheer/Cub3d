@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/23 16:37:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:14:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ int pseudo_random(int max)
 	return ((tv.tv_usec ^ tv.tv_sec) % max);
 }
 
-
-
-
 void check_key_pickup(t_game *g)
 {
     int px = (int)(g->player->x / MINI_TILE);
@@ -33,10 +30,10 @@ void check_key_pickup(t_game *g)
         g->map->map_lines[py][px] = '0';
         printf("🔑 You picked up a key! (%d/%d)\n", g->collected_keys, g->total_keys);
         color_square_map2d(0xFFF3C5B9, g->map_2d, px * MINI_TILE, py * MINI_TILE);
-    }
+		if (g->collected_keys == g->total_keys)
+			g->door_open = 1;
+	}
 }
-
-
 
 void check_door(t_game *g)
 {
@@ -48,16 +45,11 @@ void check_door(t_game *g)
 		if (g->collected_keys == g->total_keys)
 		{
 			puts("🚪 Door opened! You win! 🎉");
-			g->door_open = 1;
-			mlx_close_window(g->mlx); // edit later (show a win window)
-		}
-		else
-		{
-			printf("🚫 Door is locked! Collect all keys first (%d/%d)\n",
-				g->collected_keys, g->total_keys);
+			g->won = 1;
 		}
 	}
 }
+
 int	reach_keys(t_map *map, char **grid, int x, int y)
 {
 	int	count;

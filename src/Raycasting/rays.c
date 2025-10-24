@@ -6,11 +6,12 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 16:53:43 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:56:01 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
+
 
 void draw_scene_and_rays(t_game *game)
 {
@@ -45,15 +46,17 @@ void	dda(t_game *game)
 	i = 0;
 	while(i < (int)game->scene_3d->width)
 	{
-		if (i < MINI_TILE * game->map->screen_width)
-		{
-			camera_x = 2 * i / (float)game->rays->width - 1;
-    		an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
-			cast_rays(game, an);
-		}
 		camera_x = 2 * i / (float)game->scene_3d->width - 1;
-    	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
+		an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
 		draw_single_col(game, an, i);
+		i++;
+	}
+	i = 0;
+	while (i < MINI_TILE * game->map->screen_width)
+	{
+		camera_x = 2 * i / (float)game->rays->width - 1;
+    	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
+		cast_rays(game, an);
 		i++;
 	}
 }
@@ -144,30 +147,33 @@ void cast_rays(t_game *game, float angle)
 {
 	t_ray_pos x;
 	t_ray_pos y;
+	t_angle an;
 	float wall_dist;
 	
+	an.cos_angle = cosf(angle);
+	an.sin_angle = sinf(angle);
 	if (!game  || !game->player)
 		error_exit(NULL, "cast ray failure");//edit
 	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
 	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);	
-	if (evaluate_delta_dist(&x, &y, angle) == 1)
+	if (evaluate_delta_dist(&x, &y, &an) == 1)
 		error_exit(game->map, "error during drawing rays");//edit later
-	set_dir(angle, &x, &y);
+	set_dir(&an, &x, &y);
 	wall_dist = find_stop_point(game,&x, &y);
     x.line_start = (int)(x.pos * MINI_TILE);
     y.line_start = (int)(y.pos * MINI_TILE);
-    x.line_end = (int)((x.pos+ cosf(angle) * wall_dist) * MINI_TILE);
-    y.line_end = (int)((y.pos + sinf(angle) * wall_dist) * MINI_TILE);
+    x.line_end = (int)((x.pos+ an.cos_angle * wall_dist) * MINI_TILE);
+    y.line_end = (int)((y.pos + an.sin_angle * wall_dist) * MINI_TILE);
     draw_line_bresenham(game->rays, &x, &y, 0xFF00EE00);
  }
 
-void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y)
+void	set_dir(t_angle *angle, t_ray_pos *x, t_ray_pos *y)
 {
-	if (!x || !y)
+	if (!x || !y || !angle)
 		error_exit(NULL, "draw line failure");//edit
-	if (cosf(angle) < 0)
+	if (angle->cos_angle < 0)
 	{
 		x->sign = -1;
 		x->walk = (x->pos - x->map_p ) * x->delta_dist;
@@ -178,7 +184,7 @@ void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y)
 		x->walk = (1.0f + x->map_p   - x->pos) * x->delta_dist;
 	}
 
-	if (sinf(angle) < 0)
+	if (angle->sin_angle < 0)
 	{
 		y->sign = -1;
 		y->walk = (y->pos - y->map_p ) * y->delta_dist;
@@ -190,18 +196,18 @@ void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y)
 	}	
 }
 
-int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, float angle)
+int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, t_angle *angle)
  {
 	if (!x || !y)
 		return (1);
-	if (cosf(angle) == 0)
+	if (angle->cos_angle == 0)
 		(x->delta_dist) = 1e10f;
 	else
-		(x->delta_dist) = fabsf(1.0f / cosf(angle));
-	if (sinf(angle) == 0)
+		(x->delta_dist) = fabsf(1.0f / angle->cos_angle);
+	if (angle->sin_angle  == 0)
 		(y->delta_dist) = 1e10f;
 	else
-		(y->delta_dist) = fabsf(1.0f / sinf(angle));
+		(y->delta_dist) = fabsf(1.0f / angle->sin_angle );
 	return (0);
  }
  
@@ -249,7 +255,8 @@ float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y)
 	return (wall_dist);
  }
  
- 
+
+
  
  
  

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:11:38 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 18:04:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,38 @@ void draw_single_col(t_game *game, float angle, int col)
 	t_ray_pos x;
 	t_ray_pos y;
 	t_ray_dic rays;
+	t_angle an;
 	
+	an.cos_angle = cosf(angle);
+	an.sin_angle = sinf(angle);
 	if (!game || !game->player)
 		error_exit(NULL, "draw ray failure");//edit
 	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
 	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);	
-	if (evaluate_delta_dist(&x, &y, angle) == 1)
+	if (evaluate_delta_dist(&x, &y, &an) == 1)
 		error_exit(game->map, "error during drawing rays");//edit later
-	set_dir(angle, &x, &y);
+	set_dir(&an, &x, &y);
 	find_stop_point(game,&x, &y);
     rays.x = &x;
 	rays.y = &y;
-	color_3d_scene(game, col, angle, &rays);
+	color_3d_scene(game, col, &an, &rays);
 }
 
-int eval_wall_height(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y)
+int eval_wall_height(t_game *game,t_angle *angle, t_ray_pos *x, t_ray_pos *y)
 {
     float perp_wall_dist;
     float scale;
     int wall_height;
 
-    scale = 0.7f;
+    scale = 0.75f;
     perp_wall_dist = eval_real_wall_dist(game, angle, x, y);
     wall_height = (int)(game->scene_3d->height / (perp_wall_dist * scale));
     return (wall_height);
 }
 
-int eval_tex_x(t_game *game, float angle, t_ray_dic *rays, mlx_image_t *img_tex)
+int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_tex)
 {
 	float wallX;
 	int tex_x;
@@ -53,9 +56,9 @@ int eval_tex_x(t_game *game, float angle, t_ray_dic *rays, mlx_image_t *img_tex)
 	if (!game || !rays || !img_tex)
 		exit(2); // edit later
 	if (game->hit_side == 0)
-		wallX = rays->y->pos + (rays->x->walk - rays->x->delta_dist) * sinf(angle);
+		wallX = rays->y->pos + (rays->x->walk - rays->x->delta_dist) * angle->sin_angle;
 	else
-		wallX = rays->x->pos + (rays->y->walk - rays->y->delta_dist) * cosf(angle);
+		wallX = rays->x->pos + (rays->y->walk - rays->y->delta_dist) * angle->cos_angle;
 	wallX = wallX - floorf(wallX);
 	tex_x = (int)(wallX * img_tex->width);
 	if ((game->hit_side == 0 && rays->x->sign < 0) || \
@@ -69,7 +72,7 @@ int eval_tex_x(t_game *game, float angle, t_ray_dic *rays, mlx_image_t *img_tex)
 }
 
 // Step 4: draw the column
-void color_3d_scene(t_game *game, int col,float angle, t_ray_dic *rays)
+void color_3d_scene(t_game *game, int col, t_angle *angle, t_ray_dic *rays)
 {
 	t_wall_draw wall;
     int i;
@@ -223,14 +226,14 @@ void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_en
   	}
 }
 
-float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y)
+float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y)
 {
 	float perp_wall_dist;
 	
 	if (game->hit_side == 0)
-	    perp_wall_dist = (x->map_p - x->pos + (1 - x->sign) / 2.0f) / cosf(angle);
+	    perp_wall_dist = (x->map_p - x->pos + (1 - x->sign) / 2.0f) / angle->cos_angle;
 	else
-	    perp_wall_dist = (y->map_p - y->pos + (1 - y->sign) / 2.0f) / sinf(angle);
+	    perp_wall_dist = (y->map_p - y->pos + (1 - y->sign) / 2.0f) / angle->sin_angle;
 	if (perp_wall_dist < 0.1f)
     	perp_wall_dist = 0.1f;
 	return (perp_wall_dist);

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/21 01:13:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:18:15 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,53 @@ void	free_map(t_map *map)
 		free(map->msg);
 	if (map)
 		free(map);
+}
+
+void clean_sources(t_game *game)
+{
+	if (game->player)
+	{
+    	if (game->player->img)
+   			mlx_delete_image(game->mlx, game->player->img);
+    	free(game->player);
+    	game->player = NULL;
+	}
+    if (game->map_2d)
+   		mlx_delete_image(game->mlx, game->map_2d);
+	if (game->img_tex)
+		mlx_delete_image(game->mlx, game->img_tex);
+	if (game->rays)
+		mlx_delete_image(game->mlx, game->rays);
+	if (game->scene_3d)
+		mlx_delete_image(game->mlx, game->scene_3d);
+	free_map(game->map);
+	delete_textures(game);
+}
+
+void delete_textures(t_game *game)
+{
+	if (!game)
+		exit(1);//edit
+	if (game->textures->img_tex_no)
+	    mlx_delete_image(game->mlx, game->textures->img_tex_no);
+	if (game->textures->tex_no)
+	    mlx_delete_texture(game->textures->tex_no);	
+	if (game->textures->img_tex_we)
+	    mlx_delete_image(game->mlx, game->textures->img_tex_we);
+	if (game->textures->tex_we)
+	    mlx_delete_texture(game->textures->tex_we);
+	if (game->textures->img_tex_ea)
+	    mlx_delete_image(game->mlx, game->textures->img_tex_ea);
+	if (game->textures->tex_ea)
+	    mlx_delete_texture(game->textures->tex_ea);	
+	if (game->textures->img_tex_so)
+	    mlx_delete_image(game->mlx, game->textures->img_tex_so);
+	if (game->textures->tex_so)
+	    mlx_delete_texture(game->textures->tex_so);	
+	if (game->textures->tex_door)
+	    mlx_delete_texture(game->textures->tex_door);
+	if (game->textures->img_tex_door)
+	    mlx_delete_image(game->mlx, game->textures->img_tex_door);
+	if(game->textures)
+		free(game->textures);
 }

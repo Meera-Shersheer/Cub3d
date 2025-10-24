@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:12:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:06:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ typedef struct s_game
 	int door_x;          // door coordinates
 	int door_y;
 	int door_open;       // 0 = closed, 1 = open
-
+	int won; //0-> false   1-> true
 }			t_game;
 
 typedef struct s_ray
@@ -194,6 +194,13 @@ typedef struct s_ray_hit3
     float hit_x;      // fractional hit position along the wall (0..1) - optional for textures
     int side;         // 0 = hit vertical gridline (x), 1 = horizontal gridline (y) - optional for shading
 } t_ray_hit3;
+
+typedef struct s_angle
+{
+    float cos_angle;
+	float sin_angle;
+} t_angle;
+
 
 typedef struct s_wall_draw
 {
@@ -299,11 +306,11 @@ void color_block (unsigned int color, mlx_image_t *img);
 float abs_max (float num1, float num2);
 void	dda(t_game *game);
 void cast_rays(t_game *game, float angle);
-int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, float angle);
+int evaluate_delta_dist(t_ray_pos *x, t_ray_pos *y, t_angle *angle);
 int evaluate_walk(t_ray_pos *i);
 float	find_stop_point(t_game *game, t_ray_pos *x, t_ray_pos *y);
 int check_acum_err(int err, int sd[4], t_ray_pos *x, t_ray_pos *y);
-void	set_dir(float angle, t_ray_pos *x, t_ray_pos *y);
+void	set_dir(t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 
 
 void try_move(t_game *g, float dx, float dy);
@@ -316,17 +323,17 @@ void move_forward(t_game *g);
 
 void draw_scene_and_rays(t_game *game);
 void draw_single_col(t_game *game, float angle, int col);
-void color_3d_scene(t_game *game, int col,float angle, t_ray_dic *rays);
+void color_3d_scene(t_game *game, int col,t_angle *angle, t_ray_dic *rays);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
 uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex);
-float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
 
 //3dscene
-int eval_wall_height(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
-int eval_tex_x(t_game *game, float angle, t_ray_dic *rays, mlx_image_t *img_tex);
-float eval_real_wall_dist(t_game *game, float angle, t_ray_pos *x, t_ray_pos *y);
+int eval_wall_height(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
+int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_tex);
+float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 
 int init_textures(t_game *game);
 mlx_image_t *get_wall_texture(t_game *game, t_ray_pos *x, t_ray_pos *y);
@@ -340,5 +347,9 @@ void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
 void	check_keys_reachable(t_game *g);
 int	reach_keys(t_map *map, char **grid, int x, int y);
 int pseudo_random(int max);
+
+//cleanup
+void delete_textures(t_game *game);
+void clean_sources(t_game *game);
 
 #endif

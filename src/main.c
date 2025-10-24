@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/23 11:08:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 19:09:24 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,14 @@ void move(void *param)
         g->player->angle -= 2 * M_PI;
 	g->player->img->instances[0].x = g->player->x;
 	g->player->img->instances[0].y = g->player->y;
-	dda(g);
 	check_key_pickup(g);
     check_door(g);
+	if (g->won == 1)
+	{
+		mlx_close_window(g->mlx);  // Now safe to close
+        return;
+	}
+	dda(g);
 }
 	
 	
@@ -133,6 +138,7 @@ int	main(int argc, char *argv[])
 	//one door and keys (randomly)
 	//test the size of window
 	place_keys_and_door(&game);
+	game.won = 0;
 	game.mlx =  mlx_init(W_TILE * (game.map->screen_width), W_TILE * (game.map->screen_height), "Cub3d Game", true);
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
@@ -143,18 +149,8 @@ int	main(int argc, char *argv[])
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
-	if (game.player)
-	{
-    	if (game.player->img)
-   			mlx_delete_image(game.mlx, game.player->img);
-    	free(game.player);
-    	game.player = NULL;
-	}
-    if (game.map_2d)
-   		mlx_delete_image(game.mlx, game.map_2d);
+	clean_sources(&game);
 	mlx_terminate(game.mlx);// a must to free some leaks caused by mlx 42
-	free_map(game.map);
-	
 	return (0);
 }
 
