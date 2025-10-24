@@ -33,20 +33,27 @@ void draw_rectangle(t_dimention dim, t_center center, uint32_t color, mlx_image_
 {
     int i;
     int j;
-    uint32_t *pixels = (uint32_t *)img->pixels;
-
-    for (i = 0; i < dim.width; i++)
+    uint32_t *pixels;
+    int px;
+    int py; 
+    
+    pixels = (uint32_t *)img->pixels;
+    i = 0;
+    while ( i < dim.width)
     {
-        for (j = 0; j < dim.height; j++)
+        j = 0;
+        while (j < dim.height)
         {
-            int px =  center.center_x + i;
-            int py =  center.center_y + j;      
+            px =  center.center_x + i;
+            py =  center.center_y + j;      
             if (px >= 0 && px < (int)img->width && \
             py >= 0 && py < (int)img->height)
             {
                 pixels[py * img->width + px] = color;
             }
+            j++;
         }
+        i++;
     }
 }
 
