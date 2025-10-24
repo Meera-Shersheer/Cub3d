@@ -1,61 +1,87 @@
 #include "../../cub3D.h"
 
+void draw_circle( int radius, t_center center, uint32_t color, mlx_image_t *img)
+{ 
+    int i;
+    int j;
+    int px;
+    int py;
+    uint32_t *pixels;
 
-
-void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
-{
-    int center_x = pixel_x + MINI_TILE / 2;
-    int center_y = pixel_y + MINI_TILE / 2;
-    uint32_t *pixels = (uint32_t *)img->pixels;
-    int i, j;
-
-    // Draw the key ring (circle)
-    for (i = -5; i <= 5; i++)
+    pixels = (uint32_t *)img->pixels;
+    i = -radius;
+    while (i <= radius)
     {
-        for (j = -5; j <= 5; j++)
+        j = -radius;
+        while ( j <= radius)
         {
-            if (i * i + j * j <= 16)  // radius^2 = 9 (3px radius)
-                pixels[(center_y + j) * img->width + (center_x + i)] = 0xFF0000FF;
+            if (i * i + j * j <= (radius * radius))
+            {
+                px = center.center_x + i;
+                py = center.center_y + j;
+                if (px >= 0 && px < (int)img->width && py >= 0 && py < (int)img->height)
+                    pixels[py * img->width + px] = color;
+            }
+            j++;
         }
+        i++;
     }
+}
 
-    // Draw thicker shaft (rectangle)
-    int shaft_length = 8;
-    for (i = 0; i < shaft_length; i++)
+
+void draw_rectangle(t_dimention dim, t_center center, uint32_t color, mlx_image_t *img)
+{
+    int i;
+    int j;
+    uint32_t *pixels = (uint32_t *)img->pixels;
+
+    for (i = 0; i < dim.width; i++)
     {
-        for (j = -1; j <= 0; j++) // vertical thickness 3 pixels
+        for (j = 0; j < dim.height; j++)
         {
-            pixels[(center_y + j) * img->width + (center_x + 3 + i)] = 0xFF0000FF;
+            int px =  center.center_x + i;
+            int py =  center.center_y + j;      
+            if (px >= 0 && px < (int)img->width && \
+            py >= 0 && py < (int)img->height)
+            {
+                pixels[py * img->width + px] = color;
+            }
         }
     }
 }
 
+void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
+{
+    t_center center;
+    t_dimention dim;
+    int radius = MINI_TILE / 6;
+    
+    if (!img)
+        return;
+    center.center_x = pixel_x + MINI_TILE / 2;
+    center.center_y = pixel_y + MINI_TILE / 2;
+    draw_circle(radius, center, 0xFFDD0000, img);
+    dim.width = 2 * radius;
+    dim.height = radius / 2;  
+    center.center_x += radius ;
+    draw_rectangle(dim, center, 0xFFDD0000, img);
+}
+
 void draw_door_symbol(mlx_image_t *img, int px, int py)
 {
-    // RRGGBBAA format for MLX42
-    uint32_t door_color = 0xFF006400;   // green
-    uint32_t knob_color = 0xFF00FFD7;   // gold
+    uint32_t door_color = 0xFF006600;
+    uint32_t knob_color = 0xFF00FFD7; 
+    t_dimention dim;
+    t_center center;
 
-    uint32_t *p = (uint32_t *)img->pixels;
-    int w = MINI_TILE - 1;
-    int h = MINI_TILE - 1;
-
-    // Fill door
-    for (int y = 0; y <= h; y++)
-        for (int x = 0; x <= w; x++)
-            p[(py + y) * img->width + (px + x)] = door_color;
-
-    // Draw bigger knob (circle radius 2)
-    int kx = px + MINI_TILE - 4;
-    int ky = py + MINI_TILE / 2;
-    for (int dy = -2; dy <= 2; dy++)
-    {
-        for (int dx = -2; dx <= 2; dx++)
-        {
-            if (dx*dx + dy*dy <= 4) // circle radius^2
-                p[(ky + dy) * img->width + (kx + dx)] = knob_color;
-        }
-    }
+    dim.width = MINI_TILE;
+    dim.height = MINI_TILE;
+    center.center_x = px;
+    center.center_y = py;
+    draw_rectangle(dim, center, door_color, img);
+    center.center_x = px + MINI_TILE - 4;
+    center.center_y = py + MINI_TILE / 2;
+    draw_circle(2, center, knob_color, img);
 }
 
 // void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y)

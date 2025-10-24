@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/24 19:06:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/24 20:13:14 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,11 @@ typedef struct s_angle
 	float sin_angle;
 } t_angle;
 
+typedef struct s_center
+{
+    int center_x;
+	int center_y;
+} t_center;
 
 typedef struct s_wall_draw
 {
@@ -211,6 +216,11 @@ typedef struct s_wall_draw
     int     col;
 }   t_wall_draw;
 
+typedef struct s_dimention
+{
+    int     height;
+    int     width;
+}   t_dimention;
 
 typedef struct s_ray_dic
 {
