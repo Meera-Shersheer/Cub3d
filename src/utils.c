@@ -6,19 +6,24 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/16 05:20:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 02:00:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
+void	error_exit2(t_game *game, const char *msg)
+{
+	printf(RED "Error\n%s\n" NC, msg);
+	free_map(game->map);
+	exit(1);
+}
 void	error_exit(t_map *map, const char *msg)
 {
 	printf(RED "Error\n%s\n" NC, msg);
 	free_map(map);
 	exit(1);
 }
-
 size_t	ft_strlen_d(char **s)
 {
 	size_t	n;

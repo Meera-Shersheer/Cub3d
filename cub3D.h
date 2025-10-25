@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/24 20:13:14 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 03:12:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@
 #endif
 
 #ifndef FOV
-#define FOV (M_PI / 3)
+#define FOV (M_PI / 2.5f)  
 #endif
-
 
 # ifndef W_TILE
 #  define W_TILE  96
@@ -145,9 +144,47 @@ typedef struct s_textures
 	mlx_image_t *img_tex_we;
 	mlx_texture_t *tex_so;
 	mlx_image_t *img_tex_so;
-	mlx_texture_t *tex_door;
-	mlx_image_t *img_tex_door;
+	struct s_key_textures	*keys;
+	struct s_door_textures	*door;
 }			t_textures;
+
+typedef struct s_door_textures
+{
+	mlx_texture_t *tex_door_closed;
+	mlx_image_t *img_door_closed;
+	mlx_texture_t *tex_door_opened;
+	mlx_image_t *img_door_opened;
+	mlx_texture_t *tex_door_semi1;
+	mlx_image_t *img_door_semi1;
+	mlx_texture_t *tex_door_semi2;
+	mlx_image_t *img_door_semi2;
+}			t_door_textures;
+
+typedef struct s_key_textures
+{
+	mlx_texture_t *tex_key00;
+	mlx_image_t *img_key00;
+	mlx_texture_t *tex_key01;
+	mlx_image_t *img_key01;
+	mlx_texture_t *tex_key02;
+	mlx_image_t *img_key02;
+	mlx_texture_t *tex_key03;
+	mlx_image_t *img_key03;
+	mlx_texture_t *tex_key04;
+	mlx_image_t *img_key04;
+	mlx_texture_t *tex_key05;
+	mlx_image_t *img_key05;
+	mlx_texture_t *tex_key06;
+	mlx_image_t *img_key06;
+	mlx_texture_t *tex_key07;
+	mlx_image_t *img_key07;
+	mlx_texture_t *tex_key08;
+	mlx_image_t *img_key08;
+	mlx_texture_t *tex_key09;
+	mlx_image_t *img_key09;
+	mlx_texture_t *tex_key10;
+	mlx_image_t *img_key10;
+}			t_key_textures;
 
 typedef struct s_game
 {
@@ -199,6 +236,7 @@ typedef struct s_angle
 {
     float cos_angle;
 	float sin_angle;
+	float	angle;
 } t_angle;
 
 typedef struct s_center
@@ -362,4 +400,12 @@ int pseudo_random(int max);
 void delete_textures(t_game *game);
 void clean_sources(t_game *game);
 
+int init_door_textures(t_game *g);
+void	error_exit2(t_game *game, const char *msg);
+int	init_key_textures(t_game *g);
+void	init_key_textures1(t_game *g);
+int	init_key_textures(t_game *g);
+void	init_key_textures2(t_game *g);
+void	init_key_textures3(t_game *g);
+void	init_key_textures4(t_game *g);
 #endif

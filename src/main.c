@@ -6,29 +6,11 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/24 19:09:24 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 02:04:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
-
-
-
-
-	/* If we PRESS the 'J' key, print "Hello" on terminal.
-	if (keydata.key == MLX_KEY_J && keydata.action == MLX_PRESS)
-		puts("Hello ");
-
-	// If we RELEASE the 'K' key, print "World" on terminal.
-	if (keydata.key == MLX_KEY_K && keydata.action == MLX_RELEASE)
-		puts("World");
-
-	// If we HOLD the 'L' key, print "!" on terminal.
-	if (keydata.key == MLX_KEY_L && keydata.action == MLX_REPEAT)
-		puts("!");
-
-		*/
-
 
 void hide_map2d(mlx_key_data_t keydata, void *param)
 {
@@ -170,7 +152,165 @@ int init_textures(t_game *game)
 	game->textures->img_tex_ea = mlx_texture_to_image(game->mlx, game->textures->tex_ea);//add protection and exit 
 	game->textures->tex_so =  mlx_load_png(game->map->south_texture);// add protection and exit 
 	game->textures->img_tex_so = mlx_texture_to_image(game->mlx, game->textures->tex_so);//add protection and exit 
-	game->textures->tex_door =  mlx_load_png(game->map->north_texture);// add protection and exit 
-	game->textures->img_tex_door = mlx_texture_to_image(game->mlx, game->textures->tex_no);//add protection and exit 
+	init_door_textures(game);
+	init_key_textures(game);
 	return (0);
+}
+int init_door_textures(t_game *g)
+{
+	
+	if (!g || !g->textures)
+		error_exit(NULL, "Failure during uploading door/key textures");
+	g->textures->door = malloc(sizeof(t_door_textures));
+	if (!g->textures->door)
+		error_exit2(g, "malloc failure for door textures");
+	g->textures->door->tex_door_closed =
+mlx_load_png("src_textures/doors/door003.png");
+	if (!g->textures->door->tex_door_closed)
+		error_exit2(g, "Failed: door closed texture");
+	g->textures->door->img_door_closed =
+		mlx_texture_to_image(g->mlx, g->textures->door->tex_door_closed);
+	if (!g->textures->door->img_door_closed)
+		error_exit2(g, "Failed: door closed image");
+	g->textures->door->tex_door_semi1 =
+		mlx_load_png("src_textures/doors/door001.png");
+	if (!g->textures->door->tex_door_semi1)
+		error_exit2(g, "Failed: door semi1 texture");
+	g->textures->door->img_door_semi1 =
+		mlx_texture_to_image(g->mlx, g->textures->door->tex_door_semi1);
+	if (!g->textures->door->img_door_semi1)
+		error_exit2(g, "Failed: door semi1 image");
+	g->textures->door->tex_door_semi2 =
+		mlx_load_png("src_textures/doors/door002.png");
+	if (!g->textures->door->tex_door_semi2)
+		error_exit2(g, "Failed: door semi2 texture");
+	g->textures->door->img_door_semi2 =
+		mlx_texture_to_image(g->mlx, g->textures->door->tex_door_semi2);
+	if (!g->textures->door->img_door_semi2)
+		error_exit2(g, "Failed: door semi2 image");
+	g->textures->door->tex_door_opened =
+		mlx_load_png("src_textures/doors/door000.png");
+	if (!g->textures->door->tex_door_opened)
+		error_exit2(g, "Failed: door opened texture");
+	g->textures->door->img_door_opened =
+		mlx_texture_to_image(g->mlx, g->textures->door->tex_door_opened);
+	if (!g->textures->door->img_door_opened)
+		error_exit2(g, "Failed: door opened image");
+	return (0);
+}
+
+int	init_key_textures(t_game *g)
+{
+	if (!g || !g->textures)
+		error_exit(NULL, "Failure during uploading door/key textures");
+	g->textures->keys = malloc(sizeof(t_key_textures));
+	if (!g->textures->keys)
+		error_exit2(g, "malloc failure for key textures");
+	init_key_textures1(g);
+	init_key_textures2(g);
+	init_key_textures3(g);
+	init_key_textures4(g);
+	return (0);
+}
+
+
+void	init_key_textures1(t_game *g)
+{
+	if (!g || !g->textures  || !g->textures->keys)
+		error_exit2(NULL, "Failure during uploading door/key textures");
+	g->textures->keys->tex_key00 = mlx_load_png("src_textures/keys/key00.png");
+	if (!g->textures->keys->tex_key00)
+		error_exit2(g, "Failed: key00 texture");
+	g->textures->keys->img_key00 =
+	mlx_texture_to_image(g->mlx, g->textures->keys->tex_key00);
+	if (!g->textures->keys->img_key00)
+		error_exit2(g, "Failed: key00 image");
+	g->textures->keys->tex_key01 = mlx_load_png("src_textures/keys/key01.png");
+	if (!g->textures->keys->tex_key01)
+		error_exit2(g, "Failed: key01 texture");
+	g->textures->keys->img_key01 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key01);
+	if (!g->textures->keys->img_key01)
+		error_exit2(g, "Failed: key01 image");
+	g->textures->keys->tex_key02 = mlx_load_png("src_textures/keys/key02.png");
+	if (!g->textures->keys->tex_key02)
+		error_exit2(g, "Failed: key02 texture");
+	g->textures->keys->img_key02 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key02);
+	if (!g->textures->keys->img_key02)
+		error_exit2(g, "Failed: key02 image");
+}
+
+
+void	init_key_textures2(t_game *g)
+{
+	if (!g || !g->textures || !g->textures->keys)
+		error_exit2(NULL, "Failure during uploading door/key textures");
+	g->textures->keys->tex_key03 = mlx_load_png("src_textures/keys/key03.png");
+	if (!g->textures->keys->tex_key03)
+		error_exit2(g, "Failed: key03 texture");
+	g->textures->keys->img_key03 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key03);
+	if (!g->textures->keys->img_key03)
+		error_exit2(g, "Failed: key03 image");
+	g->textures->keys->tex_key04 = mlx_load_png("src_textures/keys/key04.png");
+	if (!g->textures->keys->tex_key04)
+		error_exit2(g, "Failed: key04 texture");
+	g->textures->keys->img_key04 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key04);
+	if (!g->textures->keys->img_key04)
+		error_exit2(g, "Failed: key04 image");
+	g->textures->keys->tex_key05 = mlx_load_png("src_textures/keys/key05.png");
+	if (!g->textures->keys->tex_key05)
+		error_exit2(g, "Failed: key05 texture");
+	g->textures->keys->img_key05 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key05);
+	if (!g->textures->keys->img_key05)
+		error_exit2(g, "Failed: key05 image");
+}
+
+void	init_key_textures3(t_game *g)
+{
+	if (!g || !g->textures || !g->textures->keys)
+		error_exit2(NULL, "Failure during uploading door/key textures");
+	g->textures->keys->tex_key06 = mlx_load_png("src_textures/keys/key06.png");
+	if (!g->textures->keys->tex_key06)
+		error_exit2(g, "Failed: key06 texture");
+	g->textures->keys->img_key06 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key06);
+	if (!g->textures->keys->img_key06)
+		error_exit2(g, "Failed: key06 image");
+	g->textures->keys->tex_key07 = mlx_load_png("src_textures/keys/key07.png");
+	if (!g->textures->keys->tex_key07)
+		error_exit2(g, "Failed: key07 texture");
+	g->textures->keys->img_key07 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key07);
+	if (!g->textures->keys->img_key07)
+		error_exit2(g, "Failed: key07 image");
+	g->textures->keys->tex_key08 = mlx_load_png("src_textures/keys/key08.png");
+	if (!g->textures->keys->tex_key08)
+		error_exit2(g, "Failed: key08 texture");
+	g->textures->keys->img_key08 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key08);
+	if (!g->textures->keys->img_key08)
+		error_exit2(g, "Failed: key08 image");
+}
+void	init_key_textures4(t_game *g)
+{
+	if (!g || !g->textures || !g->textures->keys)
+		error_exit2(NULL, "Failure during uploading door/key textures");
+	g->textures->keys->tex_key09 = mlx_load_png("src_textures/keys/key09.png");
+	if (!g->textures->keys->tex_key09)
+		error_exit2(g, "Failed: key09 texture");
+	g->textures->keys->img_key09 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key09);
+	if (!g->textures->keys->img_key09)
+		error_exit2(g, "Failed: key09 image");
+	g->textures->keys->tex_key10 = mlx_load_png("src_textures/keys/key10.png");
+	if (!g->textures->keys->tex_key10)
+		error_exit2(g, "Failed: key010 texture");
+	g->textures->keys->img_key10 =
+		mlx_texture_to_image(g->mlx, g->textures->keys->tex_key10);
+	if (!g->textures->keys->img_key10)
+		error_exit2(g, "Failed: key10 image");
 }

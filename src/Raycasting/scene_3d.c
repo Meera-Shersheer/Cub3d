@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/24 18:04:05 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 03:13:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void draw_single_col(t_game *game, float angle, int col)
 	
 	an.cos_angle = cosf(angle);
 	an.sin_angle = sinf(angle);
+	an.angle = angle;
 	if (!game || !game->player)
 		error_exit(NULL, "draw ray failure");//edit
 	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
@@ -42,10 +43,10 @@ int eval_wall_height(t_game *game,t_angle *angle, t_ray_pos *x, t_ray_pos *y)
     float scale;
     int wall_height;
 
-    scale = 0.75f;
+    scale = 0.9f;
     perp_wall_dist = eval_real_wall_dist(game, angle, x, y);
-    wall_height = (int)(game->scene_3d->height / (perp_wall_dist * scale));
-    return (wall_height);
+	wall_height = (int)(game->scene_3d->height / (perp_wall_dist * scale));
+	return (wall_height);
 }
 
 int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_tex)
@@ -116,15 +117,32 @@ void color_3d_scene(t_game *game, int col, t_angle *angle, t_ray_dic *rays)
 mlx_image_t *get_wall_texture(t_game *game, t_ray_pos *x, t_ray_pos *y)
 {
     int direction;
-    
+    int tile_x;
+    int tile_y;
+
 	if (!game || !game->textures || !x || !y)
 	{
 		printf("ERROR: get_wall_texture null pointer!\n");
 		return (NULL);
 	}
+	tile_x = x->map_p;
+	tile_y = y->map_p;
+	if (tile_y < 0 || tile_y >= (int)ft_strlen_d(game->map->map_lines) || \
+tile_x < 0 || tile_x >= (int)ft_strlen(game->map->map_lines[tile_y]))
+		return (NULL);
+
+	if (game->map->map_lines[tile_y][tile_x] == 'D')
+	{
+		if (!game->textures->door)
+			printf("ERROR: DOOR textures is NULL!\n");
+		if (game->door_open == 0)
+			return (game->textures->door->img_door_closed);
+		else
+			return (game->textures->door->img_door_opened);
+	}
     direction = get_wall_direction(game, x, y); 
     if (direction == NORTH)
-{
+	{
 		if (!game->textures->img_tex_no)
 			printf("ERROR: NORTH texture is NULL!\n");
 		return (game->textures->img_tex_no);
@@ -148,9 +166,6 @@ mlx_image_t *get_wall_texture(t_game *game, t_ray_pos *x, t_ray_pos *y)
 		return (game->textures->img_tex_we);
 	}
 	return (NULL);
-	// else
-	// 	return (game->textures->img_tex_door);
-
 }
 int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y)
 {
@@ -229,11 +244,14 @@ void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_en
 float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y)
 {
 	float perp_wall_dist;
+    float angle_diff;
 	
 	if (game->hit_side == 0)
 	    perp_wall_dist = (x->map_p - x->pos + (1 - x->sign) / 2.0f) / angle->cos_angle;
 	else
 	    perp_wall_dist = (y->map_p - y->pos + (1 - y->sign) / 2.0f) / angle->sin_angle;
+	angle_diff = angle->angle - game->player->angle;
+	perp_wall_dist = perp_wall_dist * cosf(angle_diff);
 	if (perp_wall_dist < 0.1f)
     	perp_wall_dist = 0.1f;
 	return (perp_wall_dist);
