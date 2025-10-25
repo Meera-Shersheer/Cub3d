@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 03:13:25 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 20:19:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void color_3d_scene(t_game *game, int col, t_angle *angle, t_ray_dic *rays)
 	while (i <= wall.draw_end)
     {
 		pixels[i * game->scene_3d->width + col] = 
-            get_texture_color(game, &tex_pos, step, wall.tex_x, img_tex);
+            get_texture_color(game, &tex_pos, step, wall.tex_x, img_tex, i);
         i++;
     } 
 }
@@ -192,7 +192,7 @@ int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y)
     }
 }
 
-uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex)
+uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex, int screen_y)
 {
 	uint32_t color;
 	uint8_t *p;
@@ -216,7 +216,20 @@ uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, 
     uint8_t a = p[tex_index];
     uint8_t b = p[tex_index + 1];
     uint8_t g = p[tex_index + 2];
-    uint8_t r = p[tex_index + 3];     
+    uint8_t r = p[tex_index + 3]; 
+	if (a == 0 && (img_tex == game->textures->door->img_door_closed || \
+img_tex == game->textures->door->img_door_opened || \
+img_tex == game->textures->door->img_door_semi1 || \
+img_tex == game->textures->door->img_door_semi2))
+	{
+		
+		if (screen_y < 2 * (int)game->scene_3d->height / 3)
+			color = game->map->c_color.color;
+		else
+			color = game->map->f_color.color;
+		return (color);
+	}
+	   
     color = (r << 24) | (g << 16) | (b << 8) | a;
 	return (color);
 }

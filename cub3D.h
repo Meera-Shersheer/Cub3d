@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 03:12:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/25 20:15:38 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,7 +374,7 @@ void draw_single_col(t_game *game, float angle, int col);
 void color_3d_scene(t_game *game, int col,t_angle *angle, t_ray_dic *rays);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
-uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex);
+uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex, int screen_y);
 float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
 
