@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/24 19:14:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:17:50 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,31 @@ void check_key_pickup(t_game *g)
 {
     int px = (int)(g->player->x / MINI_TILE);
     int py = (int)(g->player->y / MINI_TILE);
-
+	
     if (g->map->map_lines[py][px] == 'K')
     {
         g->collected_keys++;
         g->map->map_lines[py][px] = '0';
+		check_key_sprite_pickup(g, px, py);
         printf("🔑 You picked up a key! (%d/%d)\n", g->collected_keys, g->total_keys);
         color_square_map2d(0xFFF3C5B9, g->map_2d, px * MINI_TILE, py * MINI_TILE);
 		if (g->collected_keys == g->total_keys)
 			g->door_open = 1;
+	}
+}
+void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y)
+{
+	int i;
+
+	i = 0;
+	while (i < g->sprites->count)
+	{
+		if (g->sprites->sprites[i]->map_tile_x == tile_x && g->sprites->sprites[i]->map_tile_y == tile_y)
+		{
+			g->sprites->sprites[i]->collected = 1;
+			break;
+		}
+		i++;	
 	}
 }
 

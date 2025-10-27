@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 02:04:12 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:11:08 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ void move(void *param)
 		mlx_close_window(g->mlx);  // Now safe to close
         return;
 	}
+	for (int i = 0; i < (int)g->scene_3d->width; i++)
+    	g->wall_distances[i] = 10000.0f;  // Reset each frame
 	dda(g);
+	render_all_sprites(g);
 }
 	
 	
@@ -125,9 +128,11 @@ int	main(int argc, char *argv[])
 	if (!(game.mlx))
 		error_exit(game.map, "mlx initializing failure");
 	init_textures(&game);
+	init_sprites(&game);
 	draw_2d_map(&game);
 	draw_player(&game);
 	draw_scene_and_rays(&game);
+	render_all_sprites(&game);
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
@@ -314,3 +319,265 @@ void	init_key_textures4(t_game *g)
 	if (!g->textures->keys->img_key10)
 		error_exit2(g, "Failed: key10 image");
 }
+
+void init_sprites(t_game *game)
+{
+	int	i;
+	int	j;
+	
+	if (!game)
+		error_exit2(game , "failure during sprite initialization");
+	game->sprites = malloc(sizeof(t_sprite_list));
+	if (!game->sprites)
+		error_exit2(game , "failure during sprite initialization");
+	game->sprites->sprites = malloc(sizeof(t_sprite *)  * game->total_keys);
+	if (!game->sprites->sprites)
+		error_exit2(game , "failure during sprite initialization");
+	i = 0;
+	game->sprites->count = 0;
+	//print_map(game->map);
+	while (game->map->map_lines[i])
+	{
+		j = 0;
+		while (game->map->map_lines[i][j])
+		{
+			if (game->map->map_lines[i][j] == 'K')
+				add_key_sprite(game, j , i);
+			j++;
+		}
+		i++;
+	}
+}
+
+void add_key_sprite(t_game *game, int map_x, int map_y)
+{
+	t_sprite	*sprite;
+	sprite = malloc(sizeof(t_sprite));
+	if (!sprite)
+		error_exit2(game , "failure during sprite initialization");
+	sprite->map_tile_x = map_x;
+	sprite->map_tile_y = map_y;
+	sprite->x = (map_x + 0.5f) * MINI_TILE;	// Center of tile in world coords
+	sprite->y = (map_y + 0.5f) * MINI_TILE;	// Center of tile in world coords
+	sprite->img = game->textures->keys->img_key00;
+	sprite->collected = 0;
+	game->sprites->sprites[game->sprites->count] = sprite;
+	game->sprites->count++;
+}
+
+void update_sprite_distances(t_game *game)
+{
+	int i;
+	float dx;
+	float dy;
+	float angle_diff;
+	float screen_x_calc;
+	float raw_dist;
+
+	i = 0;
+	while (i < game->sprites->count)
+	{
+		if (game->sprites->sprites[i]->collected == 0)
+		{
+			dx = game->sprites->sprites[i]->x - (game->player->x + game->player->img->width / 2.0f);
+			dy = game->sprites->sprites[i]->y - (game->player->y + game->player->img->height / 2.0f);
+			raw_dist = sqrtf(dx * dx + dy * dy); // shortest line -> Pythagorean  theorem
+			angle_diff = atan2f(dy, dx) - game->player->angle;
+			while (angle_diff > M_PI)
+				angle_diff -= 2 * M_PI;
+			while (angle_diff < -M_PI)
+				angle_diff += 2 * M_PI;
+			game->sprites->sprites[i]->dist = raw_dist;
+			screen_x_calc = (game->scene_3d->width / 2.0f) + (angle_diff * game->scene_3d->width) / FOV;
+			if (angle_diff > (FOV / 2.0f) || angle_diff < -(FOV / 2.0f))
+			{
+				// Sprite is behind/outside view, mark as off-screen
+				game->sprites->sprites[i]->screen_x = -10000;
+			}
+			else
+			{
+				if (screen_x_calc < -500)
+					screen_x_calc = -500;
+				if (screen_x_calc > game->scene_3d->width + 500)
+					screen_x_calc = game->scene_3d->width + 500;
+				
+				game->sprites->sprites[i]->screen_x = (int)screen_x_calc;
+			// printf("Sprite %d: pos=(%.1f,%.1f) dist=%.2f angle_diff=%.2f screen_x=%d\n",
+				    //    i, game->sprites->sprites[i]->x, game->sprites->sprites[i]->y,
+				    //    game->sprites->sprites[i]->dist, angle_diff, 
+				    //    game->sprites->sprites[i]->screen_x);
+			}
+		}
+		i++;
+	}
+}
+
+int get_sprite_height(t_game *game, t_sprite *sprite)
+{
+	int	sprite_height;
+
+	if (sprite->dist < 0.1f)
+		sprite->dist = 0.1f;
+	sprite_height = (int)(game->scene_3d->height / sprite->dist);
+	return (sprite_height);
+}
+
+void draw_sprite(t_game *game, t_sprite *sprite)
+{
+	int			sprite_height;
+	int			sprite_width;
+	int			draw_start_x;
+	int			draw_start_y;
+	int			draw_end_x;
+	int			draw_end_y;
+	int			i;
+	int			j;
+	uint32_t	*pixels;
+	uint32_t	color;
+	int			pixels_drawn = 0;
+
+	if (!sprite->img || sprite->collected == 1)
+		return ;
+	if (!game->wall_distances || !game->scene_3d || !game->scene_3d->pixels)
+		return;
+	if (sprite->screen_x < -500 || sprite->screen_x > (int)game->scene_3d->width + 500)
+    {
+			return;  // Skip rendering off-screen sprites
+	}
+	pixels = (uint32_t *)game->scene_3d->pixels;
+	//get ratios
+	sprite_height = get_sprite_height(game, sprite);
+	sprite_width = (sprite->img->width * sprite_height) / sprite->img->height;
+	if (sprite_height <= 0 || sprite_width <= 0)
+	{
+		return;
+	}
+	// Center sprite vertically and horizontally
+	draw_start_y = (game->scene_3d->height / 2) - (sprite_height / 2);
+	draw_start_x = sprite->screen_x - (sprite_width / 2);
+	draw_end_y = draw_start_y + sprite_height;
+	draw_end_x = draw_start_x + sprite_width;
+	
+		   
+	// Clamp to screen bounds
+	if (draw_start_y < 0)
+		draw_start_y = 0;
+	if (draw_end_y >= (int)game->scene_3d->height)
+		draw_end_y = game->scene_3d->height - 1;
+	if (draw_start_x < 0)
+		draw_start_x = 0;
+	if (draw_end_x >= (int)game->scene_3d->width)
+		draw_end_x = game->scene_3d->width - 1;
+	if (draw_start_x > draw_end_x || draw_start_y > draw_end_y)
+		return;	
+	i = draw_start_y;
+	while (i <= draw_end_y)
+	{
+		j = draw_start_x;
+		while (j <= draw_end_x)
+		{
+			if (j >= 0 && j < (int)game->scene_3d->width)
+			{
+				printf("sprite_dist:%f , wall j: %f\n", sprite->dist, game->wall_distances[j]  * MINI_TILE);
+				if (sprite->dist < game->wall_distances[j] * MINI_TILE)
+				{
+					
+				// Only draw if sprite is CLOSER than wall in this column
+					color = 0xFFCC00CC;
+					// color = get_sprite_texture(sprite, 
+					 //	(float)(j - draw_start_x) / sprite_width,
+				 	//(float)(i - draw_start_y) / sprite_height);
+					
+					// Only draw non-transparent pixels
+					if ((color & 0xFF) != 0)
+					{
+						pixels[i * game->scene_3d->width + j] = color;
+						 printf("Total pixels drawn: %d\n", ++pixels_drawn);
+					}
+				}
+			}
+			j++;
+		}
+		i++;
+	}
+
+}
+
+
+uint32_t get_sprite_texture(t_sprite *sprite, float u, float v)
+{
+	int		tex_x;
+	int		tex_y;
+	int		tex_index;
+	uint8_t	*p;
+	uint8_t	a;
+	uint8_t	b;
+	uint8_t	g;
+	uint8_t	r;
+
+	tex_x = (int)(u * sprite->img->width);
+	tex_y = (int)(v * sprite->img->height);
+	
+	// Clamp to texture bounds
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= (int)sprite->img->width)
+		tex_x = sprite->img->width - 1;
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= (int)sprite->img->height)
+		tex_y = sprite->img->height - 1;
+	
+	tex_index = (tex_y * sprite->img->width + tex_x) * 4;
+	p = sprite->img->pixels;
+	a = p[tex_index];
+	b = p[tex_index + 1];
+	g = p[tex_index + 2];
+	r = p[tex_index + 3];
+	
+	return ((r << 24) | (g << 16) | (b << 8) | a);
+}
+
+void render_all_sprites(t_game *game)
+{
+	int	i;
+
+	if (!game->sprites)
+		return ;
+
+	// Update distances from player
+	update_sprite_distances(game);
+	
+	// Sort by distance (farthest first)
+	//sort_sprites(game);
+	
+	// Draw all sprites
+	i = 0;
+	while (i < game->sprites->count)
+	{
+		draw_sprite(game, game->sprites->sprites[i]);
+		i++;
+	}
+}
+
+
+// int compare_sprites(const void *a, const void *b)
+// {
+// 	t_sprite	*sprite_a = *(t_sprite **)a;
+// 	t_sprite	*sprite_b = *(t_sprite **)b;
+
+// 	if (sprite_a->dist > sprite_b->dist)
+// 		return (-1);
+// 	if (sprite_a->dist < sprite_b->dist)
+// 		return (1);
+// 	return (0);
+// }
+
+
+// void sort_sprites(t_game *game)
+// {
+// 	qsort(game->sprites->sprites, game->sprites->count, 
+// 		  sizeof(t_sprite *), compare_sprites);
+// }
+
+

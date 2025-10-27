@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 02:55:52 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:51:13 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void draw_scene_and_rays(t_game *game)
 	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
 	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
+	game->wall_distances = malloc(sizeof(float) * game->scene_3d->width);
+	for (int i = 0; i < (int)game->scene_3d->width; i++)
+    	game->wall_distances[i] = 10000.0f;	
  	dda(game);
 	if (mlx_image_to_window(game->mlx, game->rays, 0, 0) < 0) // fix start position
 		error_exit(NULL, "image display failure");//edit to free game as well

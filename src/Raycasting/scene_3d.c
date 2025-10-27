@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 20:19:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:58:50 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,18 @@ void draw_single_col(t_game *game, float angle, int col)
 	color_3d_scene(game, col, &an, &rays);
 }
 
-int eval_wall_height(t_game *game,t_angle *angle, t_ray_pos *x, t_ray_pos *y)
+int eval_wall_height(t_game *game,t_angle *angle, t_ray_dic *rays, int col)
 {
     float perp_wall_dist;
     float scale;
     int wall_height;
-
+	
+	if (!game || !angle || !rays || ! game->wall_distances)
+		error_exit2(game, "error during evaluating wall heights");
     scale = 0.9f;
-    perp_wall_dist = eval_real_wall_dist(game, angle, x, y);
+    perp_wall_dist = eval_real_wall_dist(game, angle, rays->x, rays->y);
+	if (perp_wall_dist < game->wall_distances[col])
+    	game->wall_distances[col] = perp_wall_dist;
 	wall_height = (int)(game->scene_3d->height / (perp_wall_dist * scale));
 	return (wall_height);
 }
@@ -88,7 +92,7 @@ void color_3d_scene(t_game *game, int col, t_angle *angle, t_ray_dic *rays)
 		return;
 	}
 	pixels = (uint32_t *)game->scene_3d->pixels;
-	wall.wall_height = eval_wall_height(game, angle, rays->x, rays->y);
+	wall.wall_height = eval_wall_height(game, angle, rays, col);
 	img_tex = get_wall_texture(game, rays->x, rays->y);
 	if (!img_tex)
 	{
@@ -269,42 +273,4 @@ float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos 
     	perp_wall_dist = 0.1f;
 	return (perp_wall_dist);
 }
-/*if (game->hit_side == 1)
-    color = (color >> 1) & 0x7F7F7F7F;
-*/
 
-// void init_scene_3d(t_game *game)
-// {
-// 	if (!game)
-// 		exit(1);
-// 	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
-// 	if(!game->scene_3d)
-// 		error_exit(NULL, "image initialization failure");
-// 	dda_3d(game);
-// 	//color_block (0xFF228B22, game->scene_3d); //TEST
-// 	if (mlx_image_to_window(game->mlx, game->scene_3d, 0, 0) < 0) // fix start position
-// 		error_exit(NULL, "image display failure");//edit to free game as well
-// 	mlx_set_instance_depth(&game->scene_3d->instances[0],-1);
-// }
-
-// void dda_3d(t_game *game)
-// /* an2 is another way to calculate the angles of the rays other than the camera and tan*/
-// {
-// 	uint32_t *pixels;
-// 	float camera_x;
-// 	float an;
-// 	int i;
-	
-// 	if (!game || !game->scene_3d || !game->player)
-// 		error_exit(NULL, "draw ray failure");//edit
-// 	pixels = (uint32_t *)game->scene_3d->pixels;
-// 	ft_memset(pixels, 0, game->scene_3d->width * game->scene_3d->height * sizeof(uint32_t));
-// 	i = 0;
-// 	while(i <  (int)game->scene_3d->width )
-// 	{
-//     	camera_x = 2 * i / (float)game->scene_3d->width - 1;
-//     	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
-// 		draw_single_col(game, an, i);
-// 		i++;
-// 	}
-// }

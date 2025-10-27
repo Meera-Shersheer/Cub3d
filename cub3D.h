@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/25 20:15:38 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/27 19:18:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@
 #  define MINI_TILE   (W_TILE / 4)
 # endif
 
+# ifndef KEY_FRAMES
+#  define KEY_FRAMES   11
+# endif
+
 # ifndef GREEN
 #  define GREEN   "\033[0;32m"
 # endif
@@ -79,6 +83,27 @@ typedef struct s_color
 	int		b;
 	uint32_t color;
 }			t_color;
+
+
+typedef struct s_sprite
+{
+	float		x;				// World position X
+	float		y;				// World position Y
+	float		dist;			// Distance from player (calculated each frame)
+	mlx_image_t	*img;			// Sprite texture
+	int			collected;		// 0 = visible, 1 = collected
+	int			map_tile_x;		// Original map tile position
+	int			map_tile_y;
+	int screen_x;
+	int screen_y;
+}	t_sprite;
+
+typedef struct s_sprite_list
+{
+	t_sprite	**sprites;		// Array of pointers to sprites
+	int			count;			// Number of sprites
+	int			capacity;		// Allocated space
+}	t_sprite_list;
 
 typedef struct s_ray_pos
 {
@@ -192,6 +217,7 @@ typedef struct s_game
 	struct s_map	*map;
 	struct s_player	*player;
 	struct s_textures	*textures;
+	t_sprite_list *sprites;
 	mlx_image_t *map_2d;
 	mlx_image_t *rays;
 	mlx_image_t *scene_3d;
@@ -204,6 +230,7 @@ typedef struct s_game
 	int door_y;
 	int door_open;       // 0 = closed, 1 = open
 	int won; //0-> false   1-> true
+	float *wall_distances;  // Track closest wall distance per column
 }			t_game;
 
 typedef struct s_ray
@@ -379,7 +406,7 @@ float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos 
 void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
 
 //3dscene
-int eval_wall_height(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
+int eval_wall_height(t_game *game,t_angle *angle, t_ray_dic *rays, int col);
 int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_tex);
 float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 
@@ -408,4 +435,15 @@ int	init_key_textures(t_game *g);
 void	init_key_textures2(t_game *g);
 void	init_key_textures3(t_game *g);
 void	init_key_textures4(t_game *g);
+
+
+
+void render_all_sprites(t_game *game);
+uint32_t get_sprite_texture(t_sprite *sprite, float u, float v);
+void draw_sprite(t_game *game, t_sprite *sprite);
+int get_sprite_height(t_game *game, t_sprite *sprite);
+void update_sprite_distances(t_game *game);
+void add_key_sprite(t_game *game, int map_x, int map_y);
+void init_sprites(t_game *game);
+void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y);
 #endif
