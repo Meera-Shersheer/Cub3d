@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:17:22 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 01:36:44 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 17:12:28 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ void init_sprites(t_game *game)
 	game->sprites = malloc(sizeof(t_sprite_list));
 	if (!game->sprites)
 		error_exit2(game , "failure during sprite initialization");
+	ft_bzero(game->sprites, sizeof(t_sprite_list));
 	game->sprites->sprites = malloc(sizeof(t_sprite *)  * game->total_keys);
 	if (!game->sprites->sprites)
 		error_exit2(game , "failure during sprite initialization");
+	ft_bzero(game->sprites->sprites, sizeof(t_sprite *));
 	i = 0;
 	game->sprites->count = 0;
 	while (game->map->map_lines[i])

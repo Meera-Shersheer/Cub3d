@@ -35,7 +35,7 @@ SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -Iinclude -g 
+CFLAGS= -Wall -Wextra -Werror -Iinclude -g -fsanitize=address 
 #-g3 -fsanitize=address -g
 LIBFT  = -L$(LFTDIR) -lft
 MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm

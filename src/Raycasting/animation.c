@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:29:55 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 10:02:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 17:42:34 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void update_sprite_animation(t_sprite *sprite)
 	long current_time_ms;
 	long elapsed_ms;
 	
-	if (!sprite || !sprite->frames)
+	if (!sprite || !sprite->frames || !sprite->img)
 		return;
 	current_time_ms = get_time();
 	if (sprite->last_update_time == 0)
@@ -80,6 +80,8 @@ void update_sprite_animation(t_sprite *sprite)
 		sprite->frame++;
 		if (sprite->frame >= sprite->frame_count)
 			sprite->frame = 0;
+		if (sprite->frame < 0 || sprite->frame >= sprite->frame_count)
+			sprite->frame = 0;
 		sprite->img = sprite->frames[sprite->frame];
 	}
 }
@@ -88,12 +90,12 @@ void update_all_sprites_animation(t_game *game)
 {
 	int i;
 	
-	if (!game || !game->sprites)
+	if (!game || !game->sprites || !game->sprites->sprites)
 		return;
 	i = 0;
 	while (i < game->sprites->count)
 	{
-		if (game->sprites->sprites[i]->collected == 0)
+		if (game->sprites->sprites[i] && game->sprites->sprites[i]->collected == 0)
 		{
 			update_sprite_animation(game->sprites->sprites[i]);
 		}
@@ -105,7 +107,7 @@ void render_all_sprites(t_game *game)
 {
 	int	i;
 
-	if (!game->sprites)
+	if ( !game || !game->sprites || !game->sprites->sprites)
 		return ;
 	update_sprite_distances(game);
 	sort_sprites(game);
@@ -113,7 +115,8 @@ void render_all_sprites(t_game *game)
 	i = 0;
 	while (i < game->sprites->count)
 	{
-		draw_sprite(game, game->sprites->sprites[i]);
+		if (game->sprites->sprites[i])
+			draw_sprite(game, game->sprites->sprites[i]);
 		i++;
 	}
 }

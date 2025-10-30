@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 16:02:45 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:56:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int	main(int argc, char *argv[])
 	place_keys_and_door(&game);
 	game.won = 0;
 	init_textures(&game);
-	init_sprites(&game);
 	init_key_animation_frames(&game);
+	init_sprites(&game);
 	draw_2d_map(&game);
 	draw_player(&game);
 	draw_scene_and_rays(&game);
