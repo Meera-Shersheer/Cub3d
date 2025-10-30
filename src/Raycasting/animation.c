@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:29:55 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 03:12:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 10:02:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void update_all_sprites_animation(t_game *game)
 		i++;
 	}
 }
+
 void render_all_sprites(t_game *game)
 {
 	int	i;

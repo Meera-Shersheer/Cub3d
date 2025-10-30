@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 03:17:11 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 11:18:35 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void hide_map2d(mlx_key_data_t keydata, void *param)
 			g->map_2d->instances[0].enabled = false;
 			g->player->img->instances[0].enabled = false;
 			g->rays->instances[0].enabled = false;
-			puts("Now, the minimap is hidden to make appear press '1'\n");
+			puts("Now, the minimap is hidden to make appear press '1'");
 		}
 		else if (g->map_2d->instances[0].enabled == false )
 		{
 			g->map_2d->instances[0].enabled = true;
 			g->player->img->instances[0].enabled = true;
 			g->rays->instances[0].enabled = true;
-			puts("To hide the minimap press '1'\n");
+			puts("To hide the minimap press '1'");
 		}
 	}
 }
@@ -42,15 +42,18 @@ void mouse_rotate(double xpos, double ypos, void *param)
 {
     t_game *game;
 	double delta_x;
-    static double last_x = -1;
 
 	(void) ypos;
 	game = (t_game *)param;
-    if (last_x == -1)
-        last_x = xpos;
+	
+    if (game->mouse_last_x < 0)
+    {
+        game->mouse_last_x = xpos;
+        return;  // Skip first frame
+    }
 
-    delta_x = xpos - last_x;
-    last_x = xpos;
+    delta_x = xpos - game->mouse_last_x;
+    game->mouse_last_x = xpos;
 	
     if (delta_x > 0)
 	    game->player->angle += 0.05;
@@ -72,7 +75,7 @@ void move(void *param)
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
 	g->player->move_speed = 5;
-	mlx_key_hook(g->mlx, hide_map2d, param);
+
     if (mlx_is_key_down(g->mlx, MLX_KEY_W))
         move_forward(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_S))
@@ -82,9 +85,9 @@ void move(void *param)
     if (mlx_is_key_down(g->mlx, MLX_KEY_D))
         move_right(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-        g->player->angle += 0.2;
+        g->player->angle += 0.15;
     if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.2;
+		g->player->angle -= 0.15;
 	if (g->player->angle < 0)
         g->player->angle += 2 * M_PI;
 	else if (g->player->angle > 2 * M_PI)
@@ -93,8 +96,11 @@ void move(void *param)
 	g->player->img->instances[0].y = g->player->y;
 	check_key_pickup(g);
     check_door(g);
-	for (int i = 0; i < (int)g->scene_3d->width; i++)
-    	g->wall_distances[i] = 10000.0f;  // Reset each frame
+	if (g->wall_distances && g->scene_3d)
+	{
+		for (int i = 0; i < (int)g->scene_3d->width; i++)
+			g->wall_distances[i] = 10000.0f;
+	} // Reset each frame
 	dda(g);
 	render_all_sprites(g);
 	 if (g->won == 1)
@@ -129,6 +135,7 @@ int	main(int argc, char *argv[])
 		error_exit(NULL, "malloc failure");
 	game.w_tile = W_TILE;
 	game.mini_tile = MINI_TILE;
+	game.mouse_last_x = -1;  
 	if (parsing(argc, argv, &game))
 		return (1);
 	game.mlx =  mlx_init(game.w_tile * (game.map->screen_width), game.w_tile * (game.map->screen_height), "Cub3d Game", true);
@@ -144,6 +151,7 @@ int	main(int argc, char *argv[])
 	draw_scene_and_rays(&game);
 	game.game_time_start = get_time();
 	render_all_sprites(&game);
+	mlx_key_hook(game.mlx, hide_map2d, &game);
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);
@@ -161,9 +169,17 @@ void update_sprite_distances(t_game *game)
 	float screen_x_calc;
 	float raw_dist;
 
+	if (!game || !game->sprites || !game->player)
+		return;
 	i = 0;
 	while (i < game->sprites->count)
 	{
+		if (!game->sprites->sprites[i])
+		{
+			i++;
+			continue;
+		}
+		
 		if (game->sprites->sprites[i]->collected == 0)
 		{
 			dx = game->sprites->sprites[i]->x - (game->player->x + game->player->img->width / 2.0f);
@@ -248,7 +264,8 @@ void draw_sprite(t_game *game, t_sprite *sprite)
 		j = draw_start_x;
 		while (j <= draw_end_x)
 		{
-			if (j >= 0 && j < (int)game->scene_3d->width)
+			if (j >= 0 && j < (int)game->scene_3d->width && \
+				i >= 0 && i < (int)game->scene_3d->height)
 			{
 				if (sprite->dist < game->wall_distances[j] * game->mini_tile)
 				{
@@ -290,6 +307,8 @@ uint32_t get_sprite_texture(t_sprite *sprite, float u, float v)
 	if (tex_y >= (int)sprite->img->height)
 		tex_y = sprite->img->height - 1;
 	tex_index = (tex_y * sprite->img->width + tex_x) * 4;
+	if (tex_index + 3 >= (int)(sprite->img->width * sprite->img->height * 4))
+		return (0);
 	p = sprite->img->pixels;
 	a = p[tex_index];
 	b = p[tex_index + 1];
@@ -316,11 +335,14 @@ void sort_sprites(t_game *game)
 		j = 0;
 		while (j < game->sprites->count - i - 1)
 		{
-			if (game->sprites->sprites[j]->dist < game->sprites->sprites[j + 1]->dist)
+			if (game->sprites->sprites[j] && game->sprites->sprites[j + 1])
 			{
-				temp = game->sprites->sprites[j];
-				game->sprites->sprites[j] = game->sprites->sprites[j + 1];
-				game->sprites->sprites[j + 1] = temp;
+				if (game->sprites->sprites[j]->dist < game->sprites->sprites[j + 1]->dist)
+				{
+					temp = game->sprites->sprites[j];
+					game->sprites->sprites[j] = game->sprites->sprites[j + 1];
+					game->sprites->sprites[j + 1] = temp;
+				}
 			}
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 02:30:51 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 11:01:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ typedef struct s_game
 	long game_time_end;
 	int w_tile;
 	int mini_tile;
+	double mouse_last_x;
 }			t_game;
 
 typedef struct s_ray
