@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 02:18:02 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:05:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void draw_scene_and_rays(t_game *game)
 	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
 	game->wall_distances = malloc(sizeof(float) * game->scene_3d->width);
+	if (!game->wall_distances)
+		error_exit(game->map, "malloc failure for wall_distances");
 	for (int i = 0; i < (int)game->scene_3d->width; i++)
     	game->wall_distances[i] = 10000.0f;	
  	dda(game);

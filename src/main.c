@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 15:03:43 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:02:45 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void hide_map2d(mlx_key_data_t keydata, void *param)
     t_game *g;
 	
 	g = (t_game *)param;
+	if (!g || !g->map_2d || !g->player || !g->player->img || !g->rays)
+		return;
     if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
 	{
 		if (g->map_2d->instances[0].enabled == true )
@@ -24,19 +26,17 @@ void hide_map2d(mlx_key_data_t keydata, void *param)
 			g->map_2d->instances[0].enabled = false;
 			g->player->img->instances[0].enabled = false;
 			g->rays->instances[0].enabled = false;
-			puts("Now, the minimap is hidden to make appear press '1'");
+			puts(CYAN "Now, the minimap is hidden to make appear press '1'" NC);
 		}
 		else if (g->map_2d->instances[0].enabled == false )
 		{
 			g->map_2d->instances[0].enabled = true;
 			g->player->img->instances[0].enabled = true;
 			g->rays->instances[0].enabled = true;
-			puts("To hide the minimap press '1'");
+			puts(CYAN "To hide the minimap press '1'" NC);
 		}
 	}
 }
-
- // adjust for comfort
 
 void mouse_rotate(double xpos, double ypos, void *param)
 {
@@ -45,13 +45,13 @@ void mouse_rotate(double xpos, double ypos, void *param)
 
 	(void) ypos;
 	game = (t_game *)param;
-	
+	if (!game || !game->player)
+		return;
     if (game->mouse_last_x < 0)
     {
         game->mouse_last_x = xpos;
-        return;  // Skip first frame
+        return;
     }
-
     delta_x = xpos - game->mouse_last_x;
     game->mouse_last_x = xpos;
 	
@@ -71,17 +71,19 @@ void move(void *param)
     t_game *g;
 	
 	g = (t_game *)param;
+	if (!g || !g->mlx || !g->player || !g->scene_3d || !g->wall_distances)
+		return;
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_2))
 	{
 		g->player->move_speed += 1 ;
-		printf("player speed: %f \n",g->player->move_speed );
+		printf(CYAN"Player speed: %.1f \n" NC,g->player->move_speed );
 	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_3))
 	{
 		g->player->move_speed -= 1 ;
-		printf("player speed: %f \n",g->player->move_speed );
+		printf(CYAN"Player speed: %.1f \n"NC,g->player->move_speed );
 	}
 	if (g->player->move_speed < 1)
 		g->player->move_speed = 1;
@@ -107,11 +109,8 @@ void move(void *param)
 	g->player->img->instances[0].y = g->player->y;
 	check_key_pickup(g);
     check_door(g);
-	if (g->wall_distances && g->scene_3d)
-	{
-		for (int i = 0; i < (int)g->scene_3d->width; i++)
-			g->wall_distances[i] = 10000.0f;
-	} // Reset each frame
+	for (int i = 0; i < (int)g->scene_3d->width; i++)
+		g->wall_distances[i] = 10000.0f;
 	dda(g);
 	render_all_sprites(g);
 	 if (g->won == 1)
@@ -123,8 +122,6 @@ void move(void *param)
 	}
 }
 	
-	
-	/*1)test a really huge map and see if we need to resize or give an error*/
 	
 	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D map*/
 long get_time(void)
@@ -146,7 +143,8 @@ int	main(int argc, char *argv[])
 		error_exit(NULL, "malloc failure");
 	game.w_tile = W_TILE;
 	game.mini_tile = MINI_TILE;
-	game.mouse_last_x = -1;  
+	game.mouse_last_x = -1;
+	game.wall_distances = NULL;
 	if (parsing(argc, argv, &game))
 		return (1);
 	game.mlx =  mlx_init(game.w_tile * (game.map->screen_width), game.w_tile * (game.map->screen_height), "Cub3d Game", true);
@@ -161,6 +159,11 @@ int	main(int argc, char *argv[])
 	draw_player(&game);
 	draw_scene_and_rays(&game);
 	game.game_time_start = get_time();
+	if (game.wall_distances && game.scene_3d)
+	{
+		for (int i = 0; i < (int)game.scene_3d->width; i++)
+			game.wall_distances[i] = 10000.0f;
+	}
 	render_all_sprites(&game);
 	mlx_key_hook(game.mlx, hide_map2d, &game);
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
@@ -180,7 +183,7 @@ void update_sprite_distances(t_game *game)
 	float screen_x_calc;
 	float raw_dist;
 
-	if (!game || !game->sprites || !game->player)
+	if (!game || !game->sprites || !game->player || !game->player->img || !game->scene_3d)
 		return;
 	i = 0;
 	while (i < game->sprites->count)
@@ -278,13 +281,18 @@ void draw_sprite(t_game *game, t_sprite *sprite)
 			if (j >= 0 && j < (int)game->scene_3d->width && \
 				i >= 0 && i < (int)game->scene_3d->height)
 			{
-				if (sprite->dist < game->wall_distances[j] * game->mini_tile)
+				if (j < (int)game->scene_3d->width && 
+					game->wall_distances[j] > 0 && sprite->dist < game->wall_distances[j] * game->mini_tile)
 				{
 					 color = get_sprite_texture(sprite, \
 						(float)(j - draw_start_x) / sprite_width,	\
 						(float)(i - draw_start_y) / sprite_height);
 					if ((color & 0xFF) != 0)
-						pixels[i * game->scene_3d->width + j] = color;
+						{
+							int pixel_index = i * game->scene_3d->width + j;
+							if (pixel_index >= 0 && pixel_index < (int)(game->scene_3d->width * game->scene_3d->height))
+								pixels[pixel_index] = color;
+						}
 				}
 			}
 			j++;
@@ -305,8 +313,10 @@ uint32_t get_sprite_texture(t_sprite *sprite, float u, float v)
 	uint8_t	g;
 	uint8_t	r;
 
-	if (!sprite)
-		error_exit2(NULL, "sprite texture error");
+	if (!sprite || !sprite->img || !sprite->img->pixels)
+		return (0);
+	if (sprite->img->width == 0 || sprite->img->height == 0)
+		return (0);
 	tex_x = (int)(u * sprite->img->width);
 	tex_y = (int)(v * sprite->img->height);
 	if (tex_x < 0)
@@ -318,7 +328,7 @@ uint32_t get_sprite_texture(t_sprite *sprite, float u, float v)
 	if (tex_y >= (int)sprite->img->height)
 		tex_y = sprite->img->height - 1;
 	tex_index = (tex_y * sprite->img->width + tex_x) * 4;
-	if (tex_index + 3 >= (int)(sprite->img->width * sprite->img->height * 4))
+	if (tex_index < 0 || tex_index + 3 >= (int)(sprite->img->width * sprite->img->height * 4))
 		return (0);
 	p = sprite->img->pixels;
 	a = p[tex_index];
