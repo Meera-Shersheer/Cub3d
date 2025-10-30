@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 03:10:03 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:05:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void color_block (unsigned int color, mlx_image_t *img)
 	pixels = (uint32_t *)img->pixels;
 	while (i < (int)(img->width * img->height))
 	{
-		// if (i < (int)(img->width) * 2)
-		// 	pixels[i] = 0xFF000000;
-		// else
 			pixels[i] = color;
 		i++;
 	}
@@ -38,21 +35,22 @@ void draw_player(t_game *game)
 		exit(1);
 	game->player = malloc(sizeof(t_player));
 	if(!game->player)
-		error_exit(NULL, "malloc failure");//edit to free game as well
+		error_exit2(game, "malloc failure");//edit to free game as well
 	if(!game->map)
-		error_exit(NULL, "map failure");//edit to free game as well
+		error_exit2(game, "map failure");//edit to free game as well
 	game->player->img = mlx_new_image(game->mlx, game->mini_tile / 3, game->mini_tile / 3); // fix dimention of the player
 	if(!game->player->img)
-		error_exit(NULL, "image initialization failure");
+		error_exit2(game, "image initialization failure");
 	game->player->x = get_player_x_pos(game->map->map_lines) * game->mini_tile 
                 + (game->mini_tile - game->player->img->width) / 2;
 	game->player->y = get_player_y_pos(game->map->map_lines) * game->mini_tile 
                 + (game->mini_tile - game->player->img->height) / 2;
+	game->player->move_speed = 5;
 	pick_initial_angle (game);
 	color_block (0xFFCC00CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
-		game->player->y) < 0) // fix start position
-		error_exit(NULL, "image display failure");//edit to free game as well
+		game->player->y) < 0)
+		error_exit2(game, "image display failure");
 }
 void pick_initial_angle (t_game *game)
 {

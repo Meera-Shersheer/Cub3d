@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/25 02:00:07 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:43:52 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ void	check_map_values(t_map *map)
 {
 	check_map_chars(map);
 	check_player_position(map);
+}
+
+int find_max(int num1, int num2)
+{
+	if(num1 > num2)
+		return (num1);
+	else
+		return (num2);
 }

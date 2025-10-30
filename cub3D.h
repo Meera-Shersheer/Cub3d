@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 11:01:49 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 14:44:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -470,5 +470,7 @@ void sort_sprites(t_game *game);
 
 long get_time(void);
 void adjust_tile_size_to_screen(t_game *game, int map_width, int map_height);
+
+int find_max(int num1, int num2);
 
 #endif

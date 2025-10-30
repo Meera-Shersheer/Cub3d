@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 11:18:35 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 15:03:43 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void mouse_rotate(double xpos, double ypos, void *param)
 }
 
 
-
 void move(void *param)
 {
     t_game *g;
@@ -74,8 +73,20 @@ void move(void *param)
 	g = (t_game *)param;
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
-	g->player->move_speed = 5;
-
+	if (mlx_is_key_down(g->mlx, MLX_KEY_2))
+	{
+		g->player->move_speed += 1 ;
+		printf("player speed: %f \n",g->player->move_speed );
+	}
+	if (mlx_is_key_down(g->mlx, MLX_KEY_3))
+	{
+		g->player->move_speed -= 1 ;
+		printf("player speed: %f \n",g->player->move_speed );
+	}
+	if (g->player->move_speed < 1)
+		g->player->move_speed = 1;
+	if (g->player->move_speed > 2 * g->mini_tile / 3)
+		g->player->move_speed = 2 * g->mini_tile / 3;
     if (mlx_is_key_down(g->mlx, MLX_KEY_W))
         move_forward(g);
     if (mlx_is_key_down(g->mlx, MLX_KEY_S))
