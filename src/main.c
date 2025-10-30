@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 19:12:54 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:01:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,19 @@ void move(void *param)
 	g->player->img->instances[0].y = g->player->y;
 	check_key_pickup(g);
     check_door(g);
-
+	for (int i = 0; i < (int)g->scene_3d->width; i++)
+		g->wall_distances[i] = 10000.0f;
+	dda(g);
+	render_all_sprites(g);
 	if (g->won == 1)
 	{
 		g->game_time_end = get_time();
 		printf (GREEN"You finished the game in %ld.%ld s\n"NC, (g->game_time_end - g->game_time_start)/1000, (g->game_time_end - g->game_time_start)%1000);
 		mlx_close_window(g->mlx);
+		clean_sources(g);
+		//mlx_terminate(g->mlx);
         return;
 	}
-	for (int i = 0; i < (int)g->scene_3d->width; i++)
-		g->wall_distances[i] = 10000.0f;
-	dda(g);
-	render_all_sprites(g);
 }
 	
 	

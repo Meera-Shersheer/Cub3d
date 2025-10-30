@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:17:22 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 17:12:28 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:11:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,6 @@ int init_door_textures(t_game *g)
 	g->textures->door->img_door_closed = load_textures(g, "src_textures/doors/door003.png");
 	if (!g->textures->door->img_door_closed)
 		error_exit2(g, "Failed: door closed image");	
-	g->textures->door->img_door_semi1 =  load_textures(g, "src_textures/doors/door001.png");
-	if (!g->textures->door->img_door_semi1)
-		error_exit2(g, "Failed: door semi1 image");	
-	g->textures->door->img_door_semi2 =  load_textures(g, "src_textures/doors/door002.png");
-	if (!g->textures->door->img_door_semi2)
-		error_exit2(g, "Failed: door semi2 image");	
 	g->textures->door->img_door_opened =  load_textures(g, "src_textures/doors/door000.png");
 	if (!g->textures->door->img_door_opened)
 		error_exit2(g, "Failed: door opened image");
