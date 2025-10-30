@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/30 16:49:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 19:16:56 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void check_key_pickup(t_game *g)
     int py ;
 	
 	if (!g || !g->player || !g->map || !g->map->map_lines)
+		return;
+	if (g->map->screen_height <= 0 || g->map->screen_width <= 0)
 		return;
 	px = (int)(g->player->x / g->mini_tile);
 	py = (int)(g->player->y / g->mini_tile);
@@ -55,7 +57,7 @@ void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y)
 {
 	int i;
 
-	if (!g || !g->sprites || !g->sprites->sprites)
+	if (!g || !g->sprites || !g->sprites->sprites ||  g->sprites->count <= 0)
 		return;
 	i = 0;
 	while (i < g->sprites->count)
@@ -66,10 +68,7 @@ void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y)
 			continue;
 		}
 		if (g->sprites->sprites[i]->map_tile_x == tile_x && g->sprites->sprites[i]->map_tile_y == tile_y)
-		{
 			g->sprites->sprites[i]->collected = 1;
-			break;
-		}
 		i++;	
 	}
 }
@@ -80,6 +79,8 @@ void check_door(t_game *g)
 	int py;
 	
 	if (!g || !g->player || !g->map || !g->map->map_lines)
+		return;
+	if (g->map->screen_height <= 0 || g->map->screen_width <= 0)
 		return;
 	px = (int)(g->player->x / g->mini_tile);
 	py = (int)(g->player->y / g->mini_tile);
@@ -95,7 +96,7 @@ void check_door(t_game *g)
 	{
 		if (g->collected_keys == g->total_keys)
 		{
-			puts("🚪 Door opened! You win! 🎉");
+			printf("🚪 Door opened! You win! 🎉\n");
 			g->won = 1;
 		}	
 	}
