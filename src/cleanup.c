@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/25 00:29:56 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 01:35:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,19 @@ void clean_sources(t_game *game)
 	free_map(game->map);
 	delete_textures(game);
 }
-void delete_tex_img(mlx_t *mlx, mlx_texture_t *tex, mlx_image_t *img)
-{
-    if (img)
-        mlx_delete_image(mlx, img);
-    if (tex)
-        mlx_delete_texture(tex);
-}
+
 void delete_textures(t_game *g)
 {
 	if (!g)
 		exit(1);//edit
-	delete_tex_img(g->mlx, g->textures->tex_no, g->textures->img_tex_no);
-    delete_tex_img(g->mlx, g->textures->tex_ea, g->textures->img_tex_ea);
-    delete_tex_img(g->mlx, g->textures->tex_we, g->textures->img_tex_we);
-    delete_tex_img(g->mlx, g->textures->tex_so, g->textures->img_tex_so);
+	if ( g->textures->img_tex_no)
+        mlx_delete_image(g->mlx, g->textures->img_tex_no);
+	if ( g->textures->img_tex_no)
+        mlx_delete_image(g->mlx, g->textures->img_tex_ea);
+	if ( g->textures->img_tex_no)
+        mlx_delete_image(g->mlx, g->textures->img_tex_we);
+	if ( g->textures->img_tex_no)
+        mlx_delete_image(g->mlx, g->textures->img_tex_so);
 	if(g->textures)
 		free(g->textures);
 }

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/27 19:18:00 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 02:30:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+#ifndef FRAME_DURATION_MS
+#define FRAME_DURATION_MS 40
+#endif
+
+#ifndef MIN_TILE_SIZE
+#define MIN_TILE_SIZE 16 
+#endif
+
+#ifndef  SCALE_FACTOR
+#define SCALE_FACTOR 0.9f  
+#endif
+
 #ifndef FOV
 #define FOV (M_PI / 2.5f)  
 #endif
@@ -45,9 +57,6 @@
 #  define MINI_TILE   (W_TILE / 4)
 # endif
 
-# ifndef KEY_FRAMES
-#  define KEY_FRAMES   11
-# endif
 
 # ifndef GREEN
 #  define GREEN   "\033[0;32m"
@@ -96,6 +105,12 @@ typedef struct s_sprite
 	int			map_tile_y;
 	int screen_x;
 	int screen_y;
+	int			frame;			// Current frame index
+	int			frame_count;	// Total number of frames
+	//int			frame_delay;	// Frames to wait before switching
+	//int			frame_timer;	// Counter for frame delay
+	long		last_update_time;
+	mlx_image_t	**frames;		// Array of frame images
 }	t_sprite;
 
 typedef struct s_sprite_list
@@ -161,13 +176,9 @@ typedef struct s_player
 
 typedef struct s_textures
 {
-	mlx_texture_t *tex_no;
 	mlx_image_t *img_tex_no;
-	mlx_texture_t *tex_ea;
 	mlx_image_t *img_tex_ea;
-	mlx_texture_t *tex_we;
 	mlx_image_t *img_tex_we;
-	mlx_texture_t *tex_so;
 	mlx_image_t *img_tex_so;
 	struct s_key_textures	*keys;
 	struct s_door_textures	*door;
@@ -175,40 +186,36 @@ typedef struct s_textures
 
 typedef struct s_door_textures
 {
-	mlx_texture_t *tex_door_closed;
 	mlx_image_t *img_door_closed;
-	mlx_texture_t *tex_door_opened;
 	mlx_image_t *img_door_opened;
-	mlx_texture_t *tex_door_semi1;
 	mlx_image_t *img_door_semi1;
-	mlx_texture_t *tex_door_semi2;
 	mlx_image_t *img_door_semi2;
 }			t_door_textures;
 
 typedef struct s_key_textures
 {
-	mlx_texture_t *tex_key00;
 	mlx_image_t *img_key00;
-	mlx_texture_t *tex_key01;
 	mlx_image_t *img_key01;
-	mlx_texture_t *tex_key02;
 	mlx_image_t *img_key02;
-	mlx_texture_t *tex_key03;
 	mlx_image_t *img_key03;
-	mlx_texture_t *tex_key04;
 	mlx_image_t *img_key04;
-	mlx_texture_t *tex_key05;
 	mlx_image_t *img_key05;
-	mlx_texture_t *tex_key06;
 	mlx_image_t *img_key06;
-	mlx_texture_t *tex_key07;
 	mlx_image_t *img_key07;
-	mlx_texture_t *tex_key08;
 	mlx_image_t *img_key08;
-	mlx_texture_t *tex_key09;
 	mlx_image_t *img_key09;
-	mlx_texture_t *tex_key10;
 	mlx_image_t *img_key10;
+	mlx_image_t *img_key11;
+	mlx_image_t *img_key12;
+	mlx_image_t *img_key13;
+	mlx_image_t *img_key14;
+	mlx_image_t *img_key15;
+	mlx_image_t *img_key16;
+	mlx_image_t *img_key17;
+	mlx_image_t *img_key18;
+	mlx_image_t *img_key19;
+	mlx_image_t *img_key20;
+	mlx_image_t		*animation_frames[21];
 }			t_key_textures;
 
 typedef struct s_game
@@ -231,6 +238,10 @@ typedef struct s_game
 	int door_open;       // 0 = closed, 1 = open
 	int won; //0-> false   1-> true
 	float *wall_distances;  // Track closest wall distance per column
+	long game_time_start;
+	long game_time_end;
+	int w_tile;
+	int mini_tile;
 }			t_game;
 
 typedef struct s_ray
@@ -372,7 +383,7 @@ char		**cpy_matrix(char	**map);
 //minimap
 void draw_player(t_game *game);
 void draw_2d_map(t_game *game);
-void color_square_map2d (unsigned int color, mlx_image_t *img, int x, int y);
+void color_square_map2d (t_game *game, unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y);
 void pick_initial_angle (t_game *game);
 
 void color_block (unsigned int color, mlx_image_t *img);
@@ -417,8 +428,8 @@ int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y);
 void place_keys_and_door(t_game *g);
 void check_door(t_game *game);
 void check_key_pickup(t_game *game);
-void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
-void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y);
+void draw_door_symbol(t_game *game, mlx_image_t *img, int pixel_x, int pixel_y);
+void draw_key_symbol(t_game *game, mlx_image_t *img, int pixel_x, int pixel_y);
 void	check_keys_reachable(t_game *g);
 int	reach_keys(t_map *map, char **grid, int x, int y);
 int pseudo_random(int max);
@@ -434,7 +445,6 @@ void	init_key_textures1(t_game *g);
 int	init_key_textures(t_game *g);
 void	init_key_textures2(t_game *g);
 void	init_key_textures3(t_game *g);
-void	init_key_textures4(t_game *g);
 
 
 
@@ -446,4 +456,18 @@ void update_sprite_distances(t_game *game);
 void add_key_sprite(t_game *game, int map_x, int map_y);
 void init_sprites(t_game *game);
 void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y);
+
+
+
+////////////
+void update_all_sprites_animation(t_game *game);
+void update_sprite_animation(t_sprite *sprite);
+void init_key_animation_frames(t_game *g);
+mlx_image_t *load_textures(t_game *game, char *tex_path);
+
+void sort_sprites(t_game *game);
+
+long get_time(void);
+void adjust_tile_size_to_screen(t_game *game, int map_width, int map_height);
+
 #endif

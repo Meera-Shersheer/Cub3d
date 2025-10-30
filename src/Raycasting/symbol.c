@@ -57,16 +57,16 @@ void draw_rectangle(t_dimention dim, t_center center, uint32_t color, mlx_image_
     }
 }
 
-void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
+void draw_key_symbol(t_game *game, mlx_image_t *img, int pixel_x, int pixel_y)
 {
     t_center center;
     t_dimention dim;
-    int radius = MINI_TILE / 6;
+    int radius = game->mini_tile / 6;
     
-    if (!img)
+    if (!img || !game)
         return;
-    center.center_x = pixel_x + MINI_TILE / 2;
-    center.center_y = pixel_y + MINI_TILE / 2;
+    center.center_x = pixel_x + game->mini_tile / 2;
+    center.center_y = pixel_y + game->mini_tile / 2;
     draw_circle(radius, center, 0xFFDD0000, img);
     dim.width = 2 * radius;
     dim.height = radius / 2;  
@@ -74,38 +74,19 @@ void draw_key_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
     draw_rectangle(dim, center, 0xFFDD0000, img);
 }
 
-void draw_door_symbol(mlx_image_t *img, int px, int py)
+void draw_door_symbol(t_game *game, mlx_image_t *img, int px, int py)
 {
     uint32_t door_color = 0xFF006600;
     uint32_t knob_color = 0xFF00FFD7; 
     t_dimention dim;
     t_center center;
 
-    dim.width = MINI_TILE;
-    dim.height = MINI_TILE;
+    dim.width = game->mini_tile;
+    dim.height = game->mini_tile;
     center.center_x = px;
     center.center_y = py;
     draw_rectangle(dim, center, door_color, img);
-    center.center_x = px + MINI_TILE - 4;
-    center.center_y = py + MINI_TILE / 2;
+    center.center_x = px + game->mini_tile - 4;
+    center.center_y = py + game->mini_tile / 2;
     draw_circle(2, center, knob_color, img);
 }
-
-// void draw_door_symbol(mlx_image_t *img, int pixel_x, int pixel_y)
-// {
-//     uint32_t *pixels = (uint32_t *)img->pixels;
-//     int i, j;
-
-//     for (i = 0; i < MINI_TILE; i++)
-//     {
-//         for (j = 0; j < MINI_TILE; j++)
-//             pixels[(pixel_y + j) * img->width + (pixel_x + i)] = 0xFF006400;
-//     }
-//     int gap_start = pixel_x + MINI_TILE / 2 - 2;
-//     int gap_end = pixel_x + MINI_TILE / 2 + 2;
-//     for (i = gap_start; i < gap_end; i++)
-//     {
-//         for (j = pixel_y + 2; j < pixel_y + MINI_TILE - 2; j++)
-//             pixels[j * img->width + i] = 0xFF00FFD7;
-//     }
-//}

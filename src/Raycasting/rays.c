@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/27 16:51:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 02:18:02 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void draw_scene_and_rays(t_game *game)
 {
 	if (!game)
 		exit(1);
-	game->rays = mlx_new_image(game->mlx,  MINI_TILE * (game->map->screen_width), MINI_TILE * (game->map->screen_height));
+	game->rays = mlx_new_image(game->mlx,  game->mini_tile * (game->map->screen_width), game->mini_tile * (game->map->screen_height));
 	game->scene_3d = mlx_new_image(game->mlx, W_TILE * (game->map->screen_width), W_TILE * (game->map->screen_height));
 	if(!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
@@ -55,7 +55,7 @@ void	dda(t_game *game)
 		i++;
 	}
 	i = 0;
-	while (i < MINI_TILE * game->map->screen_width)
+	while (i < game->mini_tile * game->map->screen_width)
 	{
 		camera_x = 2 * i / (float)game->rays->width - 1;
     	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
@@ -157,18 +157,18 @@ void cast_rays(t_game *game, float angle)
 	an.sin_angle = sinf(angle);
 	if (!game  || !game->player)
 		error_exit(NULL, "cast ray failure");//edit
-	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
-	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
+	x.pos = (game->player->x + game->player->img->width / 2.0f) / game->mini_tile;
+	y.pos = (game->player->y + game->player->img->height / 2.0f) / game->mini_tile;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);	
 	if (evaluate_delta_dist(&x, &y, &an) == 1)
 		error_exit(game->map, "error during drawing rays");//edit later
 	set_dir(&an, &x, &y);
 	wall_dist = find_stop_point(game,&x, &y);
-    x.line_start = (int)(x.pos * MINI_TILE);
-    y.line_start = (int)(y.pos * MINI_TILE);
-    x.line_end = (int)((x.pos+ an.cos_angle * wall_dist) * MINI_TILE);
-    y.line_end = (int)((y.pos + an.sin_angle * wall_dist) * MINI_TILE);
+    x.line_start = (int)(x.pos * game->mini_tile);
+    y.line_start = (int)(y.pos * game->mini_tile);
+    x.line_end = (int)((x.pos+ an.cos_angle * wall_dist) * game->mini_tile);
+    y.line_end = (int)((y.pos + an.sin_angle * wall_dist) * game->mini_tile);
     draw_line_bresenham(game->rays, &x, &y, 0xFF00EE00);
  }
 

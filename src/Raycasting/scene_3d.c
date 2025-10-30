@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/27 18:58:50 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 02:18:15 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void draw_single_col(t_game *game, float angle, int col)
 	an.angle = angle;
 	if (!game || !game->player)
 		error_exit(NULL, "draw ray failure");//edit
-	x.pos = (game->player->x + game->player->img->width / 2.0f) / MINI_TILE;
-	y.pos = (game->player->y + game->player->img->height / 2.0f) / MINI_TILE;
+	x.pos = (game->player->x + game->player->img->width / 2.0f) / game->mini_tile;
+	y.pos = (game->player->y + game->player->img->height / 2.0f) / game->mini_tile;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);	
 	if (evaluate_delta_dist(&x, &y, &an) == 1)
@@ -42,10 +42,10 @@ int eval_wall_height(t_game *game,t_angle *angle, t_ray_dic *rays, int col)
     float perp_wall_dist;
     float scale;
     int wall_height;
-	
+		
 	if (!game || !angle || !rays || ! game->wall_distances)
 		error_exit2(game, "error during evaluating wall heights");
-    scale = 0.9f;
+    scale = 1.1f;
     perp_wall_dist = eval_real_wall_dist(game, angle, rays->x, rays->y);
 	if (perp_wall_dist < game->wall_distances[col])
     	game->wall_distances[col] = perp_wall_dist;
