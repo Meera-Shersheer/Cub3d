@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 19:40:06 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/31 23:26:00 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -512,7 +512,14 @@ int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_t
 void hide_map2d(mlx_key_data_t keydata, void *param);
 void mouse_rotate(double xpos, double ypos, void *param);
 void draw_sprite(t_game *game, t_sprite *sprite);
+void move(void *param);
+uint32_t	get_sprite_texture(t_sprite *sprite, float u, float v);
 
 
+void	swap_sprites(t_sprite **a, t_sprite **b);
+long	get_time(void);
+void draw_sprite(t_game *game, t_sprite *sprite);
+
+void update_sprite_distances(t_game *game) ;
 
 #endif
