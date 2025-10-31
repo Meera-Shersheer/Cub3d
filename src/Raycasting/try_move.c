@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/17 20:16:04 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/31 13:09:35 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ t_corners	get_corners(t_game *g, float nx, float ny)
 	c.rows = 0;
 	while (g->map->map_lines[c.rows])
 		c.rows++;
-	c.corners_x[0] = (int)floorf(nx / MINI_TILE);
-	c.corners_x[1] = (int)floorf((nx + player_width - 1) / MINI_TILE);
-	c.corners_y[0] = (int)floorf(ny / MINI_TILE);
-	c.corners_y[1] = (int)floorf((ny + player_height - 1) / MINI_TILE);
+	c.corners_x[0] = (int)floorf(nx / g->mini_tile);
+	c.corners_x[1] = (int)floorf((nx + player_width - 1) / g->mini_tile);
+	c.corners_y[0] = (int)floorf(ny / g->mini_tile);
+	c.corners_y[1] = (int)floorf((ny + player_height - 1) / g->mini_tile);
 	return (c);
 }
 
@@ -46,7 +46,8 @@ int	is_out_of_bounds(t_game *g, int row, int col)
 
 int	is_wall_at(t_game *g, int row, int col)
 {
-	if (g->map->map_lines[row][col] == '1')
+	if (g->map->map_lines[row][col] == '1' || \
+(g->map->map_lines[row][col] == 'D' && g->collected_keys != g->total_keys))
 		return (1);
 	return (0);
 }
@@ -79,8 +80,6 @@ void	try_move(t_game *g, float dx, float dy)
 	float		nx;
 	float		ny;
 	t_corners	c;
-	//int			final_row;
-	//int			final_col;
 
 	nx = g->player->x + dx;
 	ny = g->player->y + dy;
@@ -90,9 +89,4 @@ void	try_move(t_game *g, float dx, float dy)
 	c = get_corners(g, g->player->x, ny);
 	if (can_move(g, c))
 		g->player->y = ny;
-		
-	// final_row = (int)(g->player->y / HEIGHT);
-	// final_col = (int)(g->player->x / WIDTH);
-	//printf("Player stopped at map cell -> row: %d, col: %d, value: %c\n",
-	//	final_row, final_col, g->map->map_lines[final_row][final_col]);
 }

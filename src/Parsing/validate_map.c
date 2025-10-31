@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/14 21:19:44 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/31 12:26:46 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_player_position(t_map *map)
 				|| map->map_lines[i][j] == 'E' || map->map_lines[i][j] == 'W')
 			{
 				count++;
-				map->initial_look_dir = map->map_lines[i][j]; 
+				map->initial_look_dir = map->map_lines[i][j];
 			}
 			j++;
 		}
@@ -83,13 +83,12 @@ int	check_map_order(char **lines)
 	}
 	return (1);
 }
-
 /*
-void	check_map_outer_walls(t_map *map)//remove later
+void	check_map_outer_walls(t_map *map) // remove later
 {
-	size_t	rows;
-	size_t	i;
-	size_t	j;
+	size_t rows;
+	size_t i;
+	size_t j;
 
 	rows = 0;
 	while (map->map_lines[rows])
@@ -114,9 +113,9 @@ void	check_map_outer_walls(t_map *map)//remove later
 
 void	check_map_inner_spaces(t_map *map) // remove later
 {
-	size_t	rows;
-	size_t	i;
-	size_t	j;
+	size_t rows;
+	size_t i;
+	size_t j;
 
 	if (!map)
 		error_exit(map, "NULL variable");
@@ -129,11 +128,13 @@ void	check_map_inner_spaces(t_map *map) // remove later
 		j = 1;
 		while (j < ft_strlen(map->map_lines[i]) - 1)
 		{
-			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N' || \
-	map->map_lines[i][j] == 'S' || map->map_lines[i][j] == 'E' || \
-	map->map_lines[i][j] == 'W') && (map->map_lines[i - 1][j] == ' ' || \
-map->map_lines[i + 1][j] == ' ' || map->map_lines[i][j - 1] == ' ' || \
-map->map_lines[i][j + 1] == ' '))
+			if ((map->map_lines[i][j] == '0' || map->map_lines[i][j] == 'N'
+					|| map->map_lines[i][j] == 'S'
+					|| map->map_lines[i][j] == 'E'
+					|| map->map_lines[i][j] == 'W') && (map->map_lines[i
+					- 1][j] == ' ' || map->map_lines[i + 1][j] == ' '
+					|| map->map_lines[i][j - 1] == ' ' || map->map_lines[i][j
+					+ 1] == ' '))
 				error_exit(map, "Map is not closed by walls");
 			j++;
 		}

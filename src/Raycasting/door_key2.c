@@ -6,58 +6,101 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/21 23:38:50 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/10/31 16:33:47 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-int pseudo_random(int max)
+int	is_valid_player_tile(t_game *g, int px, int py)
 {
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_usec ^ tv.tv_sec) % max);
+	if (!g || !g->player || !g->map || !g->map->map_lines)
+		return (0);
+	if (g->map->screen_height <= 0 || g->map->screen_width <= 0)
+		return (0);
+	if (py < 0 || py >= g->map->screen_height)
+		return (0);
+	if (px < 0 || px >= g->map->screen_width)
+		return (0);
+	if (!g->map->map_lines[py])
+		return (0);
+	return (1);
 }
 
-
-
-
-void check_key_pickup(t_game *g)
+void	check_key_pickup(t_game *g)
 {
-    int px = (int)(g->player->x / MINI_TILE);
-    int py = (int)(g->player->y / MINI_TILE);
+	int	px;
+	int	py;
 
-    if (g->map->map_lines[py][px] == 'K')
-    {
-        g->collected_keys++;
-        g->map->map_lines[py][px] = '0';
-        printf("🔑 You picked up a key! (%d/%d)\n", g->collected_keys, g->total_keys);
-        color_square_map2d(0xFFF3C5B9, g->map_2d, px * MINI_TILE, py * MINI_TILE);
-    }
+	if (!g || !g->player)
+		return ;
+	px = (int)(g->player->x / g->mini_tile);
+	py = (int)(g->player->y / g->mini_tile);
+	if (!is_valid_player_tile(g, px, py))
+		return ;
+	if (g->map->map_lines[py][px] == 'K')
+	{
+		g->collected_keys++;
+		g->map->map_lines[py][px] = '0';
+		check_key_sprite_pickup(g, px, py);
+		printf("🔑 You picked up a key! (%d/%d)\n", g->collected_keys,
+			g->total_keys);
+		if (g->map_2d)
+			color_square_map2d(g, 0xFFF3C5B9, px * g->mini_tile, py
+				* g->mini_tile);
+		if (g->collected_keys == g->total_keys)
+			g->door_open = 1;
+	}
 }
 
-
-
-void check_door(t_game *g)
+void	check_key_sprite_pickup(t_game *g, int tile_x, int tile_y)
 {
-	int px = (int)(g->player->x / MINI_TILE);
-	int py = (int)(g->player->y / MINI_TILE);
+	int	i;
 
+	if (!g || !g->sprites || !g->sprites->sprites || g->sprites->count <= 0)
+		return ;
+	i = 0;
+	while (i < g->sprites->count)
+	{
+		if (!g->sprites->sprites[i])
+		{
+			i++;
+			continue ;
+		}
+		if (g->sprites->sprites[i]->map_tile_x == tile_x
+			&& g->sprites->sprites[i]->map_tile_y == tile_y)
+			g->sprites->sprites[i]->collected = 1;
+		i++;
+	}
+}
+
+void	check_door(t_game *g)
+{
+	int	px;
+	int	py;
+
+	if (!g || !g->player || !g->map || !g->map->map_lines)
+		return ;
+	if (g->map->screen_height <= 0 || g->map->screen_width <= 0)
+		return ;
+	px = (int)(g->player->x / g->mini_tile);
+	py = (int)(g->player->y / g->mini_tile);
+	if (py < 0 || py >= g->map->screen_height)
+		return ;
+	if (px < 0 || px >= g->map->screen_width)
+		return ;
+	if (!g->map->map_lines[py])
+		return ;
 	if (g->map->map_lines[py][px] == 'D')
 	{
 		if (g->collected_keys == g->total_keys)
 		{
 			printf("🚪 Door opened! You win! 🎉\n");
-			g->door_open = 1;
-			mlx_close_window(g->mlx);
-		}
-		else
-		{
-			printf("🚫 Door is locked! Collect all keys first (%d/%d)\n",
-				g->collected_keys, g->total_keys);
+			g->won = 1;
 		}
 	}
 }
+
 int	reach_keys(t_map *map, char **grid, int x, int y)
 {
 	int	count;

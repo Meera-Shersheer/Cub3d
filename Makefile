@@ -11,9 +11,11 @@ BNS_NAME = cub3D
 SRC_PARSING = check_arg.c  check_color.c  check_map.c  check_texture.c parsing.c  \
 		print.c  read_file.c parsing2.c validate_map.c split.c padding.c flood_fill.c 
 		
-SRC_RAYCASTING = minimap.c rays.c move.c try_move.c scene_3d.c door_key.c door_key2.c symbol.c
+SRC_RAYCASTING = minimap.c  minimap2.c rays.c move.c try_move.c scene_3d.c door_key.c door_key2.c symbol.c \
+init_images1.c init_images2.c init_images3.c animation.c adjust_window_size.c utils_raycasting.c rays2.c rays3.c \
+scene_3d3.c scene_3d4.c wall_textures.c ray_casting.c
 
-SRC_MAIN = cleanup.c  init.c  main.c  utils.c
+SRC_MAIN = cleanup.c  init.c  main.c  utils.c 
 
 BNS=  
 
@@ -34,7 +36,7 @@ SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -Iinclude -g 
+CFLAGS= -Wall -Wextra -Werror -Iinclude -g -fsanitize=address
 #-g3 -fsanitize=address -g
 LIBFT  = -L$(LFTDIR) -lft
 MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
