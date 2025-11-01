@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/01 10:48:42 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:45:27 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,5 +523,10 @@ void draw_sprite(t_game *game, t_sprite *sprite);
 void update_sprite_distances(t_game *game) ;
 void	init_game(int argc, char *argv[], t_game *game);
 void	delete_textures(t_game *g);
+int	reach_door(char **grid, int x, int y);
+int	door_reachable(t_game *g, char **map);
+int	reach_keys(t_map *map, char **grid, int x, int y);
+int	reach_door(char **grid, int x, int y);
+int	keys_reachable(t_game *g, char **map);
 
 #endif

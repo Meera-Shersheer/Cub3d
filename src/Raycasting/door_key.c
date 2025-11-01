@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:18:25 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 12:55:51 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:49:18 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,6 @@ int	place_door(char **map, t_game *g)
 	return (0);
 }
 
-static int	keys_reachable(t_game *g, char **map)
-{
-	char	**grid_copy;
-	int		px;
-	int		py;
-	int		reached;
-
-	grid_copy = cpy_matrix(map);
-	px = get_player_x_pos(grid_copy);
-	py = get_player_y_pos(grid_copy);
-	reached = reach_keys(g->map, grid_copy, px, py);
-	ft_free(grid_copy);
-	return (reached == g->total_keys);
-}
-
 static int	try_place(t_game *g, char **temp_map)
 {
 	g->total_keys = pseudo_random(3) + 2;
@@ -91,6 +76,8 @@ static int	try_place(t_game *g, char **temp_map)
 	if (!place_door(temp_map, g))
 		return (0);
 	if (!keys_reachable(g, temp_map))
+		return (0);
+	if (!door_reachable(g, temp_map))
 		return (0);
 	return (1);
 }

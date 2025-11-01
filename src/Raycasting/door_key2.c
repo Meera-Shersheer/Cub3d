@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 16:33:47 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:48:46 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,29 +99,4 @@ void	check_door(t_game *g)
 			g->won = 1;
 		}
 	}
-}
-
-int	reach_keys(t_map *map, char **grid, int x, int y)
-{
-	int	count;
-
-	if (x < 0 || y < 0 || y >= (int)ft_strlen_d(grid))
-		return (0);
-	if (x >= (int)ft_strlen(grid[y]))
-		return (0);
-	if (grid[y][x] == '1' || grid[y][x] == 'D' || grid[y][x] == 'V')
-		return (0);
-	count = 0;
-	if (grid[y][x] == 'K')
-		count = 1;
-	grid[y][x] = 'V';
-	count += reach_keys(map, grid, x - 1, y);
-	count += reach_keys(map, grid, x + 1, y);
-	count += reach_keys(map, grid, x, y - 1);
-	count += reach_keys(map, grid, x, y + 1);
-	count += reach_keys(map, grid, x - 1, y - 1);
-	count += reach_keys(map, grid, x - 1, y + 1);
-	count += reach_keys(map, grid, x + 1, y - 1);
-	count += reach_keys(map, grid, x + 1, y + 1);
-	return (count);
 }
