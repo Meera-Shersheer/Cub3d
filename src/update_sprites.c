@@ -1,25 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update_sprites.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/01 10:40:05 by aalmahas          #+#    #+#             */
+/*   Updated: 2025/11/01 10:40:06 by aalmahas         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
-static void compute_sprite_distance(t_game *game, t_sprite *sprite, float *raw_dist, float *angle_diff)
+static void	compute_sprite_distance(t_game *game, t_sprite *sprite,
+		float *raw_dist, float *angle_diff)
 {
-	float dx = sprite->x - (game->player->x + game->player->img->width / 2.0f);
-	float dy = sprite->y - (game->player->y + game->player->img->height / 2.0f);
+	float	dx;
+	float	dy;
 
+	dx = sprite->x - (game->player->x + game->player->img->width / 2.0f);
+	dy = sprite->y - (game->player->y + game->player->img->height / 2.0f);
 	*raw_dist = sqrtf(dx * dx + dy * dy);
 	*angle_diff = atan2f(dy, dx) - game->player->angle;
-
 	while (*angle_diff > M_PI)
 		*angle_diff -= 2 * M_PI;
 	while (*angle_diff < -M_PI)
 		*angle_diff += 2 * M_PI;
-
 	sprite->dist = *raw_dist;
 }
 
-static void compute_sprite_screen_x(t_game *game, t_sprite *sprite, float angle_diff)
+static void	compute_sprite_screen_x(t_game *game, t_sprite *sprite,
+		float angle_diff)
 {
-	float screen_x_calc = (game->scene_3d->width / 2.0f) + (angle_diff * game->scene_3d->width) / FOV;
+	float	screen_x_calc;
 
+	screen_x_calc = (game->scene_3d->width / 2.0f) + (angle_diff
+			* game->scene_3d->width) / FOV;
 	if (angle_diff > (FOV / 2.0f) || angle_diff < -(FOV / 2.0f))
 		sprite->screen_x = -10000;
 	else
@@ -32,15 +48,14 @@ static void compute_sprite_screen_x(t_game *game, t_sprite *sprite, float angle_
 	}
 }
 
-static void update_single_sprite(t_game *game, t_sprite *sprite)
+static void	update_single_sprite(t_game *game, t_sprite *sprite)
 {
-	float raw_dist, angle_diff;
+	float	raw_dist;
+	float	angle_diff;
+
 	compute_sprite_distance(game, sprite, &raw_dist, &angle_diff);
 	compute_sprite_screen_x(game, sprite, angle_diff);
 }
-
-
-
 
 void	update_sprite_distances(t_game *game)
 {
