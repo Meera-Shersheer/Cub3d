@@ -15,8 +15,8 @@ SRC_RAYCASTING = minimap.c  minimap2.c rays.c move.c try_move.c scene_3d.c door_
 init_images1.c init_images2.c init_images3.c animation.c adjust_window_size.c utils_raycasting.c rays2.c rays3.c \
 scene_3d3.c scene_3d4.c wall_textures.c ray_casting.c  door_key_reach.c
 
-SRC_MAIN = cleanup.c  init.c  main.c  utils.c input_handlers.c move.c sprites.c sprites_utils.c draw_sprites.c update_sprites.c\
-init_game.c cleanup_textures.c
+SRC_MAIN = cleanup.c  init.c  main.c  utils.c input_handlers.c move.c utils_sprites.c sprites_textures.c update_sprites.c\
+cleanup_textures.c draw_sprites.c init_game.c 
 
 BNS=  
 

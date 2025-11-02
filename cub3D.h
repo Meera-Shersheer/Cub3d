@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/01 13:45:27 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 01:18:39 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct s_sprite
 	int			frame_count;	// Total number of frames
 	//int			frame_delay;	// Frames to wait before switching
 	//int			frame_timer;	// Counter for frame delay
-	long		last_update_time;
+	long		last_update_time	;
 	mlx_image_t	**frames;		// Array of frame images
 }	t_sprite;
 
@@ -332,6 +332,18 @@ typedef struct s_wall_context
     t_tex_info  tex;
 } t_wall_context;
 
+typedef struct s_sprite_draw
+{
+    int width;
+    int height;
+    int start_x;
+    int start_y;
+    int end_x;
+    int end_y;
+    int cur_x;
+    int cur_y;
+} t_sprite_draw;
+
 
 
 
@@ -457,7 +469,7 @@ int	reach_keys(t_map *map, char **grid, int x, int y);
 int pseudo_random(int max);
 
 //cleanup
-void delete_textures(t_game *game);
+
 void clean_sources(t_game *game);
 
 int init_door_textures(t_game *g);
@@ -528,5 +540,11 @@ int	door_reachable(t_game *g, char **map);
 int	reach_keys(t_map *map, char **grid, int x, int y);
 int	reach_door(char **grid, int x, int y);
 int	keys_reachable(t_game *g, char **map);
+void	sort_sprites(t_game *game);
+uint32_t	get_sprite_texture(t_sprite *sprite, float u, float v);
+void	draw_sprite(t_game *game, t_sprite *sprite);
+void	update_sprite_distances(t_game *game);
+void draw_sprite(t_game *game, t_sprite *sprite);
+int	is_sprite_drawable(t_game *game, t_sprite *sprite);
 
 #endif

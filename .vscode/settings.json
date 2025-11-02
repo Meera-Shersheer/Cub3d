@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "cub3d.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "/home/software/Desktop/42amman/MIlestone4/CUB3D/Cub3d/mlx42"
 }

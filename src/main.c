@@ -6,13 +6,13 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/01 10:45:04 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 01:21:31 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"	
-	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all 
-	--track-origins=yes --suppressions=mlx.supp ./cub3D map*/
+	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
+	 --suppressions=mlx.supp ./cub3D map*/
 
 int	main(int argc, char *argv[])
 {
