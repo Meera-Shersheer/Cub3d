@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/09/16 04:06:53 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/31 19:14:14 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	init_map(t_map *map, size_t line_count)
 
 void	validate_map_values(t_map *map)
 {
-	if (!map->north_texture && !map->south_texture && !map->west_texture \
-	&& !map->east_texture)
+	if (!map->north_texture && !map->south_texture && !map->west_texture
+		&& !map->east_texture)
 		error_exit(map, "No textures available");
 	if (!map->north_texture)
 		error_exit(map, "North texture missing");

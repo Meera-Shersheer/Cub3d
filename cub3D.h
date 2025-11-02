@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 14:44:06 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:15:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,27 @@ typedef enum e_wall_dir
     WEST,
 	OTHER
 }   t_wall_dir;
+typedef struct s_tex_info
+{
+    float *tex_pos; 
+    float step;
+    int tex_x;
+    int screen_y;
+    mlx_image_t *img_tex;
+} t_tex_info;
+
+typedef struct s_wall_context
+{
+    t_game      *game;
+    t_angle     *angle;
+    t_ray_dic   *rays;
+    int         col;
+    t_wall_draw wall;
+    t_tex_info  tex;
+} t_wall_context;
+
+
+
 
 // check arg
 int			check_arg(char *map_file);
@@ -384,7 +405,7 @@ char		**cpy_matrix(char	**map);
 //minimap
 void draw_player(t_game *game);
 void draw_2d_map(t_game *game);
-void color_square_map2d (t_game *game, unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y);
+void color_square_map2d (t_game *game, unsigned int color,  int pixel_x, int pixel_y);
 void pick_initial_angle (t_game *game);
 
 void color_block (unsigned int color, mlx_image_t *img);
@@ -413,7 +434,7 @@ void draw_single_col(t_game *game, float angle, int col);
 void color_3d_scene(t_game *game, int col,t_angle *angle, t_ray_dic *rays);
 int get_rgba(int r, int g, int b, int a);
 void mouse_rotate(double xpos, double ypos, void *param);
-uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, mlx_image_t *img_tex, int screen_y);
+uint32_t get_texture_color(t_game *game, t_tex_info *tex);
 float eval_real_wall_dist(t_game *game, t_angle *angle, t_ray_pos *x, t_ray_pos *y);
 void color_3d_floor_cielling(t_game *game, int col, int draw_start,  int draw_end);
 
@@ -442,10 +463,15 @@ void clean_sources(t_game *game);
 int init_door_textures(t_game *g);
 void	error_exit2(t_game *game, const char *msg);
 int	init_key_textures(t_game *g);
-void	init_key_textures1(t_game *g);
+
 int	init_key_textures(t_game *g);
-void	init_key_textures2(t_game *g);
-void	init_key_textures3(t_game *g);
+
+void init_key_textures_part1(t_game *g);
+void init_key_textures_part2(t_game *g);
+void init_key_textures_part3(t_game *g);
+void init_key_textures_part4(t_game *g);
+void init_key_textures_part5(t_game *g);
+void init_key_textures_part6(t_game *g);
 
 
 
@@ -455,7 +481,8 @@ void draw_sprite(t_game *game, t_sprite *sprite);
 int get_sprite_height(t_game *game, t_sprite *sprite);
 void update_sprite_distances(t_game *game);
 void add_key_sprite(t_game *game, int map_x, int map_y);
-void init_sprites(t_game *game);
+void init_sprites_map_scan(t_game *game);
+void init_sprites_allocation(t_game *game);
 void check_key_sprite_pickup(t_game *g, int tile_x, int tile_y);
 
 
@@ -472,5 +499,34 @@ long get_time(void);
 void adjust_tile_size_to_screen(t_game *game, int map_width, int map_height);
 
 int find_max(int num1, int num2);
+
+int pseudo_random(int max);
+void	draw_map_tile(t_game *game, int x, int y);
+int	is_door_transparent(t_game *game, mlx_image_t *img_tex,
+	uint8_t alpha);
+int	get_tex_index(mlx_image_t *img_tex, int tex_x, int tex_y);
+int get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y);
+void draw_single_col(t_game *game, float angle, int col);
+int eval_wall_height(t_game *game,t_angle *angle, t_ray_dic *rays, int col);
+int eval_tex_x(t_game *game, t_angle *angle, t_ray_dic *rays, mlx_image_t *img_tex);
+void hide_map2d(mlx_key_data_t keydata, void *param);
+void mouse_rotate(double xpos, double ypos, void *param);
+void draw_sprite(t_game *game, t_sprite *sprite);
+void move(void *param);
+uint32_t	get_sprite_texture(t_sprite *sprite, float u, float v);
+
+
+void	swap_sprites(t_sprite **a, t_sprite **b);
+long	get_time(void);
+void draw_sprite(t_game *game, t_sprite *sprite);
+
+void update_sprite_distances(t_game *game) ;
+void	init_game(int argc, char *argv[], t_game *game);
+void	delete_textures(t_game *g);
+int	reach_door(char **grid, int x, int y);
+int	door_reachable(t_game *g, char **map);
+int	reach_keys(t_map *map, char **grid, int x, int y);
+int	reach_door(char **grid, int x, int y);
+int	keys_reachable(t_game *g, char **map);
 
 #endif

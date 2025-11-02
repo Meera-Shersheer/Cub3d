@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/30 02:19:58 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:52:37 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ void	try_move(t_game *g, float dx, float dy)
 	float		nx;
 	float		ny;
 	t_corners	c;
-	//int			final_row;
-	//int			final_col;
 
 	nx = g->player->x + dx;
 	ny = g->player->y + dy;
@@ -91,8 +89,4 @@ void	try_move(t_game *g, float dx, float dy)
 	c = get_corners(g, g->player->x, ny);
 	if (can_move(g, c))
 		g->player->y = ny;
-	// final_row = (int)(g->player->y / HEIGHT);
-	// final_col = (int)(g->player->x / WIDTH);
-	//printf("Player stopped at map cell -> row: %d, col: %d, value: %c\n",
-	//	final_row, final_col, g->map->map_lines[final_row][final_col]);
 }

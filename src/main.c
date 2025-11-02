@@ -6,169 +6,29 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 21:19:25 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:19:14 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
-
-void hide_map2d(mlx_key_data_t keydata, void *param)
-{
-    t_game *g;
-	
-	g = (t_game *)param;
-	if (!g || !g->map_2d || !g->player || !g->player->img || !g->rays)
-		return;
-    if (keydata.key == MLX_KEY_1 && keydata.action == MLX_PRESS)
-	{
-		if (g->map_2d->instances[0].enabled == true )
-		{
-			g->map_2d->instances[0].enabled = false;
-			g->player->img->instances[0].enabled = false;
-			g->rays->instances[0].enabled = false;
-			puts(CYAN "Now, the minimap is hidden to make appear press '1'" NC);
-		}
-		else if (g->map_2d->instances[0].enabled == false )
-		{
-			g->map_2d->instances[0].enabled = true;
-			g->player->img->instances[0].enabled = true;
-			g->rays->instances[0].enabled = true;
-			puts(CYAN "To hide the minimap press '1'" NC);
-		}
-	}
-}
-
-void mouse_rotate(double xpos, double ypos, void *param)
-{
-    t_game *game;
-	double delta_x;
-
-	(void) ypos;
-	game = (t_game *)param;
-	if (!game || !game->player)
-		return;
-    if (game->mouse_last_x < 0)
-    {
-        game->mouse_last_x = xpos;
-        return;
-    }
-    delta_x = xpos - game->mouse_last_x;
-    game->mouse_last_x = xpos;
-	
-    if (delta_x > 0)
-	    game->player->angle += 0.05;
-    if (delta_x < 0)
-		game->player->angle -= 0.05;
-	if (game->player->angle < 0)
-        game->player->angle += 2 * M_PI;
-	else if (game->player->angle > 2 * M_PI)
-        game->player->angle -= 2 * M_PI;
-}
-
-
-void move(void *param)
-{
-    t_game *g;
-	
-	g = (t_game *)param;
-	if (!g || !g->mlx || !g->player || !g->scene_3d || !g->wall_distances)
-		return;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
-	{
-		mlx_close_window(g->mlx);
-		clean_sources(g);
-		return;
-	}
-	if (mlx_is_key_down(g->mlx, MLX_KEY_2))
-	{
-		g->player->move_speed += 1 ;
-		printf(CYAN"Player speed: %.1f \n" NC,g->player->move_speed );
-	}
-	if (mlx_is_key_down(g->mlx, MLX_KEY_3))
-	{
-		g->player->move_speed -= 1 ;
-		printf(CYAN"Player speed: %.1f \n"NC,g->player->move_speed );
-	}
-	if (g->player->move_speed < 1)
-		g->player->move_speed = 1;
-	if (g->player->move_speed > 2 * g->mini_tile / 3)
-		g->player->move_speed = 2 * g->mini_tile / 3;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_W))
-        move_forward(g);
-    if (mlx_is_key_down(g->mlx, MLX_KEY_S))
-        move_backward(g);
-    if (mlx_is_key_down(g->mlx, MLX_KEY_A))
-        move_left(g);
-    if (mlx_is_key_down(g->mlx, MLX_KEY_D))
-        move_right(g);
-    if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-        g->player->angle += 0.15;
-    if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.15;
-	if (g->player->angle < 0)
-        g->player->angle += 2 * M_PI;
-	else if (g->player->angle > 2 * M_PI)
-        g->player->angle -= 2 * M_PI;
-	g->player->img->instances[0].x = g->player->x;
-	g->player->img->instances[0].y = g->player->y;
-	check_key_pickup(g);
-    check_door(g);
-	for (int i = 0; i < (int)g->scene_3d->width; i++)
-		g->wall_distances[i] = 10000.0f;
-	dda(g);
-	render_all_sprites(g);
-	if (g->won == 1)
-	{
-		g->game_time_end = get_time();
-		printf (GREEN"You finished the game in %ld.%ld s\n"NC, (g->game_time_end - g->game_time_start)/1000, (g->game_time_end - g->game_time_start)%1000);
-		mlx_close_window(g->mlx);
-		clean_sources(g);
-		//mlx_terminate(g->mlx);
-        return;
-	}
-}
-	
-	
-	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.supp ./cub3D map*/
-long get_time(void)
-{
-	struct timeval time;
-	
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
+#include "../cub3D.h"	
+	/*To test leaks: valgrind --leak-check=full --show-leak-kinds=all 
+	--track-origins=yes --suppressions=mlx.supp ./cub3D map*/
 
 int	main(int argc, char *argv[])
 {
-	t_game game;
-		
-	ft_bzero(&game, sizeof(game));
-	game.map = malloc(sizeof(t_map));
-	if(!game.map)
-		error_exit(NULL, "malloc failure");
-	game.w_tile = W_TILE;
-	game.mini_tile = MINI_TILE;
-	game.mouse_last_x = -1;
-	game.wall_distances = NULL;
-	if (parsing(argc, argv, &game))
-		return (1);
-	game.mlx =  mlx_init(game.w_tile * (game.map->screen_width), game.w_tile * (game.map->screen_height), "Cub3d Game", true);
-	if (!(game.mlx))
-		error_exit(game.map, "mlx initializing failure");
-	place_keys_and_door(&game);
-	game.won = 0;
-	init_textures(&game);
-	init_key_animation_frames(&game);
-	init_sprites(&game);
+	t_game	game;
+	int		i;
+
+	init_game(argc, argv, &game);
 	draw_2d_map(&game);
 	draw_player(&game);
 	draw_scene_and_rays(&game);
 	game.game_time_start = get_time();
 	if (game.wall_distances && game.scene_3d)
 	{
-		for (int i = 0; i < (int)game.scene_3d->width; i++)
-			game.wall_distances[i] = 10000.0f;
+		i = 0;
+		while (i < (int)game.scene_3d->width)
+			game.wall_distances[i++] = 10000.0f;
 	}
 	render_all_sprites(&game);
 	mlx_key_hook(game.mlx, hide_map2d, &game);

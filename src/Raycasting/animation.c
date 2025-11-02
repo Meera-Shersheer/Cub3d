@@ -6,13 +6,13 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:29:55 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 21:28:24 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:48:42 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-void init_key_animation_frames(t_game *g)
+void	init_key_animation_frames(t_game *g)
 {
 	if (!g || !g->textures || !g->textures->keys)
 		error_exit2(NULL, "Failure during animation setup");
@@ -39,41 +39,37 @@ void init_key_animation_frames(t_game *g)
 	g->textures->keys->animation_frames[20] = g->textures->keys->img_key20;
 }
 
-
-void add_key_sprite(t_game *game, int map_x, int map_y)
+void	add_key_sprite(t_game *game, int map_x, int map_y)
 {
 	t_sprite	*sprite;
 
-	
 	sprite = malloc(sizeof(t_sprite));
 	if (!sprite || !game)
-		error_exit2(game , "failure during sprite initialization");
+		error_exit2(game, "failure during sprite initialization");
 	sprite->map_tile_x = map_x;
 	sprite->map_tile_y = map_y;
 	sprite->x = (map_x + 0.5f) * game->mini_tile;
 	sprite->y = (map_y + 0.5f) * game->mini_tile;
 	sprite->img = game->textures->keys->img_key01;
-	sprite->collected = 0;		
-	sprite->frame_count = 21;
+	sprite->collected = 0;
+	sprite->frame_count = 20;
 	sprite->last_update_time = 0;
 	sprite->frames = game->textures->keys->animation_frames;
 	sprite->img = sprite->frames[0];
-	sprite->frame = 0;
 	game->sprites->sprites[game->sprites->count] = sprite;
 	game->sprites->count++;
 }
 
-
-void update_sprite_animation(t_sprite *sprite)
+void	update_sprite_animation(t_sprite *sprite)
 {
-	long current_time_ms;
-	long elapsed_ms;
-	
+	long	current_time_ms;
+	long	elapsed_ms;
+
 	if (!sprite || !sprite->frames || !sprite->img)
-		return;
+		return ;
 	current_time_ms = get_time();
 	if (sprite->last_update_time == 0)
-		sprite->last_update_time = current_time_ms;		
+		sprite->last_update_time = current_time_ms;
 	elapsed_ms = current_time_ms - sprite->last_update_time;
 	if (elapsed_ms >= FRAME_DURATION_MS)
 	{
@@ -87,16 +83,17 @@ void update_sprite_animation(t_sprite *sprite)
 	}
 }
 
-void update_all_sprites_animation(t_game *game)
+void	update_all_sprites_animation(t_game *game)
 {
-	int i;
-	
+	int	i;
+
 	if (!game || !game->sprites || !game->sprites->sprites)
-		return;
+		return ;
 	i = 0;
 	while (i < game->sprites->count)
 	{
-		if (game->sprites->sprites[i] && game->sprites->sprites[i]->collected == 0)
+		if (game->sprites->sprites[i]
+			&& game->sprites->sprites[i]->collected == 0)
 		{
 			update_sprite_animation(game->sprites->sprites[i]);
 		}
@@ -104,11 +101,11 @@ void update_all_sprites_animation(t_game *game)
 	}
 }
 
-void render_all_sprites(t_game *game)
+void	render_all_sprites(t_game *game)
 {
-	int	i;
+	int		i;
 
-	if ( !game || !game->sprites || !game->sprites->sprites)
+	if (!game || !game->sprites || !game->sprites->sprites)
 		return ;
 	update_sprite_distances(game);
 	sort_sprites(game);

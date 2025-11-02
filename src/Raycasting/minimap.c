@@ -6,140 +6,87 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 15:05:17 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:50:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-void color_block (unsigned int color, mlx_image_t *img)
+void	color_block(unsigned int color, mlx_image_t *img)
 {
-	int	i;
-	uint32_t *pixels;
-	
+	int			i;
+	uint32_t	*pixels;
+
 	i = 0;
 	if (!img)
-		return;
+		return ;
 	pixels = (uint32_t *)img->pixels;
 	while (i < (int)(img->width * img->height))
 	{
-			pixels[i] = color;
+		pixels[i] = color;
 		i++;
 	}
 }
 
-
-void draw_player(t_game *game)
+void	draw_player(t_game *game)
 {
 	if (!game)
 		exit(1);
 	game->player = malloc(sizeof(t_player));
-	if(!game->player)
-		error_exit2(game, "malloc failure");//edit to free game as well
-	if(!game->map)
-		error_exit2(game, "map failure");//edit to free game as well
-	game->player->img = mlx_new_image(game->mlx, game->mini_tile / 3, game->mini_tile / 3); // fix dimention of the player
-	if(!game->player->img)
+	if (!game->player)
+		error_exit2(game, "malloc failure");
+	if (!game->map)
+		error_exit2(game, "map failure");
+	game->player->img = mlx_new_image(game->mlx, game->mini_tile / 3,
+			game->mini_tile / 3);
+	if (!game->player->img)
 		error_exit2(game, "image initialization failure");
-	game->player->x = get_player_x_pos(game->map->map_lines) * game->mini_tile 
-                + (game->mini_tile - game->player->img->width) / 2;
-	game->player->y = get_player_y_pos(game->map->map_lines) * game->mini_tile 
-                + (game->mini_tile - game->player->img->height) / 2;
+	game->player->x = get_player_x_pos(game->map->map_lines) * game->mini_tile
+		+ (game->mini_tile - game->player->img->width) / 2;
+	game->player->y = get_player_y_pos(game->map->map_lines) * game->mini_tile
+		+ (game->mini_tile - game->player->img->height) / 2;
 	game->player->move_speed = 5;
-	pick_initial_angle (game);
-	color_block (0xFFCC00CC, game->player->img);
-	if (mlx_image_to_window(game->mlx, game->player->img,  game->player->x, \
-		game->player->y) < 0)
+	pick_initial_angle(game);
+	color_block(0xFFCC00CC, game->player->img);
+	if (mlx_image_to_window(game->mlx, game->player->img, game->player->x,
+			game->player->y) < 0)
 		error_exit2(game, "image display failure");
 }
-void pick_initial_angle (t_game *game)
+
+void	pick_initial_angle(t_game *game)
 {
 	if (!game)
 		exit(1);
-	if (game ->map->initial_look_dir == 'N')
-		game->player->angle = - M_PI / 2; // north
-	else if (game ->map->initial_look_dir == 'S')
-		game->player->angle =  M_PI / 2; // south
-	else if (game ->map->initial_look_dir == 'W')
-		game->player->angle =  M_PI; // west
-	else 
-		game->player->angle = 0; // east
-	
-}
-
-void draw_2d_map(t_game *game)
-{
-	int x;
-	int y;
-
-	x = 0;
-	y = 0;
-	if (!game)
-		exit(1);
-	game->map_2d = mlx_new_image(game->mlx, game->mini_tile * (game->map->screen_width), game->mini_tile * (game->map->screen_height));
-	if(!game->map_2d)
-		error_exit(NULL, "image initialization failure");
-	while(y < game->map->screen_height)
-	{
-		x = 0;
-		while(x < game->map->screen_width)
-		{
-			if (game->map->map_lines[y][x] == '1')
-				color_square_map2d (game, 0xFF230C06, game->map_2d, x * game->mini_tile, y * game->mini_tile);
-			else if (game->map->map_lines[y][x] == ' ')
-				color_square_map2d (game, 0xFF363636 , game->map_2d, x * game->mini_tile, y * game->mini_tile);
-			else if (game->map->map_lines[y][x] == 'K')
-			{
-    			color_square_map2d(game, 0xFFF3C5B9, game->map_2d, x * game->mini_tile, y * game->mini_tile);
-    			draw_key_symbol(game, game->map_2d, x * game->mini_tile, y * game->mini_tile);
-			}
-			else if (game->map->map_lines[y][x] == 'D')
-			{
-    			draw_door_symbol(game, game->map_2d, x * game->mini_tile, y * game->mini_tile);
-			}
-			else 
-				color_square_map2d (game, 0xFFF3C5B9, game->map_2d, x * game->mini_tile, y * game->mini_tile);
-			x++;
-		}	
-		y++;
-	}
-	if (mlx_image_to_window(game->mlx, game->map_2d, 0, 0) < 0) // fix start position
-		error_exit(NULL, "image display failure");//edit to free game as well
-}
-
-void color_square_map2d (t_game *game, unsigned int color, mlx_image_t *img, int pixel_x, int pixel_y)
-{
-	uint32_t *pixels;
-	int i;
-	int j;
-	
-	i = 0;
-	j = 0;
-	if (!img)
-		return;
-	pixels = (uint32_t *)img->pixels;
-	while (i < game->mini_tile)
-	{
-		j = 0;
-		while (j < game->mini_tile)
-		{
-			pixels[(i + pixel_x) + (pixel_y + j) * img->width] = color;
-			j++;
-		}
-		i++;
-	}
-}
-
-float abs_max (float num1, float num2)
-{
-	float n1;
-	float n2;
-	
-	n1 = fabsf (num1);
-	n2 = fabsf (num2);
-	if (n1 >= n2)
-		return (n1);
+	if (game->map->initial_look_dir == 'N')
+		game->player->angle = -M_PI / 2;
+	else if (game->map->initial_look_dir == 'S')
+		game->player->angle = M_PI / 2;
+	else if (game->map->initial_look_dir == 'W')
+		game->player->angle = M_PI;
 	else
-		return (n2);
+		game->player->angle = 0;
 }
 
+void	draw_map_tile(t_game *game, int x, int y)
+{
+	int		tile_x;
+	int		tile_y;
+	char	tile;
+
+	tile_x = x * game->mini_tile;
+	tile_y = y * game->mini_tile;
+	tile = game->map->map_lines[y][x];
+	if (tile == '1')
+		color_square_map2d(game, 0xFF230C06, tile_x, tile_y);
+	else if (tile == ' ')
+		color_square_map2d(game, 0xFF363636, tile_x, tile_y);
+	else if (tile == 'K')
+	{
+		color_square_map2d(game, 0xFFF3C5B9, tile_x, tile_y);
+		draw_key_symbol(game, game->map_2d, tile_x, tile_y);
+	}
+	else if (tile == 'D')
+		draw_door_symbol(game, game->map_2d, tile_x, tile_y);
+	else
+		color_square_map2d(game, 0xFFF3C5B9, tile_x, tile_y);
+}

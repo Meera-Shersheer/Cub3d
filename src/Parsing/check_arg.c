@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 14:46:39 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:45:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	parsing(int argc, char *argv[], t_game *game)
 		return (1);
 	if (check_map(argv, game->map))
 		return (1);
-	adjust_tile_size_to_screen(game, game->map->screen_width, game->map->screen_height);
+	adjust_tile_size_to_screen(game, game->map->screen_width,
+		game->map->screen_height);
 	return (0);
 }
 
@@ -49,7 +50,7 @@ int	ends_with_cub(const char *file_name)
 	len = ft_strlen(file_name);
 	if (len < 4)
 		return (0);
-	if (ft_strncmp(&(file_name[ft_strlen(file_name)- 4]), ".cub", 4) == 0)
+	if (ft_strncmp(&(file_name[ft_strlen(file_name) - 4]), ".cub", 4) == 0)
 		return (1);
 	return (0);
 }

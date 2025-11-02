@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   padding.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:44:21 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/31 12:33:02 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
- 
+
 char	*pad_line(char *line, int max_length)
 {
 	int		len;
@@ -48,8 +48,8 @@ int	find_max_len(char **lines)
 	while (lines[i])
 	{
 		j = skip_spaces(lines[i], 0);
-		if ((lines[i][j] == '0' || lines[i][j] == '1') && \
-		ft_strlen(lines[i]) > max)
+		if ((lines[i][j] == '0' || lines[i][j] == '1')
+			&& ft_strlen(lines[i]) > max)
 			max = ft_strlen(lines[i]);
 		i++;
 	}
