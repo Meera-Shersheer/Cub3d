@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/02 20:52:01 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:53:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ static void	init_scene_images_and_distances(t_game *game)
 	while (i < (int)game->scene_3d->width)
 	{
 		game->wall_distances[i] = 10000.0f;
-		i++;
-	}
-	i = 0;
-	while (i < game->mini_tile * game->map->screen_width)
-	{
-		camera_x = 2 * i / (float)game->rays->width - 1;
-    	an = game->player->angle + atanf(camera_x * tanf(FOV/ 2));
-		cast_rays(game, an);
 		i++;
 	}
 }
