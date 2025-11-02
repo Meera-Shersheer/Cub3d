@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 22:09:28 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:02:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ static void	handle_movement_keys(t_game *g)
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 		move_right(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-		g->player->angle += 0.15;
+		g->player->angle += 0.2;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.15;
+		g->player->angle -= 0.2;
 }
 
 static void	reset_and_update_scene(t_game *g)

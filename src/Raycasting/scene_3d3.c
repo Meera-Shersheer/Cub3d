@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_3d3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 18:05:28 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 18:20:35 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:45:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ int	is_door_transparent(t_game *game, mlx_image_t *img_tex, uint8_t alpha)
 	if (alpha != 0)
 		return (0);
 	if (img_tex == game->textures->door->img_door_closed
-		|| img_tex == game->textures->door->img_door_opened
-		|| img_tex == game->textures->door->img_door_semi1
-		|| img_tex == game->textures->door->img_door_semi2)
+		|| img_tex == game->textures->door->img_door_opened)
 		return (1);
 	return (0);
 }

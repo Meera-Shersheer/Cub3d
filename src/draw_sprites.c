@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 23:20:28 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 23:20:46 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:58:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 // 1. Initialize sprite draw info
 static int	init_sprite_draw(t_game *game, t_sprite *sprite, int *w, int *h)
 {
-	const float	sprite_scale = 5.0f;
+	//const float	sprite_scale = 5.0f;
 
 	if (!game || !sprite || !sprite->img || sprite->collected == 1)
 		return (0);
 	if (!game->wall_distances || !game->scene_3d || !game->scene_3d->pixels)
 		return (0);
-	*h = get_sprite_height(game, sprite) * sprite_scale;
+	*h = get_sprite_height(game, sprite) * SPRITE_SCALE;
 	*w = (sprite->img->width * (*h)) / sprite->img->height;
 	if (*w <= 0 || *h <= 0)
 		return (0);
@@ -36,7 +36,7 @@ static uint32_t	get_sprite_pixel_color(t_game *game, t_sprite *sprite, int x,
 	int			start_y;
 	uint32_t	color;
 
-	sprite_width = (sprite->img->width * get_sprite_height(game, sprite) * 5.0f)
+	sprite_width = (sprite->img->width * get_sprite_height(game, sprite) * SPRITE_SCALE)
 		/ sprite->img->height;
 	start_y = (game->scene_3d->height / 2) - (sprite_width * sprite->img->height
 			/ sprite->img->width / 5);

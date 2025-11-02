@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/02 20:15:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/02 22:00:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
+#endif
+
+#ifndef SPRITE_SCALE
+#define  SPRITE_SCALE 5.0f
 #endif
 
 #ifndef FRAME_DURATION_MS

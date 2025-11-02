@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:36:49 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 16:37:50 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:39:22 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	draw_2d_map(t_game *game)
 			* game->map->screen_width, game->mini_tile
 			* game->map->screen_height);
 	if (!game->map_2d)
-		error_exit(NULL, "image initialization failure");
+		error_exit2(game, "image initialization failure");
 	y = 0;
 	while (y < game->map->screen_height)
 	{
@@ -33,7 +33,7 @@ void	draw_2d_map(t_game *game)
 		y++;
 	}
 	if (mlx_image_to_window(game->mlx, game->map_2d, 0, 0) < 0)
-		error_exit(NULL, "image display failure");
+		error_exit2(game, "image display failure");
 }
 
 void	color_square_map2d(t_game *game, unsigned int color, int pixel_x,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:55:44 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 22:55:58 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 21:54:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,3 +94,4 @@ void	sort_sprites(t_game *g)
 		i++;
 	}
 }
+
