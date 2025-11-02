@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/30 21:10:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:36:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void clean_sources(t_game *game)
 
 void delete_textures(t_game *g)
 {
-	if (!g)
+	if (!g || !g->textures)
 		exit(1);//edit
 	if ( g->textures->img_tex_no)
         mlx_delete_image(g->mlx, g->textures->img_tex_no);
@@ -171,6 +171,17 @@ void delete_textures(t_game *g)
         mlx_delete_image(g->mlx, g->textures->keys->img_key19);
 	if (g->textures->keys->img_key20)
         mlx_delete_image(g->mlx, g->textures->keys->img_key20);	
+	if (g->textures->keys)
+		free(g->textures->keys);
 	if(g->textures)
 		free(g->textures);
+}
+
+
+void delete_sprites(t_game *g)
+{
+	if (!g)
+		exit(1);//edit
+
+    
 }

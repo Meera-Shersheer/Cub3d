@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 21:01:06 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:19:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,11 @@ void move(void *param)
 	if (!g || !g->mlx || !g->player || !g->scene_3d || !g->wall_distances)
 		return;
     if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
+	{
 		mlx_close_window(g->mlx);
+		clean_sources(g);
+		return;
+	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_2))
 	{
 		g->player->move_speed += 1 ;

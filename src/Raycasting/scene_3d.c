@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/30 02:18:15 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/10/30 21:23:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,9 +222,7 @@ uint32_t get_texture_color(t_game *game, float *tex_pos, float step, int tex_x, 
     uint8_t g = p[tex_index + 2];
     uint8_t r = p[tex_index + 3]; 
 	if (a == 0 && (img_tex == game->textures->door->img_door_closed || \
-img_tex == game->textures->door->img_door_opened || \
-img_tex == game->textures->door->img_door_semi1 || \
-img_tex == game->textures->door->img_door_semi2))
+img_tex == game->textures->door->img_door_opened))
 	{
 		
 		if (screen_y < 2 * (int)game->scene_3d->height / 3)
