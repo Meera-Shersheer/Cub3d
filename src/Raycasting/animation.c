@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:29:55 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/02 20:48:42 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:04:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	add_key_sprite(t_game *game, int map_x, int map_y)
 	sprite->y = (map_y + 0.5f) * game->mini_tile;
 	sprite->img = game->textures->keys->img_key01;
 	sprite->collected = 0;
-	sprite->frame_count = 20;
+	sprite->frame_count = 21;
 	sprite->last_update_time = 0;
 	sprite->frames = game->textures->keys->animation_frames;
 	sprite->img = sprite->frames[0];
+	sprite->frame = 0;
 	game->sprites->sprites[game->sprites->count] = sprite;
 	game->sprites->count++;
 }

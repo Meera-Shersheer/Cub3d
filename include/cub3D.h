@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 16:03:47 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:10:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include ".././Libft/ft_printf.h"
 # include ".././Libft/get_next_line_bonus.h"
 # include ".././Libft/libft.h"
-# include "../mlx42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "parsing.h"
 # include "raycasting.h"
 # include <X11/X.h>
@@ -36,7 +36,7 @@
 # endif
 
 # ifndef FRAME_DURATION_MS
-#  define FRAME_DURATION_MS 40
+#  define FRAME_DURATION_MS 30
 # endif
 
 # ifndef MIN_TILE_SIZE
@@ -129,6 +129,7 @@ void						free_map(t_map *map);
 void						ft_free(char **matrix);
 void						free_map(t_map *map);
 void						clean_sources(t_game *game);
+void						ft_free_sprites(t_game *g);
 // input_handlers
 void						mouse_rotate(double xpos, double ypos, void *param);
 void						hide_map2d(mlx_key_data_t keydata, void *param);

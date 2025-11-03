@@ -6,14 +6,12 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 18:24:54 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:32:02 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"		
-	/*To test leaks: valgrind --leak-check=full 
-	--show-leak-kinds=all --track-origins=yes
-	 --suppressions=mlx.supp ./cub3D map*/
+#include "../include/cub3D.h"
+	/*To test leaks: ./cub3D map*/
 
 int	main(int argc, char *argv[])
 {

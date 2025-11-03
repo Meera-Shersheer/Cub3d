@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 18:24:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:10:50 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,33 @@ void	clean_sources(t_game *game)
 		game->wall_distances = NULL;
 	}
 	free_map(game->map);
+	ft_free_sprites(game);
 	delete_textures(game);
+}
+
+void	ft_free_sprites(t_game *g)
+{
+	int i;
+	int j;
+
+	i = g->total_keys;
+	if (!g || !g->sprites)
+		return ;
+	while (i >= 0 )
+	{
+		j = g->sprites->count - 1;
+		while (j >= 0)
+		{
+			if (g->sprites->sprites[i]->frames[j])
+				mlx_delete_image(g->mlx, g->sprites->sprites[i]->frames[j]);
+			j--;
+		}
+		if (g->sprites->sprites[i]->img)
+			mlx_delete_image(g->mlx, g->sprites->sprites[i]->img);
+		if (g->sprites->sprites[i])
+			free (g->sprites->sprites[i]);
+		i--;
+	}
+	if (g->sprites)
+		free (g->sprites);
 }
