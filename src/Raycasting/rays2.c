@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	init_line_values(int *sd, t_ray_pos *x, t_ray_pos *y)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	adjust_tile_size_to_screen(t_game *game, int map_width, int map_height)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	draw_circle(int radius, t_center center, uint32_t color,
 		mlx_image_t *img)

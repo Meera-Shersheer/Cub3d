@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 int	get_wall_direction(t_game *game, t_ray_pos *x, t_ray_pos *y)
 {

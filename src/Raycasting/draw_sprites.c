@@ -6,21 +6,21 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 01:11:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:03:21 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:25:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
-static void	calc_sprite_draw(t_game *game, t_sprite *sprite, t_sprite_draw *sd)
+static void	calc_sprite_draw(t_game *game, t_sprite *sd)
 {
 	float	sprite_scale;
 
 	sprite_scale = 5.0f;
-	sd->height = get_sprite_height(game, sprite) * sprite_scale;
-	sd->width = (sprite->img->width * sd->height) / sprite->img->height;
+	sd->height = get_sprite_height(game, sd) * sprite_scale;
+	sd->width = (sd->img->width * sd->height) / sd->img->height;
 	sd->start_y = (game->scene_3d->height / 2) - (sd->height / 2);
-	sd->start_x = sprite->screen_x - (sd->width / 2);
+	sd->start_x = sd->screen_x - (sd->width / 2);
 	sd->end_y = sd->start_y + sd->height;
 	sd->end_x = sd->start_x + sd->width;
 	if (sd->start_y < 0)
@@ -33,23 +33,22 @@ static void	calc_sprite_draw(t_game *game, t_sprite *sprite, t_sprite_draw *sd)
 		sd->end_x = game->scene_3d->width - 1;
 }
 
-static int	init_sprite_draw(t_game *game, t_sprite *sprite, t_sprite_draw *sd)
+static int	init_sprite_draw(t_game *game, t_sprite *sd)
 {
-	if (!is_sprite_drawable(game, sprite))
+	if (!is_sprite_drawable(game, sd))
 		return (0);
-	calc_sprite_draw(game, sprite, sd);
+	calc_sprite_draw(game, sd);
 	if (sd->height <= 0 || sd->width <= 0)
 		return (0);
 	return (sd->start_x <= sd->end_x && sd->start_y <= sd->end_y);
 }
 
-static int	get_sprite_pixel_color(t_game *game, t_sprite *sprite,
-		t_sprite_draw *sd, uint32_t *color)
+static int	get_sprite_pixel_color(t_game *game, t_sprite *sd, uint32_t *color)
 {
 	if (game->wall_distances[sd->cur_x] > 0
-		&& sprite->dist < game->wall_distances[sd->cur_x] * game->mini_tile)
+		&& sd->dist < game->wall_distances[sd->cur_x] * game->mini_tile)
 	{
-		*color = get_sprite_texture(sprite, (float)(sd->cur_x - sd->start_x)
+		*color = get_sprite_texture(sd, (float)(sd->cur_x - sd->start_x)
 				/ sd->width, (float)(sd->cur_y - sd->start_y) / sd->height);
 		if ((*color & 0xFF) != 0)
 			return (1);
@@ -57,8 +56,7 @@ static int	get_sprite_pixel_color(t_game *game, t_sprite *sprite,
 	return (0);
 }
 
-static void	render_sprite_pixels(t_game *game, t_sprite *sprite,
-		t_sprite_draw *sd)
+static void	render_sprite_pixels(t_game *game, t_sprite *sd)
 {
 	int			pixel_index;
 	uint32_t	*pixels;
@@ -71,7 +69,7 @@ static void	render_sprite_pixels(t_game *game, t_sprite *sprite,
 		sd->cur_x = sd->start_x;
 		while (sd->cur_x <= sd->end_x)
 		{
-			if (get_sprite_pixel_color(game, sprite, sd, &color))
+			if (get_sprite_pixel_color(game, sd, &color))
 			{
 				pixel_index = sd->cur_y * game->scene_3d->width + sd->cur_x;
 				pixels[pixel_index] = color;
@@ -84,9 +82,7 @@ static void	render_sprite_pixels(t_game *game, t_sprite *sprite,
 
 void	draw_sprite(t_game *game, t_sprite *sprite)
 {
-	t_sprite_draw	sd;
-
-	if (!init_sprite_draw(game, sprite, &sd))
+	if (!init_sprite_draw(game, sprite))
 		return ;
-	render_sprite_pixels(game, sprite, &sd);
+	render_sprite_pixels(game, sprite);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	init_game(int argc, char *argv[], t_game *game)
 {

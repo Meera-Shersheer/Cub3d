@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
 static int	get_sprite_tex_index(t_sprite *sprite, float u, float v)
 {
