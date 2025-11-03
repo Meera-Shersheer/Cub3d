@@ -6,12 +6,31 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:41:29 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:03:05 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+# ifndef GREEN
+#  define GREEN "\033[0;32m"
+# endif
+
+# ifndef MAGENTA
+#  define MAGENTA "\033[0;35m"
+# endif
+
+# ifndef CYAN
+#  define CYAN "\033[0;36m"
+# endif
+
+# ifndef RED
+#  define RED "\033[0;31m"
+# endif
+
+# ifndef NC
+#  define NC "\033[0m"
+# endif
 
 typedef struct s_game	t_game;
 
