@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   try_move.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 13:09:35 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:52:37 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 t_corners	get_corners(t_game *g, float nx, float ny)
 {

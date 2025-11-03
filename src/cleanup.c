@@ -6,11 +6,11 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/01 10:50:20 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:56:53 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../include/cub3D.h"	
 
 void	ft_free(char **matrix)
 {

@@ -6,11 +6,11 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 23:46:54 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 01:18:21 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:03:56 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	swap_if_needed(t_sprite **a, t_sprite **b)
 {
@@ -62,6 +62,7 @@ int	get_sprite_height(t_game *game, t_sprite *sprite)
 	sprite_height = (int)(game->scene_3d->height / sprite->dist);
 	return (sprite_height);
 }
+
 int	is_sprite_drawable(t_game *game, t_sprite *sprite)
 {
 	if (!game || !sprite || !sprite->img || sprite->collected == 1)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 12:20:47 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:45:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 int	parsing(int argc, char *argv[], t_game *game)
 {

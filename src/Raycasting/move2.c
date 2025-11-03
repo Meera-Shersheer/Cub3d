@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 22:09:28 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:26:08 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	handle_speed_keys(t_game *g)
 {
@@ -44,9 +44,9 @@ static void	handle_movement_keys(t_game *g)
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 		move_right(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-		g->player->angle += 0.15;
+		g->player->angle += 0.2;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.15;
+		g->player->angle -= 0.2;
 }
 
 static void	reset_and_update_scene(t_game *g)
@@ -77,11 +77,11 @@ static void	update_game_state(t_game *g)
 	if (g->won == 1)
 	{
 		g->game_time_end = get_time();
-		printf(GREEN "You finished the game in %ld.%ld s\n" NC,
+		printf(GREEN "You finished the game in %ld.%ld s\n"NC,
 			(g->game_time_end - g->game_time_start) / 1000, (g->game_time_end
 				- g->game_time_start) % 1000);
 		mlx_close_window(g->mlx);
-		clean_sources(g);
+		return ;
 	}
 }
 
@@ -96,4 +96,6 @@ void	move(void *param)
 	handle_movement_keys(g);
 	reset_and_update_scene(g);
 	update_game_state(g);
+	if (g->won == 1)
+		return ;
 }

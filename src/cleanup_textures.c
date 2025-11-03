@@ -6,11 +6,11 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:49:17 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 00:58:38 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:05:48 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../include/cub3D.h"
 
 static void	delete_wall_textures(t_game *g)
 {
@@ -36,21 +36,58 @@ static void	delete_door_textures(t_game *g)
 		mlx_delete_image(g->mlx, g->textures->door->img_door_opened);
 }
 
-static void	delete_key_textures(t_game *g)
+static void	delete_key_textures1(t_game *g)
 {
-	int		i;
-	void	**keys;
-
 	if (!g || !g->textures || !g->textures->keys)
 		return ;
-	keys = (void **)&g->textures->keys->img_key00;
-	i = 0;
-	while (i <= 20)
-	{
-		if (keys[i])
-			mlx_delete_image(g->mlx, keys[i]);
-		i++;
-	}
+	if (g->textures->keys->img_key00)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key00);
+	if (g->textures->keys->img_key01)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key01);
+	if (g->textures->keys->img_key02)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key02);
+	if (g->textures->keys->img_key03)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key03);
+	if (g->textures->keys->img_key04)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key04);
+	if (g->textures->keys->img_key05)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key05);
+	if (g->textures->keys->img_key06)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key06);
+	if (g->textures->keys->img_key07)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key07);
+	if (g->textures->keys->img_key08)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key08);
+	if (g->textures->keys->img_key09)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key09);
+	if (g->textures->keys->img_key10)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key10);
+}
+
+static void	delete_key_textures2(t_game *g)
+{
+	if (!g || !g->textures || !g->textures->keys)
+		return ;
+	if (g->textures->keys->img_key11)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key11);
+	if (g->textures->keys->img_key12)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key12);
+	if (g->textures->keys->img_key13)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key13);
+	if (g->textures->keys->img_key14)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key14);
+	if (g->textures->keys->img_key15)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key15);
+	if (g->textures->keys->img_key16)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key16);
+	if (g->textures->keys->img_key17)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key17);
+	if (g->textures->keys->img_key18)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key18);
+	if (g->textures->keys->img_key19)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key19);
+	if (g->textures->keys->img_key20)
+		mlx_delete_image(g->mlx, g->textures->keys->img_key20);
 }
 
 void	delete_textures(t_game *g)
@@ -59,7 +96,8 @@ void	delete_textures(t_game *g)
 		return ;
 	delete_wall_textures(g);
 	delete_door_textures(g);
-	delete_key_textures(g);
+	delete_key_textures1(g);
+	delete_key_textures2(g);
 	if (g->textures)
 		free(g->textures);
 }

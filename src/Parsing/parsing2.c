@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	set_texture(char **texture_field, const char *line, t_map *map,
 		const char *err_msg)

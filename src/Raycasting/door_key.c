@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   door_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:18:25 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/01 13:49:18 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:49:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 int	place_keys(char **map, int screen_width, int screen_height, int total_keys)
 {

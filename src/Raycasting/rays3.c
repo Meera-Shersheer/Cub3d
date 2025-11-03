@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	set_dir(t_angle *angle, t_ray_pos *x, t_ray_pos *y)
 {

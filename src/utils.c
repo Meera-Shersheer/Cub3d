@@ -6,16 +6,16 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 01:02:57 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:04:33 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../include/cub3D.h"	
 
 void	error_exit2(t_game *game, const char *msg)
 {
 	printf(RED "Error\n%s\n" NC, msg);
-	free_map(game->map);
+	clean_sources(game);
 	exit(1);
 }
 

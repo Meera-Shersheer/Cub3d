@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   symbol.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 13:11:12 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 13:11:14 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:52:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	draw_circle(int radius, t_center center, uint32_t color,
 		mlx_image_t *img)

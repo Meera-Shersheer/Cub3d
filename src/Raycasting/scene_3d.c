@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scene_3d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:48 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 19:10:15 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:52:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	init_wall_context(t_wall_context *ctx)
 {

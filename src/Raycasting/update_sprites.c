@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	compute_sprite_distance(t_game *game, t_sprite *sprite,
 		float *raw_dist, float *angle_diff)

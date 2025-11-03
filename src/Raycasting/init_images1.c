@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_images1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:17:22 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 14:09:20 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:50:05 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 int	init_textures(t_game *game)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   door_key2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/01 13:48:46 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:49:40 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 int	is_valid_player_tile(t_game *g, int px, int py)
 {

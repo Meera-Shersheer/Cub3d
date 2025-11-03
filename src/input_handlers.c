@@ -6,11 +6,11 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 21:58:01 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 21:58:02 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:56:33 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3D.h"
+#include "../include/cub3D.h"	
 
 void	hide_map2d(mlx_key_data_t keydata, void *param)
 {

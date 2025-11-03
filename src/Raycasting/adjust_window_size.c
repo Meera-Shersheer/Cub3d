@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   adjust_window_size.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:51:15 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 12:41:14 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:45:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 void	adjust_tile_size_to_screen(t_game *game, int map_width, int map_height)
 {

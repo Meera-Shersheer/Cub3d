@@ -6,11 +6,11 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 17:15:43 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 13:03:32 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 static void	init_scene_images_and_distances(t_game *game)
 {

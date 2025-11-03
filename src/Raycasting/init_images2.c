@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_images2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:27:00 by mshershe          #+#    #+#             */
-/*   Updated: 2025/10/31 14:07:58 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/02 20:50:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3D.h"
+#include "../../include/cub3D.h"
 
 mlx_image_t	*load_textures(t_game *game, char *tex_path)
 {
