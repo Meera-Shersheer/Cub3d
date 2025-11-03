@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 11:59:53 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:31:33 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ typedef struct s_sprite
 	int screen_y;
 	int			frame;			// Current frame index
 	int			frame_count;	// Total number of frames
-	//int			frame_delay;	// Frames to wait before switching
-	//int			frame_timer;	// Counter for frame delay
 	long		last_update_time	;
 	mlx_image_t	**frames;		// Array of frame images
 }	t_sprite;
@@ -317,6 +315,7 @@ typedef enum e_wall_dir
     WEST,
 	OTHER
 }   t_wall_dir;
+
 typedef struct s_tex_info
 {
     float *tex_pos; 
@@ -401,8 +400,6 @@ void		check_map_values(t_map *map);
 
 void		check_player_position(t_map *map);
 void		check_map_chars(t_map *map);
-//void		check_map_outer_walls(t_map *map);
-//void		check_map_inner_spaces(t_map *map);
 int			skip_spaces(char *str, int i);
 char		**split_lines_with_nl(char *content);
 char		*trim_newline(char *str);
@@ -412,7 +409,6 @@ int			map_start(char *line);
 int			map_end(char **lines, int i);
 char		*pad_line(char *line, int max_length);
 //flood_fill
-//int			floodfill(t_map *map, char **grid, int pos_x, int pos_y);
 void		floodfill(t_map *map, char **grid, int pos_x, int pos_y);
 int			get_player_x_pos(char **grid);
 int			get_player_y_pos(char **grid);
