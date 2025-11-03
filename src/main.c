@@ -6,12 +6,14 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 19:32:02 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:14:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
-	/*To test leaks: ./cub3D map*/
+#include "../include/cub3D.h"		
+	/*To test leaks:  valgrind --leak-check=full  --show-leak-kinds=all 
+	--track-origins=yes --suppressions=mlx.supp  
+	--log-file=valgrind_output.txt./cub3D map*/
 
 int	main(int argc, char *argv[])
 {
@@ -38,4 +40,33 @@ int	main(int argc, char *argv[])
 	clean_sources(&game);
 	mlx_terminate(game.mlx);
 	return (0);
+}
+
+void	ft_free_sprites(t_game *g)
+{
+	int	i;
+	int	j;
+
+	i = g->total_keys - 1;
+	if (!g || !g->sprites)
+		return ;
+	while (i >= 0)
+	{
+		j = g->sprites->count - 1;
+		while (j >= 0)
+		{
+			if (g->sprites->sprites[i]->frames[j])
+				mlx_delete_image(g->mlx, g->sprites->sprites[i]->frames[j]);
+			j--;
+		}
+		if (g->sprites->sprites[i]->img)
+			mlx_delete_image(g->mlx, g->sprites->sprites[i]->img);
+		if (g->sprites->sprites[i])
+			free (g->sprites->sprites[i]);
+		i--;
+	}
+	if (g->sprites->sprites)
+		free (g->sprites->sprites);
+	if (g->sprites)
+		free (g->sprites);
 }

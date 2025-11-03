@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:19:35 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 18:25:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:58:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void	error_exit2(t_game *game, const char *msg)
 	clean_sources(game);
 	exit(1);
 }
+
 void	error_exit(t_map *map, const char *msg)
 {
 	printf(RED "Error\n%s\n" NC, msg);
 	free_map(map);
 	exit(1);
 }
+
 size_t	ft_strlen_d(char **s)
 {
 	size_t	n;
