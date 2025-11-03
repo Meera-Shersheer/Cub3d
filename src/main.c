@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 20:14:57 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:09:43 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char *argv[])
 	}
 	render_all_sprites(&game);
 	mlx_key_hook(game.mlx, hide_map2d, &game);
+	mlx_key_hook(game.mlx, handle_speed_keys, &game);
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);

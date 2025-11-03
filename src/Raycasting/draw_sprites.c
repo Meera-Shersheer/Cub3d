@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_sprites.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 01:11:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 18:25:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:06:35 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	calc_sprite_draw(t_game *game, t_sprite *sd)
 {
 	float	sprite_scale;
 
-	sprite_scale = 5.0f;
+	sprite_scale = 3.0f;
 	sd->height = get_sprite_height(game, sd) * sprite_scale;
 	sd->width = (sd->img->width * sd->height) / sd->img->height;
 	sd->start_y = (game->scene_3d->height / 2) - (sd->height / 2);

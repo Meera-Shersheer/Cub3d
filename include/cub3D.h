@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 19:10:06 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:56:31 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@
 # endif
 
 # ifndef W_TILE
-#  define W_TILE 96
+#  define W_TILE 64
 # endif
 
 # ifndef MINI_TILE
-#  define MINI_TILE 24
+#  define MINI_TILE (W_TILE / 4)
 # endif
 
 typedef struct s_player

@@ -10,6 +10,7 @@
         "stdio.h": "c",
         "random": "c",
         "cstdint": "c",
-        "limits": "c"
+        "limits": "c",
+        "errno.h": "c"
     }
 }

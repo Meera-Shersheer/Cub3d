@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   try_move.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 15:09:02 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 20:02:19 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:44:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_out_of_bounds(t_game *g, int row, int col)
 int	is_wall_at(t_game *g, int row, int col)
 {
 	if (g->map->map_lines[row][col] == '1' || \
-	(g->map->map_lines[row][col] == 'D' && g->collected_keys != g->total_keys))
+(g->map->map_lines[row][col] == 'D' && g->collected_keys != g->total_keys))
 		return (1);
 	return (0);
 }
