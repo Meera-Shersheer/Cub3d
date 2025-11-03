@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:37:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 21:12:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:32:13 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void			move_right(t_game *g);
 void			move_left(t_game *g);
 void			move_backward(t_game *g);
 void			move_forward(t_game *g);
-void			handle_speed_keys(mlx_key_data_t keydata, void *param);
+void			handle_additional_keys(mlx_key_data_t keydata, void *param);
 // init_images1
 
 int				init_textures(t_game *game);

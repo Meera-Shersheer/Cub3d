@@ -6,14 +6,14 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 21:09:43 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:31:00 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"		
 	/*To test leaks:  valgrind --leak-check=full  --show-leak-kinds=all 
 	--track-origins=yes --suppressions=mlx.supp  
-	--log-file=valgrind_output.txt./cub3D map*/
+	--log-file=valgrind_output.txt ./cub3D map*/
 
 int	main(int argc, char *argv[])
 {
@@ -32,8 +32,7 @@ int	main(int argc, char *argv[])
 			game.wall_distances[i++] = 10000.0f;
 	}
 	render_all_sprites(&game);
-	mlx_key_hook(game.mlx, hide_map2d, &game);
-	mlx_key_hook(game.mlx, handle_speed_keys, &game);
+	mlx_key_hook(game.mlx, handle_additional_keys, &game);
 	mlx_cursor_hook(game.mlx, mouse_rotate, &game);
 	mlx_loop_hook(game.mlx, &move, &game);
 	mlx_loop(game.mlx);

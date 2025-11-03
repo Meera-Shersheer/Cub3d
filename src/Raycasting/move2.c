@@ -6,19 +6,20 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 21:12:34 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:30:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-void	handle_speed_keys(mlx_key_data_t keydata, void *param)
+void	handle_additional_keys(mlx_key_data_t keydata, void *param)
 {
 	t_game	*g;
 
 	g = (t_game *)param;
 	if (!g || !g->map_2d || !g->player)
 		return ;
+	hide_map2d(keydata, g);
 	if (keydata.key == MLX_KEY_2 && keydata.action == MLX_PRESS)
 	{
 		g->player->move_speed += 1;

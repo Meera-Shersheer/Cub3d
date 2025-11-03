@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 20:56:31 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:18:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include ".././Libft/ft_printf.h"
 # include ".././Libft/get_next_line_bonus.h"
 # include ".././Libft/libft.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
 # include "parsing.h"
 # include "raycasting.h"
 # include <X11/X.h>
@@ -56,7 +56,7 @@
 # endif
 
 # ifndef MINI_TILE
-#  define MINI_TILE (W_TILE / 4)
+#  define MINI_TILE 16
 # endif
 
 typedef struct s_player

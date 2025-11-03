@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/30 02:40:57 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:28:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ void	check_playable_area( t_map *map)
 	if (x < 0 || y < 0)
 		error_exit(map, "player position is out of bound");
 	floodfill(map, map->flood_fill_map, x, y);
-	print_floodfill_map(map);
-	printf(GREEN "-----------------------------------------------\n" NC);
 }
 
 int	check_map(char **av, t_map *map)
@@ -93,6 +91,5 @@ int	check_map(char **av, t_map *map)
 	validate_textures(map);
 	map->screen_height = ft_strlen_d(map->map_lines);
 	map->screen_width = ft_strlen(map->map_lines[0]);
-	print_map(map);
 	return (0);
 }
