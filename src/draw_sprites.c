@@ -5,103 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/31 23:20:28 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/02 21:58:49 by mshershe         ###   ########.fr       */
+/*   Created: 2025/11/03 01:11:29 by aalmahas          #+#    #+#             */
+/*   Updated: 2025/11/03 12:03:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-// 1. Initialize sprite draw info
-static int	init_sprite_draw(t_game *game, t_sprite *sprite, int *w, int *h)
+static void	calc_sprite_draw(t_game *game, t_sprite *sprite, t_sprite_draw *sd)
 {
-	//const float	sprite_scale = 5.0f;
+	float	sprite_scale;
 
-	if (!game || !sprite || !sprite->img || sprite->collected == 1)
-		return (0);
-	if (!game->wall_distances || !game->scene_3d || !game->scene_3d->pixels)
-		return (0);
-	*h = get_sprite_height(game, sprite) * SPRITE_SCALE;
-	*w = (sprite->img->width * (*h)) / sprite->img->height;
-	if (*w <= 0 || *h <= 0)
-		return (0);
-	return (1);
+	sprite_scale = 5.0f;
+	sd->height = get_sprite_height(game, sprite) * sprite_scale;
+	sd->width = (sprite->img->width * sd->height) / sprite->img->height;
+	sd->start_y = (game->scene_3d->height / 2) - (sd->height / 2);
+	sd->start_x = sprite->screen_x - (sd->width / 2);
+	sd->end_y = sd->start_y + sd->height;
+	sd->end_x = sd->start_x + sd->width;
+	if (sd->start_y < 0)
+		sd->start_y = 0;
+	if (sd->end_y >= (int)game->scene_3d->height)
+		sd->end_y = game->scene_3d->height - 1;
+	if (sd->start_x < 0)
+		sd->start_x = 0;
+	if (sd->end_x >= (int)game->scene_3d->width)
+		sd->end_x = game->scene_3d->width - 1;
 }
 
-// 2. Draw a single column of the sprite
-static uint32_t	get_sprite_pixel_color(t_game *game, t_sprite *sprite, int x,
-		int y)
+static int	init_sprite_draw(t_game *game, t_sprite *sprite, t_sprite_draw *sd)
 {
-	int			sprite_width;
-	int			start_y;
-	uint32_t	color;
-
-	sprite_width = (sprite->img->width * get_sprite_height(game, sprite) * SPRITE_SCALE)
-		/ sprite->img->height;
-	start_y = (game->scene_3d->height / 2) - (sprite_width * sprite->img->height
-			/ sprite->img->width / 5);
-	color = get_sprite_texture(sprite, (float)(x - (sprite->screen_x
-					- sprite_width / 2)) / sprite_width, (float)(y - start_y)
-			/ (sprite_width * sprite->img->height / sprite->img->width / 5));
-	if ((color & 0xFF) == 0)
+	if (!is_sprite_drawable(game, sprite))
 		return (0);
-	if (x < 0 || x >= (int)game->scene_3d->width || y < 0
-		|| y >= (int)game->scene_3d->height)
+	calc_sprite_draw(game, sprite, sd);
+	if (sd->height <= 0 || sd->width <= 0)
 		return (0);
-	if (game->wall_distances[x] <= 0 || sprite->dist >= game->wall_distances[x]
-		* game->mini_tile)
-		return (0);
-	return (color);
+	return (sd->start_x <= sd->end_x && sd->start_y <= sd->end_y);
 }
 
-static void	draw_sprite_col(t_game *game, t_sprite *sprite, int x,
-		int sprite_height)
+static int	get_sprite_pixel_color(t_game *game, t_sprite *sprite,
+		t_sprite_draw *sd, uint32_t *color)
 {
-	int			y;
+	if (game->wall_distances[sd->cur_x] > 0
+		&& sprite->dist < game->wall_distances[sd->cur_x] * game->mini_tile)
+	{
+		*color = get_sprite_texture(sprite, (float)(sd->cur_x - sd->start_x)
+				/ sd->width, (float)(sd->cur_y - sd->start_y) / sd->height);
+		if ((*color & 0xFF) != 0)
+			return (1);
+	}
+	return (0);
+}
+
+static void	render_sprite_pixels(t_game *game, t_sprite *sprite,
+		t_sprite_draw *sd)
+{
+	int			pixel_index;
 	uint32_t	*pixels;
-	int			start_y;
 	uint32_t	color;
 
 	pixels = (uint32_t *)game->scene_3d->pixels;
-	start_y = (game->scene_3d->height / 2) - (sprite_height / 2);
-	y = start_y;
-	while (y <= start_y + sprite_height)
+	sd->cur_y = sd->start_y;
+	while (sd->cur_y <= sd->end_y)
 	{
-		color = get_sprite_pixel_color(game, sprite, x, y);
-		if (color != 0)
-			pixels[y * game->scene_3d->width + x] = color;
-		y++;
+		sd->cur_x = sd->start_x;
+		while (sd->cur_x <= sd->end_x)
+		{
+			if (get_sprite_pixel_color(game, sprite, sd, &color))
+			{
+				pixel_index = sd->cur_y * game->scene_3d->width + sd->cur_x;
+				pixels[pixel_index] = color;
+			}
+			sd->cur_x++;
+		}
+		sd->cur_y++;
 	}
 }
 
-// 3. Loop over sprite columns
-static void	draw_sprite_loop(t_game *game, t_sprite *sprite, int sprite_width,
-		int sprite_height)
-{
-	int	x;
-	int	start_x;
-	int	end_x;
-
-	start_x = sprite->screen_x - (sprite_width / 2);
-	end_x = start_x + sprite_width;
-	x = start_x;
-	while (x <= end_x)
-	{
-		draw_sprite_col(game, sprite, x, sprite_height);
-		x++;
-	}
-}
-
-// 4. Main draw_sprite function
 void	draw_sprite(t_game *game, t_sprite *sprite)
 {
-	int	sprite_width;
-	int	sprite_height;
+	t_sprite_draw	sd;
 
-	if (!init_sprite_draw(game, sprite, &sprite_width, &sprite_height))
+	if (!init_sprite_draw(game, sprite, &sd))
 		return ;
-	if (sprite->screen_x < -500 || sprite->screen_x > (int)game->scene_3d->width
-		+ 500)
-		return ;
-	draw_sprite_loop(game, sprite, sprite_width, sprite_height);
+	render_sprite_pixels(game, sprite, &sd);
 }
