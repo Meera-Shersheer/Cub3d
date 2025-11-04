@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 21:30:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:37:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,9 @@ static void	reset_and_update_scene(t_game *g)
 		i++;
 	}
 }
-
+//crashing 
 static void	update_game_state(t_game *g)
 {
-	reset_and_update_scene(g);
-	dda(g);
-	render_all_sprites(g);
 	if (g->won == 1)
 	{
 		g->game_time_end = get_time();
@@ -92,6 +89,9 @@ static void	update_game_state(t_game *g)
 		mlx_close_window(g->mlx);
 		return ;
 	}
+	reset_and_update_scene(g);
+	dda(g);
+	render_all_sprites(g);
 }
 
 void	move(void *param)

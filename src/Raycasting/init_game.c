@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:43:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 21:17:28 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/04 20:23:09 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	init_game(int argc, char *argv[], t_game *game)
 	game->wall_distances = NULL;
 	if (parsing(argc, argv, game))
 		error_exit(game->map, "parsing failure");
-	game->mlx = mlx_init(game->w_tile * game->map->screen_width,
-			game->w_tile * game->map->screen_height, "Cub3d Game", true);
+	game->mlx = mlx_init(700, 700, "Cub3d Game", true);///edit 
 	if (!game->mlx)
 		error_exit(game->map, "mlx initializing failure");
 	place_keys_and_door(game);
