@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/05 14:50:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/05 20:41:40 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include ".././Libft/ft_printf.h"
 # include ".././Libft/get_next_line_bonus.h"
 # include ".././Libft/libft.h"
-//# include "../../MLX42/include/MLX42/MLX42.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
+//# include "../MLX42/include/MLX42/MLX42.h"
 # include "parsing.h"
 # include "raycasting.h"
 # include <X11/X.h>
