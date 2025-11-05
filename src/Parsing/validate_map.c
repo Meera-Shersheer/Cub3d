@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 06:15:40 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 12:26:46 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:47:18 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ void	check_player_position(t_map *map)
 		error_exit(map, "There must be exactly one player");
 }
 
+int	is_empty_line(char *line)
+{
+	size_t	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	check_map_order(char **lines)
 {
 	int		found_map;
@@ -77,12 +91,13 @@ int	check_map_order(char **lines)
 	{
 		if (map_start(lines[i]))
 			found_map = 1;
-		else if (found_map && lines[i][0] != '\0')
+		else if (found_map && !is_empty_line(lines[i]))
 			return (0);
 		i++;
 	}
 	return (1);
 }
+
 /*
 void	check_map_outer_walls(t_map *map) // remove later
 {

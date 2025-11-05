@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   adjust_window_size.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:51:15 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/02 20:45:39 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/03 21:01:40 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	adjust_tile_size_to_screen(t_game *game, int map_width, int map_height)
 	int32_t	max_width;
 	int32_t	max_height;
 
-	max_width = 2560;
-	max_height = 1600;
+	max_width = 1920;
+	max_height = 1080;
 	while ((map_width * game->w_tile > max_width
 			|| map_height * game->w_tile > max_height)
 		&& game->w_tile > MIN_TILE_SIZE)

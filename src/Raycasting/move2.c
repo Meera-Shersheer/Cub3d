@@ -1,40 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move.c                                             :+:      :+:    :+:   */
+/*   move2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:26:08 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/04 19:37:17 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-static void	handle_speed_keys(t_game *g)
+void	handle_additional_keys(mlx_key_data_t keydata, void *param)
 {
-	if (mlx_is_key_down(g->mlx, MLX_KEY_2))
+	t_game	*g;
+
+	g = (t_game *)param;
+	if (!g || !g->map_2d || !g->player)
+		return ;
+	hide_map2d(keydata, g);
+	if (keydata.key == MLX_KEY_2 && keydata.action == MLX_PRESS)
 	{
 		g->player->move_speed += 1;
+		if (g->player->move_speed < 1)
+			g->player->move_speed = 1;
+		if (g->player->move_speed > 2 * g->mini_tile / 3)
+			g->player->move_speed = 2 * g->mini_tile / 3;
 		printf(CYAN "Player speed: %.1f\n" NC, g->player->move_speed);
 	}
 	if (mlx_is_key_down(g->mlx, MLX_KEY_3))
 	{
 		g->player->move_speed -= 1;
+		if (g->player->move_speed < 1)
+			g->player->move_speed = 1;
+		if (g->player->move_speed > 2 * g->mini_tile / 3)
+			g->player->move_speed = 2 * g->mini_tile / 3;
 		printf(CYAN "Player speed: %.1f\n" NC, g->player->move_speed);
 	}
-	if (g->player->move_speed < 1)
-		g->player->move_speed = 1;
-	if (g->player->move_speed > 2 * g->mini_tile / 3)
-		g->player->move_speed = 2 * g->mini_tile / 3;
 }
 
 static void	handle_movement_keys(t_game *g)
 {
 	if (mlx_is_key_down(g->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(g->mlx);
-	handle_speed_keys(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_W))
 		move_forward(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_S))
@@ -68,12 +77,9 @@ static void	reset_and_update_scene(t_game *g)
 		i++;
 	}
 }
-
+//crashing 
 static void	update_game_state(t_game *g)
 {
-	reset_and_update_scene(g);
-	dda(g);
-	render_all_sprites(g);
 	if (g->won == 1)
 	{
 		g->game_time_end = get_time();
@@ -83,6 +89,9 @@ static void	update_game_state(t_game *g)
 		mlx_close_window(g->mlx);
 		return ;
 	}
+	reset_and_update_scene(g);
+	dda(g);
+	render_all_sprites(g);
 }
 
 void	move(void *param)
@@ -92,7 +101,6 @@ void	move(void *param)
 	g = (t_game *)param;
 	if (!g || !g->mlx || !g->player || !g->scene_3d || !g->wall_distances)
 		return ;
-	handle_speed_keys(g);
 	handle_movement_keys(g);
 	reset_and_update_scene(g);
 	update_game_state(g);

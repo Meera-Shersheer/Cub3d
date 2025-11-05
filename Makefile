@@ -38,10 +38,10 @@ SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
 
 CC= cc
-CFLAGS= -Wall -Wextra -Werror -Iinclude -g -fsanitize=address
+CFLAGS= -Wall -Wextra -Werror -Iinclude -g
 #-g3 -fsanitize=address -g
 LIBFT  = -L$(LFTDIR) -lft
-MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
+MLX42  = -L../MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
 
 OBJ_SRC = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_PATH))
 OBJ_BNS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(BNS_PATH))

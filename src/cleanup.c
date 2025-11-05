@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:56:53 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:00:30 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ void	clean_sources(t_game *game)
 		game->wall_distances = NULL;
 	}
 	free_map(game->map);
+	ft_free_sprites(game);
 	delete_textures(game);
 }

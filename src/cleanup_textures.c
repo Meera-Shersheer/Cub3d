@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup_textures.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:49:17 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 13:05:48 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/03 20:06:57 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	delete_door_textures(t_game *g)
 		mlx_delete_image(g->mlx, g->textures->door->img_door_closed);
 	if (g->textures->door->img_door_opened)
 		mlx_delete_image(g->mlx, g->textures->door->img_door_opened);
+	if (g->textures->door)
+		free (g->textures->door);
 }
 
 static void	delete_key_textures1(t_game *g)
@@ -88,6 +90,8 @@ static void	delete_key_textures2(t_game *g)
 		mlx_delete_image(g->mlx, g->textures->keys->img_key19);
 	if (g->textures->keys->img_key20)
 		mlx_delete_image(g->mlx, g->textures->keys->img_key20);
+	if (g->textures->keys)
+		free (g->textures->keys);
 }
 
 void	delete_textures(t_game *g)

@@ -1,3 +1,7 @@
+
+# ============================================================================
+# NVIDIA Graphics Driver Leaks
+# ============================================================================
 {
 	<MLX42>
 	Memcheck:Leak
@@ -5,6 +9,10 @@
 	obj:/usr/lib/x86_64-linux-gnu/libnvidia*
 }
 
+
+# ============================================================================
+# D-Bus Library Leaks
+# ============================================================================
 {
 	<MLX42>
 	Memcheck:Leak
@@ -12,6 +20,9 @@
 	obj:/usr/lib/x86_64-linux-gnu/libdbus*
 }
 
+# ============================================================================
+# GLFW Library Leaks
+# ============================================================================
 {
 	<MLX42>
 	Memcheck:Leak
@@ -19,6 +30,9 @@
 	obj:/usr/lib/x86_64-linux-gnu/libglfw*
 }
 
+# ============================================================================
+# X11 Library Leaks
+# ============================================================================
 {
 	<MLX42>
 	Memcheck:Leak
@@ -107,7 +121,215 @@
 
 
 
+{
+   GLFW-Calloc-Leak
+   Memcheck:Leak
+   ...
+   fun:calloc
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libglfw*
+}
 
+
+
+{
+   X11-XrmInitialize-Leak
+   Memcheck:Leak
+   ...
+   fun:XrmInitialize
+}
+
+{
+   X11-Library-General
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so*
+}
+
+# ============================================================================
+# Mesa/Gallium Graphics Driver Leaks (YOUR MAIN ISSUE)
+# ============================================================================
+{
+   Gallium-All-Leaks
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libgallium-25.0.7-0ubuntu0.24.04.2.so
+}
+
+{
+   Gallium-Malloc-Leaks
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libgallium*
+}
+
+{
+   Gallium-Posix-Memalign-Leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:posix_memalign
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libgallium*
+}
+
+{
+   Gallium-Calloc-Leaks
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libgallium*
+}
+
+# ============================================================================
+# DRI (Direct Rendering Infrastructure) Leaks
+# ============================================================================
+{
+   MLX42-DRI-All
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/dri*
+}
+
+{
+   DRI-BindContext
+   Memcheck:Leak
+   ...
+   fun:driBindContext
+}
+
+# ============================================================================
+# LLVM Library Leaks
+# ============================================================================
+{
+   MLX42-LLVM-All
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libLLVM*
+}
+
+{
+   LLVM-Library-General
+   Memcheck:Leak
+   ...
+   obj:*/libLLVM.so*
+}
+
+# ============================================================================
+# GLX (OpenGL Extension to X Window System) Leaks
+# ============================================================================
+{
+   GLX-Mesa-All
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libGLX_mesa.so*
+}
+
+{
+   GLX-General
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libGLX.so*
+}
+
+# ============================================================================
+# Dynamic Linker Leaks
+# ============================================================================
+{
+   MLX42-DL-Open
+   Memcheck:Leak
+   ...
+   fun:_dl_open
+}
+
+{
+   Dynamic-Linker-All
+   Memcheck:Leak
+   ...
+   fun:_dl_*
+}
+
+{
+   DLOpen-Leaks
+   Memcheck:Leak
+   ...
+   fun:dlopen*
+}
+
+# ============================================================================
+# Standard C++ Library Leaks
+# ============================================================================
+{
+   StdCPP-Library-Leaks
+   Memcheck:Leak
+   ...
+   obj:*/libstdc++.so*
+}
+
+# ============================================================================
+# MLX Init Leaks
+# ============================================================================
+{
+   MLX-Init-Leak
+   Memcheck:Leak
+   ...
+   fun:mlx_init
+}
+
+{
+   MLX-Loop-Leak
+   Memcheck:Leak
+   ...
+   fun:mlx_loop
+}
+
+{
+   MLX-Flush-Batch
+   Memcheck:Leak
+   ...
+   fun:mlx_flush_batch
+}
+
+# ============================================================================
+# OpenGL/Graphics Context Leaks
+# ============================================================================
+{
+   OpenGL-Context-All
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libGL*
+}
+
+# ============================================================================
+# Texture Loading Leaks (PNG related)
+# ============================================================================
+{
+   PNG-Loading-Leaks
+   Memcheck:Leak
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libpng*
+}
+
+# ============================================================================
+# General Graphics Stack Leaks
+# ============================================================================
+{
+   Graphics-Stack-General
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   fun:mlx_*
+}
+
+{
+   Graphics-Drivers-General
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   ...
+   obj:/usr/lib/*/dri/*
+}
 
 
 

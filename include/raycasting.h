@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:37:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 15:51:22 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:07:21 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void			move_right(t_game *g);
 void			move_left(t_game *g);
 void			move_backward(t_game *g);
 void			move_forward(t_game *g);
-
+void			handle_additional_keys(mlx_key_data_t keydata, void *param);
 // init_images1
 
 int				init_textures(t_game *game);
@@ -209,7 +209,7 @@ int				reach_keys(t_map *map, char **grid, int x, int y);
 int				keys_reachable(t_game *g, char **map);
 int				door_reachable(t_game *g, char **map);
 int				reach_keys(t_map *map, char **grid, int x, int y);
-int				reach_door(char **grid, int x, int y);
+int				reach_door(t_map *map, char **grid, int x, int y);
 // adjust_window_size
 void			adjust_tile_size_to_screen(t_game *game, int map_width,
 					int map_height);

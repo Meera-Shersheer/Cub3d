@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 16:03:05 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:50:41 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void					classify_colors(char *line, t_map *map);
 
 // validate map
 int						check_map_order(char **lines);
+int						is_empty_line(char *line);
 void					check_player_position(t_map *map);
 void					check_map_chars(t_map *map);
 // check_texture

@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 16:03:47 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 09:03:49 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # endif
 
 # ifndef FRAME_DURATION_MS
-#  define FRAME_DURATION_MS 40
+#  define FRAME_DURATION_MS 30
 # endif
 
 # ifndef MIN_TILE_SIZE
@@ -52,11 +52,11 @@
 # endif
 
 # ifndef W_TILE
-#  define W_TILE 96
+#  define W_TILE 64
 # endif
 
 # ifndef MINI_TILE
-#  define MINI_TILE 24
+#  define MINI_TILE 16
 # endif
 
 typedef struct s_player
@@ -129,9 +129,11 @@ void						free_map(t_map *map);
 void						ft_free(char **matrix);
 void						free_map(t_map *map);
 void						clean_sources(t_game *game);
+void						ft_free_sprites(t_game *g);
 // input_handlers
 void						mouse_rotate(double xpos, double ypos, void *param);
 void						hide_map2d(mlx_key_data_t keydata, void *param);
 // cleanup_texutre
 void						delete_textures(t_game *g);
+int	is_only_spacess(const char *line);
 #endif
