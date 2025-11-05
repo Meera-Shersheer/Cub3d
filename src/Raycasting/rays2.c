@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 17:15:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 17:15:17 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 19:13:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ void	cast_rays(t_game *game, float angle)
 		/ game->mini_tile;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);
+	if (x.map_p < 0 || x.map_p >= find_max_len(game->map->map_lines)
+		|| y.map_p < 0 || y.map_p >=  (int)ft_strlen_d(game->map->map_lines))
+		return; 
 	if (evaluate_delta_dist(&x, &y, &an) == 1)
 		error_exit(game->map, "error during drawing rays");
 	set_dir(&an, &x, &y);
