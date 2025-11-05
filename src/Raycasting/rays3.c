@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 16:59:25 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 16:18:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:40:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,9 @@ int	evaluate_walk(t_ray_pos *i)
 int	trace_ray_until_hit(t_game *game, t_ray_pos *x, t_ray_pos *y)
 {
 	int	side_dir;
-	char	tile;
-	int		max_iterations;
 
 	side_dir = -1;
-	max_iterations = 1000;
-	while (max_iterations-- > 0)
+	while (1)
 	{
 		if (x->walk < y->walk)
 			side_dir = evaluate_walk(x);
@@ -80,17 +77,13 @@ int	trace_ray_until_hit(t_game *game, t_ray_pos *x, t_ray_pos *y)
 			side_dir = 1;
 		}
 		if (side_dir == -1)
-			error_exit2(game, "error during drawing rays");
+			error_exit(game->map, "error during drawing rays");
 		if (y->map_p >= 0 && y->map_p < (int)ft_strlen_d(game->map->map_lines)
-			&& x->map_p >= 0 && x->map_p < find_max_len(game->map->map_lines))
-		{
-			tile = game->map->map_lines[y->map_p][x->map_p];
-			if (tile == '1' || (tile == 'D' && game->door_open == 0))
+			&& x->map_p >= 0 && x->map_p < find_max_len(game->map->map_lines)
+			&& (game->map->map_lines[y->map_p][x->map_p] == '1'
+			|| game->map->map_lines[y->map_p][x->map_p] == 'D'))
 			break ;
-		}
 	}
-	if (max_iterations <= 0)
-		error_exit2(game, "Ray tracing exceeded maximum iterations");
 	return (side_dir);
 }
 
