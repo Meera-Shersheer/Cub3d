@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 16:03:05 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:17:10 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@
 
 # ifndef NC
 #  define NC "\033[0m"
+# endif
+
+# ifndef BLUE
+#define BLUE        "\033[0;34m"
+# endif
+
+# ifndef YELLOW
+#define YELLOW	"\033[38;2;255;215;0m"
+# endif
+
+# ifndef  ORANGE 
+#define ORANGE       "\033[38;5;208m"
 # endif
 
 typedef struct s_game	t_game;

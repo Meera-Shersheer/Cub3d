@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:04:52 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 20:00:30 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/05 14:53:19 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,28 @@ void	ft_free(char **matrix)
 
 void	free_textures(t_map *map)
 {
-	if (map->north_texture)
+	if (map)
 	{
-		free(map->north_texture);
-		map->north_texture = NULL;
-	}
-	if (map->south_texture)
-	{
-		free(map->south_texture);
-		map->south_texture = NULL;
-	}
-	if (map->west_texture)
-	{
-		free(map->west_texture);
-		map->west_texture = NULL;
-	}
-	if (map->east_texture)
-	{
-		free(map->east_texture);
-		map->east_texture = NULL;
+		if (map->north_texture)
+		{
+			free(map->north_texture);
+			map->north_texture = NULL;
+		}
+		if (map->south_texture)
+		{
+			free(map->south_texture);
+			map->south_texture = NULL;
+		}
+		if (map->west_texture)
+		{
+			free(map->west_texture);
+			map->west_texture = NULL;
+		}
+		if (map->east_texture)
+		{
+			free(map->east_texture);
+			map->east_texture = NULL;
+		}
 	}
 }
 
