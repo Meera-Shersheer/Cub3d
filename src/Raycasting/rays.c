@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 20:01:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:53:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	init_scene_images_and_distances(t_game *game)
 	game->rays = mlx_new_image(game->mlx, game->mini_tile
 			* (game->map->screen_width), game->mini_tile
 			* (game->map->screen_height));
-	game->scene_3d = mlx_new_image(game->mlx, W_TILE
-			* (game->map->screen_width), W_TILE * (game->map->screen_height));
+	game->scene_3d = mlx_new_image(game->mlx ,W_SCREEN, H_SCREEN);
 	if (!game->rays || !game->scene_3d)
 		error_exit(NULL, "image initialization failure");
 	game->wall_distances = malloc(sizeof(float) * game->scene_3d->width);
@@ -68,7 +67,7 @@ void	dda(t_game *game)
 		i++;
 	}
 	i = 0;
-	while (i < game->mini_tile * game->map->screen_width)
+	while (i < W_SCREEN)
 	{
 		camera_x = 2 * i / (float)game->rays->width - 1;
 		an = game->player->angle + atanf(camera_x * tanf(FOV / 2));

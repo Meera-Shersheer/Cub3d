@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:57:00 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:23:59 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	init_textures_and_colors(t_map *map)
 	map->msg = NULL;
 	map->flood_fill_map = NULL;
 }
+
+
 
 static void	init_map_lines(t_map *map, size_t line_count)
 {

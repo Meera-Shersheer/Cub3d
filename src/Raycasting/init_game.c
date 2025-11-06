@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:43:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 15:53:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 10:11:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ void	init_game(int argc, char *argv[], t_game *game)
 	if (!game->map)
 		error_exit(NULL, "malloc failure");
 	ft_bzero(game->map , sizeof(t_map));
-	game->w_tile = W_TILE;
-	game->mini_tile = MINI_TILE;
+	game->mini_tile	= 16;
 	game->mouse_last_x = -1;
 	game->wall_distances = NULL;
 	if (parsing(argc, argv, game))
 		error_exit(game->map, "parsing failure");
 	place_keys_and_door(game);
-	game->mlx = mlx_init(700, 700, "Cub3d Game", true);///edit 
+	game->mlx = mlx_init(W_SCREEN, H_SCREEN, "Cub3d Game", true); 
 	if (!game->mlx)
 		error_exit(game->map, "mlx initializing failure");
 	game->won = 0;
