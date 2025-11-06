@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 19:48:27 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:51:47 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	validate_and_move_ptr(char **ptr, char *start,
 {
 	if (value < 0 || value > 255 || ft_strlen_number(start) > 3)
 		return (0);
-	while (**ptr == ' ')
+	while (**ptr == ' ' || **ptr == '\t')
 		(*ptr)++;
 	if (is_last)
 	{
@@ -55,7 +55,7 @@ int	parse_component(char **ptr, int is_last)
 
 	if (!ptr || !*ptr)
 		return (-1);
-	while (**ptr == ' ')
+	while (**ptr == ' ' || **ptr == '\t')
 		(*ptr)++;
 	if (!ft_isdigit(**ptr))
 		return (-1);
