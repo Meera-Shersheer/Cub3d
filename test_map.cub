@@ -2,7 +2,7 @@
 
     SO ./texture/wall.png
     WE ./texture/bricks.png
-    EA ./texture/wood.png
+    EA		 	 	./texture/wood.png
 
 
 

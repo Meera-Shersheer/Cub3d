@@ -36,19 +36,19 @@ SRC = $(SRC_MAIN)\
 
 SRC_PATH = $(addprefix $(SRC_DIR)/, $(SRC))
 BNS_PATH = $(addprefix $(SRC_DIR)/, $(BNS))
-
+MLX_DIR = MLX42
 CC= cc
 CFLAGS= -Wall -Wextra -Werror -Iinclude -g
 #-g3 -fsanitize=address -g
 LIBFT  = -L$(LFTDIR) -lft
-MLX42  = -L../MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
+MLX42  = -L./MLX42/build/ -lmlx42 -I./MLX42/include -lglfw -ldl -lglfw -pthread -lm
 
 OBJ_SRC = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_PATH))
 OBJ_BNS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(BNS_PATH))
 
-all: $(NAME)
+all: MLX $(NAME)
 
-$(NAME): $(OBJ_SRC) $(LFTDIR)/libft.a
+$(NAME): $(OBJ_SRC) $(LFTDIR)/libft.a 
 	@echo "$(MAGENTA)Building $(NAME)...$(NC)"
 	$(CC) $(CFLAGS) $(OBJ_SRC) -o $(NAME)  $(LIBFT) $(MLX42)
 	@echo "$(GREEN)Build complete.$(NC)"
@@ -61,22 +61,23 @@ $(LFTDIR)/libft.a:
 	@echo "$(MAGENTA)Building libft...$(NC)"
 	@$(MAKE) -sC $(LFTDIR) bonus
 	@echo "$(GREEN)Building Libft is complete.$(NC)"
-	
+
+MLX:
+	cmake $(MLX_DIR) -B $(MLX_DIR)/build
+	cmake --build $(MLX_DIR)/build -j4 
+
 clean:
 	@rm -rf $(OBJ_SRC) $(OBJ_DIR)
 	@$(MAKE) -sC $(LFTDIR) clean
 	@echo "$(CYAN)Clean is done.$(NC)"
 
-bonus: $(OBJ_BNS)| libft 
-	@echo "$(MAGENTA)Building bonus...$(NC)"
-	$(CC) $(CFLAGS) $(OBJ_BNS) -o $(BNS_NAME) $(LIBFT) $(MLX42)
-
 fclean: clean
 	@rm -f $(OBJ_SRC) 
 	@$(MAKE) -C $(LFTDIR) fclean 
 	@rm -rf $(NAME)
+	@rm -rf $(MLX_DIR)/build
 	@echo "$(CYAN)fClean is done.$(NC)"
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus      	
+.PHONY: all clean fclean re MLX      

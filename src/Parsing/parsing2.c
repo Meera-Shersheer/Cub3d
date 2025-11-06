@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:23 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:40:21 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	set_texture(char **texture_field, const char *line, t_map *map,
 	if (*texture_field)
 		error_exit(map, err_msg);
 	len = ft_strlen(line);
-	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n'))
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n' || line[len - 1] == '\t'))
 		len--;
 	if (len == 0)
 		error_exit(map, err_msg);

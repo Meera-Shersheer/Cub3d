@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 16:55:04 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:32:37 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include ".././Libft/ft_printf.h"
 # include ".././Libft/get_next_line_bonus.h"
 # include ".././Libft/libft.h"
-# include "../../MLX42/include/MLX42/MLX42.h"
-//# include "../MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "parsing.h"
 # include "raycasting.h"
 # include <X11/X.h>
