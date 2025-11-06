@@ -1,15 +1,15 @@
-    NO          ./texture/grass.png
+    NO		 		 ./texture/grass.png
 
     SO ./texture/wall.png
-    WE ./texture/bricks.png
+    WE	./texture/bricks.png
     	 	 	 			EA		 	 	./texture/wood.png
 
 
-
+ NO		 		 ./texture/grass.png
 
 
 F			 	 	 			 	20,20,20
-C 200,200,      	200		 	 
+C 200,200,      	200
 
 
 1111111111111111111
