@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:22:49 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:21:40 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void					print_map(t_map *map);
 void					print_floodfill_map(t_map *map);
 void					print_start_header(void);
 void					print_win_header(long time_ms);
+int						get_rgba(int r, int g, int b, int a);
 // read_file
 void					copy_old_content(char *dest, char *content,
 							size_t total);

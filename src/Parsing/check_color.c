@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 19:51:47 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:23:36 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,23 @@ static int	validate_and_move_ptr(char **ptr, char *start,
 	return (1);
 }
 
+static int	handle_sign(char **ptr)
+{
+	int	sign_count;
+
+	sign_count = 0;
+	while (**ptr == '+' || **ptr == '-')
+	{
+		if (**ptr == '-')
+			return (-1);
+		sign_count++;
+		if (sign_count > 1)
+			return (-1);
+		(*ptr)++;
+	}
+	return (0);
+}
+
 int	parse_component(char **ptr, int is_last)
 {
 	int		value;
@@ -57,10 +74,12 @@ int	parse_component(char **ptr, int is_last)
 		return (-1);
 	while (**ptr == ' ' || **ptr == '\t')
 		(*ptr)++;
+	if (handle_sign(ptr) < 0)
+		return (-1);
 	if (!ft_isdigit(**ptr))
 		return (-1);
 	start = *ptr;
-	value = ft_atoi(*ptr);
+	value = ft_atoi(start);
 	while (**ptr && ft_isdigit(**ptr))
 		(*ptr)++;
 	if (!validate_and_move_ptr(ptr, start, value, is_last))
@@ -86,9 +105,4 @@ int	parse_color_line(const char *line, t_color *color)
 	color->b = b;
 	color->color = get_rgba(r, g, b, 0xFF);
 	return (0);
-}
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
