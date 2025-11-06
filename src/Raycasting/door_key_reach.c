@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_key_reach.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 13:41:48 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 17:10:16 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 20:34:35 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	reach_keys(t_map *map, char **grid, int x, int y)
 	count += reach_keys(map, grid, x + 1, y);
 	count += reach_keys(map, grid, x, y - 1);
 	count += reach_keys(map, grid, x, y + 1);
-	count += reach_keys(map, grid, x - 1, y - 1);
-	count += reach_keys(map, grid, x - 1, y + 1);
-	count += reach_keys(map, grid, x + 1, y - 1);
-	count += reach_keys(map, grid, x + 1, y + 1);
+	// count += reach_keys(map, grid, x - 1, y - 1);
+	// count += reach_keys(map, grid, x - 1, y + 1);
+	// count += reach_keys(map, grid, x + 1, y - 1);
+	// count += reach_keys(map, grid, x + 1, y + 1);
 	return (count);
 }
 int	reach_door(t_map *map, char **grid, int x, int y)
@@ -54,10 +54,10 @@ int	reach_door(t_map *map, char **grid, int x, int y)
 	count += reach_door(map, grid, x + 1, y);
 	count += reach_door(map, grid, x, y - 1);
 	count += reach_door(map, grid, x, y + 1);
-	count += reach_door(map, grid, x - 1, y - 1);
-	count += reach_door(map, grid, x - 1, y + 1);
-	count += reach_door(map, grid, x + 1, y - 1);
-	count += reach_door(map, grid, x + 1, y + 1);
+	// count += reach_door(map, grid, x - 1, y - 1);
+	// count += reach_door(map, grid, x - 1, y + 1);
+	// count += reach_door(map, grid, x + 1, y - 1);
+	// count += reach_door(map, grid, x + 1, y + 1);
 	return (count > 0);
 }
 
