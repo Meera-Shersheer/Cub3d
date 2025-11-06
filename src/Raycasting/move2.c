@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/04 19:37:17 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:32:18 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ static void	update_game_state(t_game *g)
 	if (g->won == 1)
 	{
 		g->game_time_end = get_time();
-		printf(GREEN "You finished the game in %ld.%ld s\n"NC,
-			(g->game_time_end - g->game_time_start) / 1000, (g->game_time_end
-				- g->game_time_start) % 1000);
+		print_win_header(g->game_time_end - g->game_time_start);
 		mlx_close_window(g->mlx);
 		return ;
 	}

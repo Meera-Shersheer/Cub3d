@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 15:17:10 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:40:07 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
 # ifndef GREEN
 #  define GREEN "\033[0;32m"
 # endif
@@ -97,6 +98,8 @@ void					check_color(t_map *map);
 // print
 void					print_map(t_map *map);
 void					print_floodfill_map(t_map *map);
+void					print_start_header(void);
+void					print_win_header(long time_ms);
 // read_file
 void					copy_old_content(char *dest, char *content,
 							size_t total);

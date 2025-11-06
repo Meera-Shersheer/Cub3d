@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 15:22:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:33:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include ".././Libft/ft_printf.h"
 # include ".././Libft/get_next_line_bonus.h"
 # include ".././Libft/libft.h"
-//# include "../../MLX42/include/MLX42/MLX42.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# include "../../MLX42/include/MLX42/MLX42.h"
+//# include "../MLX42/include/MLX42/MLX42.h"
 # include "parsing.h"
 # include "raycasting.h"
 # include <X11/X.h>
@@ -49,11 +49,11 @@
 # endif
 
 # ifndef W_SCREEN
-#  define W_SCREEN 1600
+#  define W_SCREEN 1000
 # endif
 
 # ifndef H_SCREEN
-#  define H_SCREEN 1000
+#  define H_SCREEN 800
 # endif
 
 typedef struct s_player
