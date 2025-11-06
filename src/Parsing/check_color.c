@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 17:32:52 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 19:48:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 static int	ft_strlen_number(char *str)
 {
 	int	len;
+	int	i;
 
 	len = 0;
-	while (str[len] && ft_isdigit(str[len]))
+	i = 0;
+	while (str[i] == '0')
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		i++;
 		len++;
+	}
 	return (len);
 }
 
