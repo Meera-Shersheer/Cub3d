@@ -6,15 +6,15 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:56:01 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 17:15:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-int	read_map(char **av, char **content)
+int	read_map(char **av, char **content, t_game *game)
 {
-	*content = read_file(av[1]);
+	*content = read_file(av[1], game);
 	if (!*content)
 	{
 		return (1);
@@ -79,19 +79,19 @@ void	check_playable_area( t_map *map)
 	floodfill(map, map->flood_fill_map, x, y);
 }
 
-int	check_map(char **av, t_map *map)
+int	check_map(char **av, t_game *game)
 {
 	char		*content;
 
-	if (read_map(av, &content))
+	if (read_map(av, &content, game))
 	{
-		printf( ORANGE"Empty File\n" NC);
+		printf( RED"Erorr\nEmpty File\n" NC);
 		return (1);
 	}
-	if (process_map(content, map))
+	if (process_map(content, game->map))
 		return (1);
-	validate_textures(map);
-	map->screen_height = ft_strlen_d(map->map_lines);
-	map->screen_width = ft_strlen(map->map_lines[0]);
+	validate_textures(game->map);
+	game->map->screen_height = ft_strlen_d(game->map->map_lines);
+	game->map->screen_width = ft_strlen(game->map->map_lines[0]);
 	return (0);
 }

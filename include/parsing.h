@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:55:12 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 17:16:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int						check_arg(char *map_file);
 int						ends_with_cub(const char *file_name);
 int						parsing(int argc, char *argv[], t_game *game);
 // check map
-int						read_map(char **av, char **content);
+int						read_map(char **av, char **content, t_game *game);
 int						process_map(char *content, t_map *map);
-int						check_map(char **av, t_map *map);
+int						check_map(char **av, t_game *game);
 void					check_playable_area(t_map *map);
 // init
 void					init_map(t_map *map, size_t line_count);
@@ -105,7 +105,7 @@ void					copy_old_content(char *dest, char *content,
 							size_t total);
 char					*append_buffer(char *content, char *buffer,
 							size_t total, ssize_t n);
-char					*read_file(const char *path);
+char					*read_file(const char *path, t_game *game);
 // parsing
 void					classify_resolution(char *line, t_map *map);
 void					classify_map_lines(char **lines, t_map *map);
