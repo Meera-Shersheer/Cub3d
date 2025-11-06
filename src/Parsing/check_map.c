@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 17:15:11 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:23:47 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_map(char **av, t_game *game)
 
 	if (read_map(av, &content, game))
 	{
-		printf( RED"Erorr\nEmpty File\n" NC);
+		printf(RED"Erorr\nEmpty File\n" NC);
 		return (1);
 	}
 	if (process_map(content, game->map))

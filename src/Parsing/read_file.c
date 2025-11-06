@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 17:15:22 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:46:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*read_file(const char *path, t_game *game)
 	if (fd < 0)
 	{
 		printf(RED "Error\n%s\n" NC, strerror(errno));
-		error_exit2(game , NULL);
+		error_exit2(game, NULL);
 	}
 	content = NULL;
 	total = 0;

@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:32:11 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 19:32:37 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:21:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,5 @@ void						mouse_rotate(double xpos, double ypos, void *param);
 void						hide_map2d(mlx_key_data_t keydata, void *param);
 // cleanup_texutre
 void						delete_textures(t_game *g);
-int	is_only_spacess(const char *line);
+int							is_only_spacess(const char *line);
 #endif

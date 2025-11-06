@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 15:23:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:21:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"	
+#include "../include/cub3D.h"
 
 static void	init_textures_and_colors(t_map *map)
 {
@@ -31,8 +31,6 @@ static void	init_textures_and_colors(t_map *map)
 	map->msg = NULL;
 	map->flood_fill_map = NULL;
 }
-
-
 
 static void	init_map_lines(t_map *map, size_t line_count)
 {

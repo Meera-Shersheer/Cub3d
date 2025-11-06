@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 17:16:48 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:22:49 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@
 # endif
 
 # ifndef BLUE
-#define BLUE        "\033[0;34m"
+#  define BLUE "\033[0;34m"
 # endif
 
 # ifndef YELLOW
-#define YELLOW	"\033[38;2;255;215;0m"
+#  define YELLOW	"\033[38;2;255;215;0m"
 # endif
 
-# ifndef  ORANGE 
-#define ORANGE       "\033[38;5;208m"
+# ifndef ORANGE
+#  define ORANGE       "\033[38;5;208m"
 # endif
 
 typedef struct s_game	t_game;

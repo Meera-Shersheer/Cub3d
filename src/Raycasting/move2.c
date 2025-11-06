@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 18:46:39 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:43:46 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	reset_and_update_scene(t_game *g)
 		i++;
 	}
 }
-//crashing 
+
 static void	update_game_state(t_game *g)
 {
 	if (g->won == 1)

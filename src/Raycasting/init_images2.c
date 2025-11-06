@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:27:00 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/04 20:26:23 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:26:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ mlx_image_t	*load_textures(t_game *game, char *tex_path)
 
 	if (!tex_path)
 		return (NULL);
-	temp = mlx_load_png(tex_path);//leaks
+	temp = mlx_load_png(tex_path);
 	if (!temp)
 		error_exit2(game, "Texture loading failure");
 	img = mlx_texture_to_image(game->mlx, temp);

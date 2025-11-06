@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 20:06:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:46:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	set_texture(char **texture_field, const char *line, t_map *map,
 	if (*texture_field)
 		error_exit(map, err_msg);
 	len = ft_strlen(line);
-	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n' || line[len - 1] == '\t'))
+	while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\n' || \
+line[len - 1] == '\t'))
 		len--;
 	if (len == 0)
 		error_exit(map, "Texture is not defined");
