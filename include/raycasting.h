@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:37:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 17:07:21 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:23:33 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ int				pseudo_random(int max);
 
 // move2
 void			move(void *param);
+void			handle_additional_keys2(mlx_key_data_t keydata, void *param);
 // init_game
 void			init_game(int argc, char *argv[], t_game *game);
 // utils_sprites

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/09 19:02:29 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:46:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*append_buffer(char *content, char *buffer, size_t total, ssize_t n)
 	return (new_content);
 }
 
-char	*read_file(const char *path)
+char	*read_file(const char *path, t_game *game)
 {
 	int		fd;
 	char	buffer[1024];
@@ -60,7 +60,7 @@ char	*read_file(const char *path)
 	if (fd < 0)
 	{
 		printf(RED "Error\n%s\n" NC, strerror(errno));
-		exit(1);
+		error_exit2(game, NULL);
 	}
 	content = NULL;
 	total = 0;

@@ -2,11 +2,11 @@
 NO texture/cobblestone_1.png
           SO texture/brick_wall_grey.png
 
-F               4294967296,                  4294967296,      4294967296
+F            255, 255 , 0
 
 EA texture/bricks.png
                   
-C 255, 0,0 ,
+C 0, 0,255
 
 
 1111111111111

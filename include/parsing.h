@@ -6,12 +6,13 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 16:50:41 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:56:16 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
+
 # ifndef GREEN
 #  define GREEN "\033[0;32m"
 # endif
@@ -30,6 +31,18 @@
 
 # ifndef NC
 #  define NC "\033[0m"
+# endif
+
+# ifndef BLUE
+#  define BLUE "\033[0;34m"
+# endif
+
+# ifndef YELLOW
+#  define YELLOW "\033[38;2;255;215;0m"
+# endif
+
+# ifndef ORANGE
+#  define ORANGE "\033[38;5;208m"
 # endif
 
 typedef struct s_game	t_game;
@@ -73,9 +86,9 @@ int						check_arg(char *map_file);
 int						ends_with_cub(const char *file_name);
 int						parsing(int argc, char *argv[], t_game *game);
 // check map
-int						read_map(char **av, char **content);
+int						read_map(char **av, char **content, t_game *game);
 int						process_map(char *content, t_map *map);
-int						check_map(char **av, t_map *map);
+int						check_map(char **av, t_game *game);
 void					check_playable_area(t_map *map);
 // init
 void					init_map(t_map *map, size_t line_count);
@@ -85,12 +98,15 @@ void					check_color(t_map *map);
 // print
 void					print_map(t_map *map);
 void					print_floodfill_map(t_map *map);
+void					print_start_header(void);
+void					print_win_header(long time_ms);
+int						get_rgba(int r, int g, int b, int a);
 // read_file
 void					copy_old_content(char *dest, char *content,
 							size_t total);
 char					*append_buffer(char *content, char *buffer,
 							size_t total, ssize_t n);
-char					*read_file(const char *path);
+char					*read_file(const char *path, t_game *game);
 // parsing
 void					classify_resolution(char *line, t_map *map);
 void					classify_map_lines(char **lines, t_map *map);

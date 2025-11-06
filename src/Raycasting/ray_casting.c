@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 19:09:32 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 19:09:38 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:50:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,16 @@ void	draw_single_col(t_game *game, float angle, int col)
 	an.angle = angle;
 	if (!game || !game->player)
 		error_exit(NULL, "draw ray failure");
-	x.pos = (game->player->x + game->player->img->width / 2.0f)
-		/ game->mini_tile;
+	x.pos = (game->player->x + game->player->img->width / 2.0f) \
+/ game->mini_tile;
 	y.pos = (game->player->y + game->player->img->height / 2.0f)
 		/ game->mini_tile;
 	x.map_p = (int)(x.pos);
 	y.map_p = (int)(y.pos);
+	if (x.map_p < 0 || x.map_p >= find_max_len(game->map->map_lines) || \
+y.map_p < 0 || y.map_p >= (int)ft_strlen_d(game->map->map_lines) || \
+game->map->map_lines[y.map_p][x.map_p] == 'D')
+		return ;
 	if (evaluate_delta_dist(&x, &y, &an) == 1)
 		error_exit(game->map, "error during drawing rays");
 	set_dir(&an, &x, &y);

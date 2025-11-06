@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 08:31:19 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:54:23 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,17 @@
 static int	ft_strlen_number(char *str)
 {
 	int	len;
+	int	i;
 
 	len = 0;
-	while (str[len] && ft_isdigit(str[len]))
+	i = 0;
+	while (str[i] == '0')
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		i++;
 		len++;
+	}
 	return (len);
 }
 
@@ -27,7 +34,7 @@ static int	validate_and_move_ptr(char **ptr, char *start,
 {
 	if (value < 0 || value > 255 || ft_strlen_number(start) > 3)
 		return (0);
-	while (**ptr == ' ')
+	while (**ptr == ' ' || **ptr == '\t')
 		(*ptr)++;
 	if (is_last)
 	{
@@ -41,6 +48,23 @@ static int	validate_and_move_ptr(char **ptr, char *start,
 	return (1);
 }
 
+static int	handle_sign(char **ptr)
+{
+	int	sign_count;
+
+	sign_count = 0;
+	while (**ptr == '+' || **ptr == '-')
+	{
+		if (**ptr == '-')
+			return (-1);
+		sign_count++;
+		if (sign_count > 1)
+			return (-1);
+		(*ptr)++;
+	}
+	return (0);
+}
+
 int	parse_component(char **ptr, int is_last)
 {
 	int		value;
@@ -48,12 +72,14 @@ int	parse_component(char **ptr, int is_last)
 
 	if (!ptr || !*ptr)
 		return (-1);
-	while (**ptr == ' ')
+	while (**ptr == ' ' || **ptr == '\t')
 		(*ptr)++;
+	if (handle_sign(ptr) < 0)
+		return (-1);
 	if (!ft_isdigit(**ptr))
 		return (-1);
 	start = *ptr;
-	value = ft_atoi(*ptr);
+	value = ft_atoi(start);
 	while (**ptr && ft_isdigit(**ptr))
 		(*ptr)++;
 	if (!validate_and_move_ptr(ptr, start, value, is_last))
@@ -69,9 +95,9 @@ int	parse_color_line(const char *line, t_color *color)
 	int		b;
 
 	tmp = (char *)line;
+	b = parse_component(&tmp, 0);
 	r = parse_component(&tmp, 0);
-	g = parse_component(&tmp, 0);
-	b = parse_component(&tmp, 1);
+	g = parse_component(&tmp, 1);
 	if (r < 0 || g < 0 || b < 0)
 		return (1);
 	color->r = r;
@@ -79,9 +105,4 @@ int	parse_color_line(const char *line, t_color *color)
 	color->b = b;
 	color->color = get_rgba(r, g, b, 0xFF);
 	return (0);
-}
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
 }

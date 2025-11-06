@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:43:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 16:51:30 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:49:34 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ void	init_game(int argc, char *argv[], t_game *game)
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
 		error_exit(NULL, "malloc failure");
-	game->w_tile = W_TILE;
-	game->mini_tile = MINI_TILE;
+	ft_bzero(game->map, sizeof(t_map));
+	game->mini_tile = 16;
 	game->mouse_last_x = -1;
 	game->wall_distances = NULL;
 	if (parsing(argc, argv, game))
-		error_exit(game->map, "parsing failure");
-	game->mlx = mlx_init(700, 700, "Cub3d Game", true);///edit 
-	if (!game->mlx)
-		error_exit(game->map, "mlx initializing failure");
+		error_exit2(game, NULL);
 	place_keys_and_door(game);
+	game->mlx = mlx_init(W_SCREEN, H_SCREEN, "Cub3d Game", true);
+	if (!game->mlx)
+		error_exit2(game, "mlx initializing failure");
 	game->won = 0;
 	init_textures(game);
 	init_key_animation_frames(game);
 	init_sprites_allocation(game);
 	init_sprites_map_scan(game);
+	print_start_header();
 }

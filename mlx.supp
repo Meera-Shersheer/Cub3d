@@ -333,3 +333,30 @@
 
 
 
+{
+   mlx_glfw_init
+   Memcheck:Leak
+   ...
+   fun:glfwInit
+}
+
+{
+   mlx_texture_load
+   Memcheck:Leak
+   ...
+   fun:mlx_load_png
+}
+
+{
+   opengl_mesa_libs
+   Memcheck:Leak
+   ...
+   obj:*/libgallium*
+}
+
+{
+   x11_libs
+   Memcheck:Leak
+   ...
+   obj:*/libX11.so*
+}

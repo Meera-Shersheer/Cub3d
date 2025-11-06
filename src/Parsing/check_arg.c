@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_arg.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:36:41 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/02 20:45:19 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:45:36 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int	parsing(int argc, char *argv[], t_game *game)
 	}
 	if (check_arg(argv[1]))
 		return (1);
-	if (check_map(argv, game->map))
+	if (check_map(argv, game))
 		return (1);
-	adjust_tile_size_to_screen(game, game->map->screen_width,
-		game->map->screen_height);
 	return (0);
 }
 

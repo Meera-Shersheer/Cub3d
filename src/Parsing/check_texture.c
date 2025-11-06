@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:24:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:52:33 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:13:06 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_file(t_map *map, const char *path, const char *name)
 
 	if (!path || !*path)
 		error_exit(map, name);
-	if (path[strlen(path) - 1] == '/')
+	if (path[ft_strlen(path) - 1] == '/')
 		error_exit(map, "Texture path must include file name");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)

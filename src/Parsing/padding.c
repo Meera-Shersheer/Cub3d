@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 16:46:52 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 21:41:57 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,19 @@ char	*pad_line(char *line, int max_length)
 	char	*padded;
 
 	len = ft_strlen(line);
+	if (len > max_length)
+		max_length = len;
 	padded = malloc(max_length + 1);
 	if (!padded)
 		return (NULL);
 	i = 0;
-	while (i < len)
+	while (i < len && i < max_length)
 	{
 		padded[i] = line[i];
 		i++;
 	}
 	while (i < max_length)
-	{
-		padded[i] = ' ';
-		i++;
-	}
+		padded[i++] = ' ';
 	padded[i] = '\0';
 	return (padded);
 }
