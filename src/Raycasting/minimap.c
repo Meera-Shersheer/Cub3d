@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:58:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 18:36:10 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:49:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	draw_player(t_game *game)
 		+ (game->mini_tile - game->player->img->width) / 2;
 	game->player->y = get_player_y_pos(game->map->map_lines) * game->mini_tile
 		+ (game->mini_tile - game->player->img->height) / 2;
-	game->player->move_speed = game->mini_tile / 4.0f;
-	g->player->rot_speed = 0.05f;
+	game->player->move_speed = game->mini_tile / 3.0f;
+	game->player->rot_speed = 0.1f;
 	pick_initial_angle(game);
 	color_block(0xFFCC00CC, game->player->img);
 	if (mlx_image_to_window(game->mlx, game->player->img, game->player->x,

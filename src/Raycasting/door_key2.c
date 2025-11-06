@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_key2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 23:36:46 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 10:10:40 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:50:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void	check_door(t_game *g)
 	{
 		if (g->collected_keys == g->total_keys)
 		{
-			printf("🚪 Door opened! You win! 🎉\n");
 			g->won = 1;
 		}
 	}

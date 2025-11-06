@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:37:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:55:34 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:46:25 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,7 @@ int				pseudo_random(int max);
 
 // move2
 void			move(void *param);
+void	handle_additional_keys2(mlx_key_data_t keydata, void *param);
 // init_game
 void			init_game(int argc, char *argv[], t_game *game);
 // utils_sprites

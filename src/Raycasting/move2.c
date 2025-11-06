@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 18:26:09 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 18:46:39 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,6 @@ void	handle_additional_keys(mlx_key_data_t keydata, void *param)
 		printf(CYAN "Player speed: %.1f\n" NC, g->player->move_speed);
 	}
 	handle_additional_keys2(keydata, g);
-}
-void	handle_additional_keys2(mlx_key_data_t keydata, void *param)
-{
-	t_game	*g;
-
-	g = (t_game *)param;
-	if (!g || !g->map_2d || !g->player)
-		return ;
-	if (keydata.key == MLX_KEY_4 && keydata.action == MLX_PRESS)
-	{
-		g->player->rot_speed += 0.01;
-		if (g->player->rot_speed <= 0)
-			g->player->rot_speed = 0.01;
-		if (g->player->rot_speed > g->mini_tile / 3)
-			g->player->rot_speed = g->mini_tile / 3;
-		printf(CYAN "Rotation speed: %.2f\n" NC, g->player->rot_speed);
-	}
-	if (keydata.key == MLX_KEY_5 && keydata.action == MLX_PRESS)
-	{
-		g->player->rot_speed -= 0.01;
-		if (g->player->rot_speed <= 0)
-			g->player->rot_speed = 0.01;
-		if (g->player->rot_speed > g->mini_tile / 3)
-			g->player->rot_speed = g->mini_tile / 3;
-			printf(CYAN "Rotation speed: %.2f\n" NC, g->player->rot_speed);
-	}
 }
 
 static void	handle_movement_keys(t_game *g)
