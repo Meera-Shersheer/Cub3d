@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:11:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 23:24:08 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 23:26:20 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ void	print_start_header(void)
 	printf("╚═════════════════════════════════════════════════════════╝\n");
 	printf(NC);
 	printf(RED);
-	printf("	┌─────────────────────  CONTROLS  ─────────────────────┐\n");
-	printf("	│  🕹️   W/A/S/D          Move Forward/Left/Back/Right   │\n");
-	printf("	│  👀  Arrow Keys       Rotate Camera View             │\n");
-	printf("	│  🗺️   [1]              Hide/Show Minimap              │\n");
-	printf("	│  🚀  [2]              Speed UP (+faster)             │\n");
-	printf("	│  🐢  [3]              Speed DOWN (-slower)           │\n");
-	printf("	│  ⚡  [4]              Rotation Speed UP (+faster)    │\n");
-	printf("	│  🌀  [5]              Rotation Speed DOWN (-slower)  │\n");
-	printf("	│  🔑  Find Keys        Collect all to unlock door     │\n");
-	printf("	│  🏁  Reach Door       Escape and WIN!                │\n");
-	printf("	└──────────────────────────────────────────────────────┘\n"NC);
+	printf("┌─────────────────────  CONTROLS  ─────────────────────┐\n");
+	printf("│  🕹️   W/A/S/D          Move Forward/Left/Back/Right   │\n");
+	printf("│  👀  Arrow Keys       Rotate Camera View             │\n");
+	printf("│  🗺️   [1]              Hide/Show Minimap              │\n");
+	printf("│  🚀  [2]              Speed UP (+faster)             │\n");
+	printf("│  🐢  [3]              Speed DOWN (-slower)           │\n");
+	printf("│  ⚡  [4]              Rotation Speed UP (+faster)    │\n");
+	printf("│  🌀  [5]              Rotation Speed DOWN (-slower)  │\n");
+	printf("│  🔑  Find Keys        Collect all to unlock door     │\n");
+	printf("│  🏁  Reach Door       Escape and WIN!                │\n");
+	printf("└──────────────────────────────────────────────────────┘\n"NC);
 }
 
 void	print_win_header(long time_ms)
