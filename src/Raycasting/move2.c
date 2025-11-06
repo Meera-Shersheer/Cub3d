@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 22:08:57 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:56:59 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 17:34:36 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static void	handle_movement_keys(t_game *g)
 	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
 		move_right(g);
 	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT))
-		g->player->angle += 0.2;
+		g->player->angle += 0.05;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT))
-		g->player->angle -= 0.2;
+		g->player->angle -= 0.05;
 }
 
 static void	reset_and_update_scene(t_game *g)

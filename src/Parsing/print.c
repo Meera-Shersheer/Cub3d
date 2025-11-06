@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:11:16 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:48:31 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 17:43:44 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_floodfill_map(t_map *map)
 
 void print_start_header(void)
 {
-  	printf(GREEN);
+	printf(YELLOW);
     printf("	╔═══════════════════════════════════════════════════════════╗\n");
     printf("	║  ██████╗██╗   ██╗██████╗ ██████╗ ██████╗                  ║\n");
     printf("	║ ██╔════╝██║   ██║██╔══██╗╚════██╗██╔══██╗                 ║\n");
@@ -89,7 +89,7 @@ void print_start_header(void)
 
 void	print_win_header(long time_ms)
 {
-    printf(YELLOW); // Green
+	printf(GREEN);
 	printf("	╔══════════════════════════════════════════════════════════════╗\n");
 	printf("	║                                                              ║\n");
 	printf("	║   ██╗   ██╗██╗ ██████╗████████╗ ██████╗  ██████╗██╗   ██╗    ║\n");

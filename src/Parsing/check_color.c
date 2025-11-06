@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/05 08:31:19 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/06 17:32:52 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int	parse_color_line(const char *line, t_color *color)
 	int		b;
 
 	tmp = (char *)line;
+	b = parse_component(&tmp, 0);
 	r = parse_component(&tmp, 0);
-	g = parse_component(&tmp, 0);
-	b = parse_component(&tmp, 1);
+	g = parse_component(&tmp, 1);
 	if (r < 0 || g < 0 || b < 0)
 		return (1);
 	color->r = r;
@@ -83,5 +83,5 @@ int	parse_color_line(const char *line, t_color *color)
 
 int	get_rgba(int r, int g, int b, int a)
 {
-	return (r << 24 | g << 16 | b << 8 | a);
+	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
