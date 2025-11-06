@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   adjust_window_size.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:51:15 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 10:03:20 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:56:11 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

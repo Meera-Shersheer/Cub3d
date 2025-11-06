@@ -6,7 +6,7 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 12:55:59 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 16:46:37 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ void	classify_map_lines(char **lines, t_map *map)
 		j = 0;
 		if (map_started && map_end(lines, i))
 			error_exit(map, "Empty line inside map");
-		if (map_start(lines[i]))
+		if (map_start(lines[i]) || (map_started && is_empty_line(lines[i])))
 		{
 			if (!map_started)
 				map_started = 1;
 			add_map_line(map, lines[i] + j, &map_index, lines);
 		}
-		else if (map_started && lines[i][j] != '\0')
+		else if (map_started && !is_empty_line(lines[i]))
 			error_exit(map, "Map must be the last element in the file");
 		i++;
 	}

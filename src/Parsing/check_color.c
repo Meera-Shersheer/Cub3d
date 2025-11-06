@@ -6,15 +6,45 @@
 /*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/10/31 12:22:12 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/05 08:31:19 by aalmahas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-int	parse_component(char **ptr)
+static int	ft_strlen_number(char *str)
 {
-	int	value;
+	int	len;
+
+	len = 0;
+	while (str[len] && ft_isdigit(str[len]))
+		len++;
+	return (len);
+}
+
+static int	validate_and_move_ptr(char **ptr, char *start,
+	int value, int is_last)
+{
+	if (value < 0 || value > 255 || ft_strlen_number(start) > 3)
+		return (0);
+	while (**ptr == ' ')
+		(*ptr)++;
+	if (is_last)
+	{
+		if (**ptr == ',' || **ptr != '\0')
+			return (0);
+	}
+	else if (**ptr == ',')
+		(*ptr)++;
+	else
+		return (0);
+	return (1);
+}
+
+int	parse_component(char **ptr, int is_last)
+{
+	int		value;
+	char	*start;
 
 	if (!ptr || !*ptr)
 		return (-1);
@@ -22,11 +52,12 @@ int	parse_component(char **ptr)
 		(*ptr)++;
 	if (!ft_isdigit(**ptr))
 		return (-1);
+	start = *ptr;
 	value = ft_atoi(*ptr);
-	while (**ptr && **ptr != ',')
+	while (**ptr && ft_isdigit(**ptr))
 		(*ptr)++;
-	if (**ptr == ',')
-		(*ptr)++;
+	if (!validate_and_move_ptr(ptr, start, value, is_last))
+		return (-1);
 	return (value);
 }
 
@@ -38,10 +69,10 @@ int	parse_color_line(const char *line, t_color *color)
 	int		b;
 
 	tmp = (char *)line;
-	r = parse_component(&tmp);
-	g = parse_component(&tmp);
-	b = parse_component(&tmp);
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	r = parse_component(&tmp, 0);
+	g = parse_component(&tmp, 0);
+	b = parse_component(&tmp, 1);
+	if (r < 0 || g < 0 || b < 0)
 		return (1);
 	color->r = r;
 	color->g = g;

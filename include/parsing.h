@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 16:40:07 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:55:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void					classify_colors(char *line, t_map *map);
 
 // validate map
 int						check_map_order(char **lines);
+int						is_empty_line(char *line);
 void					check_player_position(t_map *map);
 void					check_map_chars(t_map *map);
 // check_texture

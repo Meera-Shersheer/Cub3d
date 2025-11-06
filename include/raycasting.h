@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 15:37:29 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/03 21:32:13 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/06 16:55:34 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int				reach_keys(t_map *map, char **grid, int x, int y);
 int				keys_reachable(t_game *g, char **map);
 int				door_reachable(t_game *g, char **map);
 int				reach_keys(t_map *map, char **grid, int x, int y);
-int				reach_door(char **grid, int x, int y);
+int				reach_door(t_map *map, char **grid, int x, int y);
 // adjust_window_size
 void			adjust_tile_size_to_screen(t_game *game, int map_width,
 					int map_height);
