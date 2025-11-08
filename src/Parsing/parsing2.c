@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 21:17:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:46:16 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:49:29 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ line[len - 1] == '\t'))
 		error_exit(map, "Texture is not defined");
 	*texture_field = ft_substr(line, 0, len);
 	if (!*texture_field)
-		error_exit(map, "malloc failed");
+		error_exit(map, "Malloc Failed");
 }
 
 void	handle_ns_textures(char *line, t_map *map)
@@ -91,7 +91,7 @@ void	classify_colors(char *line, t_map *map)
 		i = skip_spaces(line, 1);
 		map->floor_color = ft_strdup(line + i);
 		if (!map->floor_color)
-			error_exit(map, "malloc");
+			error_exit(map, "Malloc Failure");
 	}
 	else if (line[0] == 'C')
 	{
@@ -100,6 +100,6 @@ void	classify_colors(char *line, t_map *map)
 		i = skip_spaces(line, 1);
 		map->ceiling_color = ft_strdup(line + i);
 		if (!map->ceiling_color)
-			error_exit(map, "malloc");
+			error_exit(map, "Malloc Failure");
 	}
 }

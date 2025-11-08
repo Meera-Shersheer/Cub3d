@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:28:15 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:21:26 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:36:16 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ static void	init_map_lines(t_map *map, size_t line_count)
 
 	map->map_lines = malloc(sizeof(char *) * (line_count + 1));
 	if (!map->map_lines)
-	{
-		printf(RED "Error\nmalloc: %s\n" NC, strerror(errno));
-		exit(1);
-	}
+		error_exit(map, "Malloc Failure");
 	i = 0;
 	while (i < line_count + 1)
 	{

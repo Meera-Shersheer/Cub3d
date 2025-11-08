@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:46:32 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:52:30 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,9 @@ char	*append_buffer(char *content, char *buffer, size_t total, ssize_t n)
 	char	*new_content;
 	size_t	j;
 
-	new_content = malloc(total + n + 1);
+	new_content =  malloc(total + n + 1);
 	if (!new_content)
-	{
-		printf(RED "Error\nmalloc: %s\n" NC, strerror(errno));
-		free(content);
-		exit(1);
-	}
+		return (NULL);
 	copy_old_content(new_content, content, total);
 	j = 0;
 	while (j < (size_t)n)
@@ -68,6 +64,8 @@ char	*read_file(const char *path, t_game *game)
 	while (n > 0)
 	{
 		content = append_buffer(content, buffer, total, n);
+		if (content == NULL)
+			error_exit(game->map, "Malloc Failure");
 		total += (size_t)n;
 		n = read(fd, buffer, sizeof(buffer));
 	}

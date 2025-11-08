@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 01:29:55 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 16:56:18 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:00:32 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ void	add_key_sprite(t_game *game, int map_x, int map_y)
 {
 	t_sprite	*sprite;
 
-	sprite = malloc(sizeof(t_sprite));
-	if (!sprite || !game)
+	if (!game)
 		error_exit2(game, "failure during sprite initialization");
+	sprite = malloc(sizeof(t_sprite)); // fix errors given later
+	if (!sprite)
+	{
+	//	mlx_close_window(game->mlx);
+		error_exit2(game, "failure during sprite initialization");
+	}
 	sprite->map_tile_x = map_x;
 	sprite->map_tile_y = map_y;
 	sprite->x = (map_x + 0.5f) * game->mini_tile;

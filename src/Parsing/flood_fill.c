@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalmahas <aalmahas@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/16 01:06:38 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/03 12:55:39 by aalmahas         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:15:26 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ char	**cpy_matrix(char	**map)
 	while (i < ft_strlen_d(map))
 	{
 		map_cpy[i] = ft_strdup((map[i]));
+		if (map_cpy[i] == NULL)
+		{
+			ft_free (map_cpy);
+			return (NULL);
+		}
 		i++;
 	}
 	map_cpy[i] = NULL;

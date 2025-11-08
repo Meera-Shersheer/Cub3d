@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 16:10:16 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 21:37:54 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 18:01:04 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@ static void	init_scene_images_and_distances(t_game *game)
 
 	if (!game)
 		exit(1);
-	game->rays = mlx_new_image(game->mlx, game->mini_tile \
+	game->rays = mlx_new_image(game->mlx, game->mini_tile\
 * (game->map->screen_width), game->mini_tile * (game->map->screen_height));
-	game->scene_3d = mlx_new_image(game->mlx, W_SCREEN, H_SCREEN);
+	game->scene_3d =  mlx_new_image(game->mlx, W_SCREEN, H_SCREEN);
 	if (!game->rays || !game->scene_3d)
-		error_exit(NULL, "image initialization failure");
+	{
+		mlx_close_window(game->mlx);
+		error_exit2(game, "image initialization failure");
+	}
 	game->wall_distances = malloc(sizeof(float) * game->scene_3d->width);
 	if (!game->wall_distances)
-		error_exit(game->map, "malloc failure for wall_distances");
+	{
+		mlx_close_window(game->mlx);
+		error_exit2(game, "malloc failure for wall_distances");
+	}
 	i = 0;
 	while (i < (int)game->scene_3d->width)
 	{

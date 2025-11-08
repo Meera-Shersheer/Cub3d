@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:32:51 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 19:41:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:47:03 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	add_map_line(t_map *map, char *line, size_t *map_index, char **lines)
 	max_length = find_max_len(lines);
 	map->map_lines[*map_index] = pad_line(line, max_length);
 	if (!map->map_lines[*map_index])
-		error_exit(map, "malloc");
+		error_exit(map, "Malloc Failure");
 	(*map_index)++;
 }
 

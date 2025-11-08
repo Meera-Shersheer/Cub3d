@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 10:43:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:49:34 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:23:12 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_game(int argc, char *argv[], t_game *game)
 	ft_bzero(game, sizeof(t_game));
 	game->map = malloc(sizeof(t_map));
 	if (!game->map)
-		error_exit(NULL, "malloc failure");
+		error_exit(NULL, "Malloc Failure");
 	ft_bzero(game->map, sizeof(t_map));
 	game->mini_tile = 16;
 	game->mouse_last_x = -1;

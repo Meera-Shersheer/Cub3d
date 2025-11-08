@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:41:05 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 21:23:47 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:54:03 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ int	process_map(char *content, t_map *map)
 	classify_lines(map->cpy_content, map);
 	map->flood_fill_map = cpy_matrix(map->map_lines);
 	if (map->flood_fill_map == NULL)
-	{
-		free_map(map);
-		return (1);
-	}
+		error_exit(map, "Malloc Failure");
 	check_playable_area(map);
 	return (0);
 }

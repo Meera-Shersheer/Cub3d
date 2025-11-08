@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 20:18:25 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 10:06:54 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/08 17:22:27 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	place_keys_and_door(t_game *g)
 	while (retries < max_retries)
 	{
 		temp_map = cpy_matrix(g->map->map_lines);
+		if (!temp_map)
+			error_exit(g->map, "Malloc Failure");
 		if (try_place(g, temp_map))
 		{
 			ft_free(g->map->map_lines);
