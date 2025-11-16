@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshershe <mshershe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 20:31:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/08 16:52:30 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:51:40 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*read_file(const char *path, t_game *game)
 	{
 		content = append_buffer(content, buffer, total, n);
 		if (content == NULL)
-			error_exit(game->map, "Malloc Failure");
+			error_exit_fd(game->map, "Malloc Failure", fd);
 		total += (size_t)n;
 		n = read(fd, buffer, sizeof(buffer));
 	}

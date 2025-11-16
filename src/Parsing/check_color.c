@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 23:21:14 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 23:23:36 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/16 17:05:48 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int	parse_color_line(const char *line, t_color *color)
 
 	tmp = (char *)line;
 	b = parse_component(&tmp, 0);
-	r = parse_component(&tmp, 0);
-	g = parse_component(&tmp, 1);
+	g = parse_component(&tmp, 0);
+	r = parse_component(&tmp, 1);
 	if (r < 0 || g < 0 || b < 0)
 		return (1);
 	color->r = r;

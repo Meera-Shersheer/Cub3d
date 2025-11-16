@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 11:45:53 by aalmahas          #+#    #+#             */
-/*   Updated: 2025/11/06 23:24:44 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:52:13 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void					copy_old_content(char *dest, char *content,
 char					*append_buffer(char *content, char *buffer,
 							size_t total, ssize_t n);
 char					*read_file(const char *path, t_game *game);
+void					error_exit_fd(t_map *map, const char *msg, int fd);
 // parsing
 void					classify_resolution(char *line, t_map *map);
 void					classify_map_lines(char **lines, t_map *map);

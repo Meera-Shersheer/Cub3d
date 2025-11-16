@@ -6,7 +6,7 @@
 /*   By: mshershe <mshershe@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 19:09:56 by mshershe          #+#    #+#             */
-/*   Updated: 2025/11/06 23:22:58 by mshershe         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:51:51 by mshershe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,15 @@ void	error_exit3(t_game *game, const char *msg)
 		clean_sources(game);
 		mlx_terminate(game->mlx);
 	}
+	exit(1);
+}
+
+void	error_exit_fd(t_map *map, const char *msg, int fd)
+{
+	if (fd >= 0)
+		close (fd);
+	if (msg)
+		printf(RED "Error\n%s\n" NC, msg);
+	free_map(map);
 	exit(1);
 }
