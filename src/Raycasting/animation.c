@@ -15,7 +15,7 @@
 void	init_key_animation_frames(t_game *g)
 {
 	if (!g || !g->textures || !g->textures->keys)
-		error_exit2(NULL, "Failure during animation setup");
+		error_exit3(g, "Failure during animation setup");
 	g->textures->keys->animation_frames[0] = g->textures->keys->img_key00;
 	g->textures->keys->animation_frames[1] = g->textures->keys->img_key01;
 	g->textures->keys->animation_frames[2] = g->textures->keys->img_key02;
@@ -44,13 +44,10 @@ void	add_key_sprite(t_game *game, int map_x, int map_y)
 	t_sprite	*sprite;
 
 	if (!game)
-		error_exit2(game, "failure during sprite initialization");
-	sprite = malloc(sizeof(t_sprite)); // fix errors given later
+		error_exit3(game, "failure during sprite initialization");
+	sprite = malloc(sizeof(t_sprite));
 	if (!sprite)
-	{
-	//	mlx_close_window(game->mlx);
-		error_exit2(game, "failure during sprite initialization");
-	}
+		error_exit3(game, "failure during sprite initialization");
 	sprite->map_tile_x = map_x;
 	sprite->map_tile_y = map_y;
 	sprite->x = (map_x + 0.5f) * game->mini_tile;

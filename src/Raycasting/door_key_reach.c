@@ -79,7 +79,7 @@ int	keys_reachable(t_game *g, char **map)
 	int		py;
 	int		reached;
 
-(void)map;
+	(void)map;
 	grid_copy = cpy_matrix(map);
 	if (!grid_copy)
 		return (0);

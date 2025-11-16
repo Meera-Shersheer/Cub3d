@@ -28,7 +28,7 @@ void	color_block(unsigned int color, mlx_image_t *img)
 	}
 }
 
-void	draw_player(t_game *game)
+static void	init_player_data(t_game *game)
 {
 	if (!game)
 		exit(1);
@@ -51,16 +51,23 @@ void	draw_player(t_game *game)
 		mlx_close_window(game->mlx);
 		error_exit2(game, "image initialization failure");
 	}
-	game->player->x = get_player_x_pos(game->map->map_lines) * game->mini_tile
+}
+
+void	draw_player(t_game *game)
+{
+	init_player_data(game);
+	game->player->x = get_player_x_pos(game->map->map_lines)
+		* game->mini_tile
 		+ (game->mini_tile - game->player->img->width) / 2;
-	game->player->y = get_player_y_pos(game->map->map_lines) * game->mini_tile
+	game->player->y = get_player_y_pos(game->map->map_lines)
+		* game->mini_tile
 		+ (game->mini_tile - game->player->img->height) / 2;
 	game->player->move_speed = game->mini_tile / 3.0f;
 	game->player->rot_speed = 0.1f;
 	pick_initial_angle(game);
 	color_block(0xFFCC00CC, game->player->img);
-	if (mlx_image_to_window(game->mlx, game->player->img, game->player->x,
-			game->player->y) < 0)
+	if (mlx_image_to_window(game->mlx, game->player->img,
+			game->player->x, game->player->y) < 0)
 	{
 		mlx_close_window(game->mlx);
 		error_exit2(game, "image display failure");

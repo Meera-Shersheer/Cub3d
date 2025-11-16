@@ -119,6 +119,7 @@ void						error_exit(t_map *map, const char *msg);
 size_t						ft_strlen_d(char **s);
 void						check_map_values(t_map *map);
 void						error_exit2(t_game *game, const char *msg);
+void						error_exit3(t_game *game, const char *msg);
 int							find_max(int num1, int num2);
 // cleanup
 void						free_map(t_map *map);

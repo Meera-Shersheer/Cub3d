@@ -29,7 +29,7 @@ char	*append_buffer(char *content, char *buffer, size_t total, ssize_t n)
 	char	*new_content;
 	size_t	j;
 
-	new_content =  malloc(total + n + 1);
+	new_content = malloc(total + n + 1);
 	if (!new_content)
 		return (NULL);
 	copy_old_content(new_content, content, total);

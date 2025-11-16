@@ -41,31 +41,55 @@ int	main(int argc, char *argv[])
 	return (0);
 }
 
+void	ft_free_sprites2(t_game *g, int i)
+{
+	int	j;
+
+	if (!g || !g->sprites)
+		return ;
+	j = g->sprites->count - 1;
+	while (j >= 0)
+	{
+		if (g->sprites->sprites[i] && g->sprites->sprites[i]->frames[j])
+			mlx_delete_image(g->mlx, g->sprites->sprites[i]->frames[j]);
+		j--;
+	}
+}
+
 void	ft_free_sprites(t_game *g)
 {
 	int	i;
-	int	j;
 
 	i = g->total_keys - 1;
 	if (!g || !g->sprites)
 		return ;
-	while (i >= 0)
+	if (g->sprites->sprites)
 	{
-		j = g->sprites->count - 1;
-		while (j >= 0)
+		while (i >= 0)
 		{
-			if (g->sprites->sprites[i]->frames[j])
-				mlx_delete_image(g->mlx, g->sprites->sprites[i]->frames[j]);
-			j--;
+			ft_free_sprites2(g, i);
+			if (g->sprites->sprites[i]->img)
+				mlx_delete_image(g->mlx, g->sprites->sprites[i]->img);
+			if (g->sprites->sprites[i])
+				free (g->sprites->sprites[i]);
+			i--;
 		}
-		if (g->sprites->sprites[i]->img)
-			mlx_delete_image(g->mlx, g->sprites->sprites[i]->img);
-		if (g->sprites->sprites[i])
-			free (g->sprites->sprites[i]);
-		i--;
 	}
 	if (g->sprites->sprites)
 		free (g->sprites->sprites);
 	if (g->sprites)
 		free (g->sprites);
+}
+
+void	error_exit3(t_game *game, const char *msg)
+{
+	if (msg)
+		printf(RED "Error\n%s\n" NC, msg);
+	if (game)
+	{
+		mlx_close_window(game->mlx);
+		clean_sources(game);
+		mlx_terminate(game->mlx);
+	}
+	exit(1);
 }

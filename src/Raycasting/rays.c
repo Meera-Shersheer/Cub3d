@@ -18,9 +18,9 @@ static void	init_scene_images_and_distances(t_game *game)
 
 	if (!game)
 		exit(1);
-	game->rays = mlx_new_image(game->mlx, game->mini_tile\
+	game->rays = mlx_new_image(game->mlx, game->mini_tile \
 * (game->map->screen_width), game->mini_tile * (game->map->screen_height));
-	game->scene_3d =  mlx_new_image(game->mlx, W_SCREEN, H_SCREEN);
+	game->scene_3d = mlx_new_image(game->mlx, W_SCREEN, H_SCREEN);
 	if (!game->rays || !game->scene_3d)
 	{
 		mlx_close_window(game->mlx);
